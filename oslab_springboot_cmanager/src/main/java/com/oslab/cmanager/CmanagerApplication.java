@@ -10,6 +10,4 @@ public class CmanagerApplication {
 		SpringApplication.run(CmanagerApplication.class, args);
 	}
 
-
-
 }
