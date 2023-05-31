@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oslab.agent.repository.mapper.UserMapper">
+    <select id="findUserById" parameterType="int" resultType="com.oslab.agent.model.transfer.User">
+        SELECT
+            user_id,
+            user_email,
+            user_password,
+            user_name
+        FROM user_master
+        WHERE user_id = #{id}
+    </select>
+</mapper>
