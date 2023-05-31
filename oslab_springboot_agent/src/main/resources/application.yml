@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    mapper-locations: classpath:/mybatis/mapper/**/*.xml
+    username: root
+    jdbc-url: jdbc:mariadb://152.67.213.248:3306/sshdesktop?serverTimezone=UTC&characterEncoding=UTF-8&allowMultiQueries=true
+    password: oslab
