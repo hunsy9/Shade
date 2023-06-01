@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.oslab.agent.repository.mapper.UserMapper">
+<mapper namespace="com.oslab.agent.repository.user.mapper.UserMapper">
     <select id="findUserById" parameterType="int" resultType="com.oslab.agent.model.transfer.User">
         SELECT
             user_id,
@@ -12,4 +12,21 @@
         FROM user_master
         WHERE user_id = #{id}
     </select>
+
+    <insert id="signUp" parameterType="com.oslab.agent.controller.user.dto.SignupReqDto">
+        INSERT INTO user_master VALUES (0, #{user_email}, #{user_password}, #{user_name}, now(), now())
+    </insert>
+
+    <select id="signIn" parameterType="com.oslab.agent.controller.user.dto.SignInReqDto" resultType="int">
+        SELECT count(user_name)
+        FROM user_master
+        WHERE user_email = #{user_email} AND user_password = #{user_password}
+    </select>
+
+    <select id="checkEmailDuplication" parameterType="string" resultType="int">
+        SELECT count(user_name)
+        FROM user_master
+        WHERE user_email = #{user_email}
+    </select>
+
 </mapper>
