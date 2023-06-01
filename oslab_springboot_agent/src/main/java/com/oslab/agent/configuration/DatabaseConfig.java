@@ -23,6 +23,7 @@ public class DatabaseConfig {
     String mPath;
 
     @Bean(name = "dataSource")
+    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
         log.info("Datasource Bean 등록");
         return DataSourceBuilder.create().build();

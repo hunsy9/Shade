@@ -1,16 +1,15 @@
 package com.oslab.agent.model.transfer;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Data
 public class User {
-    private String userId;
-    private String userEmail;
-    private String userPassword;
-    private String userName;
+    private Integer user_id;
+    private String user_email;
+    private String user_password;
+    private String user_name;
 }
