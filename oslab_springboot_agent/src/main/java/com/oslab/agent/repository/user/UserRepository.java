@@ -1,9 +1,9 @@
 package com.oslab.agent.repository.user;
 
 
-import com.oslab.agent.controller.user.dto.SignInReqDto;
-import com.oslab.agent.controller.user.dto.SignupReqDto;
-import com.oslab.agent.model.transfer.User;
+import com.oslab.agent.model.transfer.userDto.SignInReqDto;
+import com.oslab.agent.model.transfer.userDto.SignupReqDto;
+import com.oslab.agent.model.transfer.userDto.User;
 import com.oslab.agent.repository.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,5 +30,9 @@ public class UserRepository {
 
     public boolean checkEmailDuplication(String email) throws SQLException{
         return userMapper.checkEmailDuplication(email) > 0;
+    }
+
+    public boolean checkAdmin(String email) throws SQLException{
+        return userMapper.checkAdmin(email) > 0;
     }
 }

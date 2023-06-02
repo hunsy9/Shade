@@ -1,9 +1,9 @@
 package com.oslab.agent.service.user;
 
 
-import com.oslab.agent.controller.user.dto.SignInReqDto;
-import com.oslab.agent.controller.user.dto.SignupReqDto;
-import com.oslab.agent.model.transfer.User;
+import com.oslab.agent.model.transfer.userDto.SignInReqDto;
+import com.oslab.agent.model.transfer.userDto.SignupReqDto;
+import com.oslab.agent.model.transfer.userDto.User;
 import com.oslab.agent.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserServiceImpl{
+public class UserService implements UserServiceInterface {
 
     private final UserRepository userRepository;
 
@@ -29,6 +29,10 @@ public class UserService implements UserServiceImpl{
 
     public boolean checkEmailDuplication(String email) throws SQLException {
         return userRepository.checkEmailDuplication(email);
+    }
+
+    public boolean checkAdmin(String email) throws SQLException{
+        return userRepository.checkAdmin(email);
     }
 
 }

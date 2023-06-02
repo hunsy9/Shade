@@ -1,4 +1,4 @@
-package com.oslab.agent.controller.request;
+package com.oslab.agent.controller.sshRequest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

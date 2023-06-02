@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oslab.agent.repository.organization.mapper.OrgCategoryMapper">
+    <insert id="addNewCategory" parameterType="com.oslab.agent.model.transfer.categoryDto.CategoryDto">
+        INSERT INTO category_master VALUES (0,#{org_id},#{project_id},#{prev},#{next})
+    </insert>
+    <update id="updateCategory" parameterType="com.oslab.agent.model.transfer.categoryDto.CategoryDto">
+        UPDATE category_master SET next = #{next} WHERE prev = #{prev}
+    </update>
+    <delete id="deleteCategory" parameterType="com.oslab.agent.model.transfer.categoryDto.CategoryDto">
+        DELETE FROM category_master WHERE prev LIKE #{prev} AND next LIKE #{next}
+    </delete>
+</mapper>

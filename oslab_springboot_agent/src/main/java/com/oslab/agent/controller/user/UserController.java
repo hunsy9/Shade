@@ -1,8 +1,8 @@
 package com.oslab.agent.controller.user;
 
-import com.oslab.agent.controller.user.dto.SignInReqDto;
-import com.oslab.agent.controller.user.dto.SignupReqDto;
-import com.oslab.agent.model.transfer.User;
+import com.oslab.agent.model.transfer.userDto.SignInReqDto;
+import com.oslab.agent.model.transfer.userDto.SignupReqDto;
+import com.oslab.agent.model.transfer.userDto.User;
 import com.oslab.agent.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +40,12 @@ public class UserController {
     @GetMapping("api/user/duplicateEmail")
     public ResponseEntity<?> checkEmailDuplication(@RequestParam("email") String email) throws SQLException {
         boolean result = userService.checkEmailDuplication(email);
-        return result ? ResponseEntity.ok().body("중복되는 이메일이 있습니다.") :  ResponseEntity.ok().body("가입 가능한 이메일입니다.");
+        return result ? ResponseEntity.ok().body("중복되는 이메일이 있습니다.") : ResponseEntity.ok().body("가입 가능한 이메일입니다.");
+    }
+
+    @GetMapping("api/user/checkAdmin")
+    public ResponseEntity<?> checkAdmin(@RequestParam("email") String email) throws SQLException {
+        boolean result = userService.checkAdmin(email);
+        return result ? ResponseEntity.ok().body("조직 관리자입니다.") :  ResponseEntity.ok().body("관리자가 아닙니다.");
     }
 }

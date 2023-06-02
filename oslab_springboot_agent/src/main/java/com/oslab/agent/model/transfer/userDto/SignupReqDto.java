@@ -1,4 +1,4 @@
-package com.oslab.agent.controller.user.dto;
+package com.oslab.agent.model.transfer.userDto;
 
 
 import lombok.AllArgsConstructor;
@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignInReqDto {
+public class SignupReqDto {
     private String user_email;
     private String user_password;
+    private String user_name;
 }
