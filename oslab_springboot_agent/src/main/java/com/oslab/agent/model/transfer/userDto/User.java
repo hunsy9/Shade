@@ -1,4 +1,4 @@
-package com.oslab.agent.model.transfer;
+package com.oslab.agent.model.transfer.userDto;
 
 
 import lombok.*;
