@@ -30,7 +30,7 @@ public class ServerController {
     }
 
     @PostMapping("/api/server/delete")
-    public boolean addContributor(@RequestParam("server_id") String server_id) throws SQLException {
+    public boolean deleteServer(@RequestParam("server_id") String server_id) throws SQLException {
         return serverService.deleteServer(server_id);
     }
 }
