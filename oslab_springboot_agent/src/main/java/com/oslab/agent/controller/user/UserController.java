@@ -27,6 +27,8 @@ public class UserController {
     @PostMapping("api/user/signup")
     public ResponseEntity<?> signUp(@RequestBody SignupReqDto signupReqDto) throws SQLException{
         System.out.println(signupReqDto);
+
+
         boolean success = userService.signUp(signupReqDto);
         return success ? ResponseEntity.ok().body("Success") : ResponseEntity.internalServerError().body("Fail");
     }
