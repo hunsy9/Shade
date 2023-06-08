@@ -4,6 +4,7 @@ import java.io.File;
 
 public interface ContainerService {
     public void createContainer();
+    //public void startContainer();
     public void deleteContainer();
 
     private File getSSHKeyFile() {
