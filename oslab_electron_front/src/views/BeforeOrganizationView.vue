@@ -7,11 +7,11 @@
     </div>
 
     <div class="topbarframe">
-      <TopBarButton :userName="userName" :existUser="existUser" @openAppLoginModal="openAppLoginModal"/>
+      <TopBarButton :userName="userName" :isLogin="isLogin" @openAppLoginModal="openAppLoginModal"/>
     </div>
 
     <div class="contentframe">
-      <template v-if="existUser ==true && hasOrganization == true">
+      <template v-if="isLogin ==true && hasOrganization == true">
         <OrganizationListItem @openInOganization="openInOganization"/>
       </template>
       <div class="nocontent" v-else>
@@ -36,16 +36,22 @@ import router from '@/router/index.js';
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('inOrganization')
+const { mapState } = createNamespacedHelpers('login')
 
 export default {
   name: 'BeforeLoginView',
   data() {
     return {
-      userName:'seunghun',
-      existUser: true,
       hasOrganization: true,
       organizationNames: [],
     }
+  },
+  computed: {
+    ...mapState({
+      userName: state => state.userName,
+      isLogin: state => state.isLogin,
+      isAdmin: state => state.isAdmin
+    }),
   },
   methods: {
     openAppLoginModal() {

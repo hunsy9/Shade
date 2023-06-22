@@ -11,6 +11,8 @@ let mainWindow
 let appLoginModalWindow
 let addOrganModalWindow
 
+let startPage = true
+
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
@@ -90,7 +92,17 @@ async function createWindow() {
   }
 
   win.on('closed', () => {
-    mainWindow = null
+    if(startPage){
+      console.log("close1")
+      mainWindow = null
+    }
+    // else{
+    //   console.log("close2")
+    //   startPage = true;
+    //   // const wina = BrowserWindow.getFocusedWindow();
+    //   mainWindow.setSize(1000, 600);
+    //   mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+    // }
   })
 
   appLoginModal.on('close', (e) => {
@@ -155,6 +167,7 @@ if (isDevelopment) {
 }
 
 ipcMain.on('resize-window', () => {
+  startPage = false
   const win = BrowserWindow.getFocusedWindow();
   win.setSize(1200, 720);
   win.center();
