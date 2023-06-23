@@ -11,7 +11,7 @@
 
   <div class="topbarframe">
     <OrganizationName/>
-    <TopBarButton :userName="userName" :existUser="isLogin == true"/>
+    <TopBarButton/>
   </div>
 
   <div class="contentframe">
@@ -76,14 +76,12 @@ export default {
   name: 'InOrganizationView',
   data(){
     return {
-      existUser: true,
       onTerminal: false,
       onContributors: false,
     }
   },
   computed: {
     ...mapState({
-      userName: state => state.userName,
       isLogin: state => state.isLogin,
       isAdmin: state => state.isAdmin
     }),

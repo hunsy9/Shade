@@ -1,29 +1,37 @@
 <template>
-  <button @click="$emit('openAppLoginModal')" v-if="existUser == false">
+  <button @click="openAppLoginModal" v-if="isLogin == false">
     <p>Sign in</p>
     <img src="@/assets/user.png">
   </button>
   <button v-else>
     <img src="@/assets/user.png">
-    <p v-if="existUser">{{ userName }}</p>
+    <p v-if="isLogin">{{ userName }}</p>
     <img class="adm" src="@/assets/adminbanner.png" v-if="isAdmin == true">
   </button>
+  <h2>{{ "login " + isLogin }} {{ "admin " + isAdmin }}</h2>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('login')
+const { mapState, mapActions } = createNamespacedHelpers('login')
+import { ipcRenderer } from 'electron';
 
 export default {
   name: 'TopBarButton',
-  props:{
-    userName: String,
-    existUser: Boolean,
-  },
   computed: {
     ...mapState({
+      userName: state => state.userName,
+      isLogin: state => state.isLogin,
       isAdmin: state => state.isAdmin
     }),
+    // ...mapState(['userName', 'isLogin', 'isAdmin'])
+  },
+  methods: {
+    openAppLoginModal() {
+      ipcRenderer.send('open-app-login-modal');
+    },
+    ...mapActions(['look'])
+
   },
 }
 </script>

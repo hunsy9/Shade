@@ -27,7 +27,7 @@ export default createStore({
   plugins: [
     createPersistedState({
         paths: ["token", "inOrganization"],
-      }
+      },
     ),
   ],
 })

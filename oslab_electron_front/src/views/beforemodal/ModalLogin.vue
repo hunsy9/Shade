@@ -24,7 +24,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapActions} = createNamespacedHelpers('login')
+const { mapActions } = createNamespacedHelpers('login')
 
 export default {
   name: "ModalLogin",

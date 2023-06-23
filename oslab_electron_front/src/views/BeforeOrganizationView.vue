@@ -3,11 +3,11 @@
 
     <div class="leftsideframe">
       <AppInfo/>
-      <NewOrganizationButton @openNewOrganModal="openNewOrganModal"/>
+      <NewOrganizationButton v-if="isLogin ==true" @openNewOrganModal="openNewOrganModal"/>
     </div>
 
     <div class="topbarframe">
-      <TopBarButton :userName="userName" :isLogin="isLogin" @openAppLoginModal="openAppLoginModal"/>
+      <TopBarButton/>
     </div>
 
     <div class="contentframe">
@@ -48,26 +48,20 @@ export default {
   },
   computed: {
     ...mapState({
-      userName: state => state.userName,
       isLogin: state => state.isLogin,
-      isAdmin: state => state.isAdmin
     }),
   },
   methods: {
-    openAppLoginModal() {
-      ipcRenderer.send('open-app-login-modal');
-    },
     openNewOrganModal() {
-      ipcRenderer.send('open-add-organ-modal');
+      ipcRenderer.send('open-add-organ-modal')
     },
     openInOganization(name) {
       // 서버에 해당 org 의 내부 정보 요청
-      this.setData(name);
-      console.log("bhbh" + name);
-      router.push('/in');
-      ipcRenderer.send('resize-window');
+      this.setData(name)
+      router.push('/in')
+      ipcRenderer.send('resize-window')
     },
-    ...mapMutations(['setData'])
+    ...mapMutations(['setData']),
   },
   components: {
     AppInfo,
