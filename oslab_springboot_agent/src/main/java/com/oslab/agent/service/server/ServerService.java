@@ -5,6 +5,7 @@ import com.oslab.agent.model.transfer.serverDto.EditServerDto;
 import com.oslab.agent.repository.server.ServerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;

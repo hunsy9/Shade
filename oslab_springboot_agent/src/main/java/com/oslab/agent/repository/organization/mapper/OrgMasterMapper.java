@@ -1,10 +1,12 @@
 package com.oslab.agent.repository.organization.mapper;
 
 import com.oslab.agent.model.transfer.orgDto.OrgReqDto;
+import com.oslab.agent.model.entity.orgEntity.ProjectInfo;
 import com.oslab.agent.model.transfer.orgDto.RegOrgReqDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Mapper
 public interface OrgMasterMapper {
@@ -15,4 +17,8 @@ public interface OrgMasterMapper {
     boolean addOrganizationToUser(OrgReqDto orgReqDto) throws SQLException;
 
     void deleteOrganizationFromUser(OrgReqDto orgReqDto) throws SQLException;
+
+    List<ProjectInfo> getProjectInfo(Integer org_id) throws SQLException;
+
+    List<Integer> getOrgUserPrivileges(Integer user_id) throws SQLException;
 }

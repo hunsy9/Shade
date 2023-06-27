@@ -5,3 +5,16 @@ spring:
     username: root
     jdbc-url: jdbc:mariadb://152.67.213.248:3306/sshdesktop?serverTimezone=UTC&characterEncoding=UTF-8&allowMultiQueries=true
     password: oslab
+  data:
+    redis:
+      port: 6379
+      host: ec2-13-209-13-164.ap-northeast-2.compute.amazonaws.com
+      password: tingdev
+
+jwt:
+  header: Authorization
+  secret: fieldproject
+  token-validity-in-seconds: 3600000
+
+
+

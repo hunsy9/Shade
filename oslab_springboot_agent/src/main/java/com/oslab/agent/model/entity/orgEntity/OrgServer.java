@@ -1,16 +1,18 @@
-package com.oslab.agent.model.transfer.serverDto;
+package com.oslab.agent.model.entity.orgEntity;
 
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-public class EditServerDto {
-    private Long server_id;
+@AllArgsConstructor
+@Nullable
+public class OrgServer {
+    private Integer server_id;
     private String server_name;
     private String server_desc;
 }

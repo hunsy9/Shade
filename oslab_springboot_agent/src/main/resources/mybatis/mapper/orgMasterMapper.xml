@@ -19,4 +19,27 @@
     <delete id="deleteOrganizationFromUser" parameterType="com.oslab.agent.model.transfer.orgDto.OrgReqDto">
         DELETE FROM user_organization WHERE user_id LIKE #{user_id} AND org_id LIKE #{org_id}
     </delete>
+
+    <select id="getProjectInfo" parameterType="Integer">
+        SELECT
+            op.project_id,
+            op.project_name,
+            cm.category_id,
+            cm.prev,
+            cm.next,
+            sm.server_id,
+            sm.server_name,
+            sm.server_desc
+        FROM organization_project op
+                 JOIN category_master cm
+                      USING (project_id)
+                 LEFT OUTER JOIN server_master sm
+                                 USING (category_id)
+        WHERE op.org_id = #{org_id}
+    </select>
+
+    <select id="getOrgUserPrivileges" parameterType="Integer">
+        SELECT server_id FROM server_privileges WHERE user_id = #{user_id}
+    </select>
+
 </mapper>

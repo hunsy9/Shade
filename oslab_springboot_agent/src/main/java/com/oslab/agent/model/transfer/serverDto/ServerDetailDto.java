@@ -7,10 +7,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class EditServerDto {
-    private Long server_id;
-    private String server_name;
-    private String server_desc;
+@AllArgsConstructor
+public class ServerDetailDto {
+    private String public_ip;
+    private String private_ip;
+    private String host;
+    private String password;
+    private String vpn_host;
 }

@@ -18,5 +18,4 @@
     <insert id="editPrivileges" parameterType="com.oslab.agent.model.transfer.contributorDto.EditPrivDto">
         INSERT INTO server_privileges VALUES (#{user_id}, #{server_id})
     </insert>
-
 </mapper>
