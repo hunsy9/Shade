@@ -3,15 +3,15 @@
 
     <div class="leftsideframe">
       <AppInfo/>
-      <NewOrganizationButton @openNewOrganModal="openNewOrganModal"/>
+      <NewOrganizationButton v-if="isLogin ==true" @openNewOrganModal="openNewOrganModal"/>
     </div>
 
     <div class="topbarframe">
-      <TopBarButton :userName="userName" :existUser="existUser" @openAppLoginModal="openAppLoginModal"/>
+      <TopBarButton />
     </div>
 
     <div class="contentframe">
-      <template v-if="existUser ==true && hasOrganization == true">
+      <template v-if="isLogin ==true && hasOrganization == true">
         <OrganizationListItem @openInOganization="openInOganization"/>
       </template>
       <div class="nocontent" v-else>
@@ -27,41 +27,41 @@
 </template>
 
 <script>
-import AppInfo from '@/components/common/AppInfo.vue';
+import AppInfo from '@/components/common/AppInfo.vue'
 import NewOrganizationButton from '@/components/beforeorganization/NewOrganizationButton.vue'
-import TopBarButton from '@/components/common/TopBarButton.vue';
+import TopBarButton from '@/components/common/TopBarButton.vue'
 import OrganizationListItem from '@/components/beforeorganization/OrganizationListItem.vue'
-import { ipcRenderer } from 'electron';
-import router from '@/router/index.js';
+import { ipcRenderer } from 'electron'
+import router from '@/router/index.js'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('inOrganization')
+const { mapState } = createNamespacedHelpers('login')
 
 export default {
   name: 'BeforeLoginView',
   data() {
     return {
-      userName:'seunghun',
-      existUser: true,
       hasOrganization: true,
       organizationNames: [],
     }
   },
+  computed: {
+    ...mapState({
+      isLogin: state => state.isLogin,
+    }),
+  },
   methods: {
-    openAppLoginModal() {
-      ipcRenderer.send('open-app-login-modal');
-    },
     openNewOrganModal() {
-      ipcRenderer.send('open-add-organ-modal');
+      ipcRenderer.send('open-add-organ-modal')
     },
     openInOganization(name) {
       // 서버에 해당 org 의 내부 정보 요청
-      this.setData(name);
-      console.log("bhbh" + name);
-      router.push('/in');
-      ipcRenderer.send('resize-window');
+      this.setData(name)
+      router.push('/in')
+      ipcRenderer.send('resize-window')
     },
-    ...mapMutations(['setData'])
+    ...mapMutations(['setData']),
   },
   components: {
     AppInfo,

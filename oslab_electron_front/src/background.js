@@ -11,6 +11,8 @@ let mainWindow
 let appLoginModalWindow
 let addOrganModalWindow
 
+// let startPage = true
+
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
@@ -91,6 +93,18 @@ async function createWindow() {
 
   win.on('closed', () => {
     mainWindow = null
+    // e.preventDefault()
+    // if(startPage){
+    //   console.log("close1")
+    //   mainWindow = null
+    // }
+    // else{
+    //   console.log("close2")
+    //   startPage = true;
+    //   const wina = BrowserWindow.getFocusedWindow();
+    //   win.setSize(1000, 600);
+    //   win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+    // }
   })
 
   appLoginModal.on('close', (e) => {
@@ -113,6 +127,7 @@ async function createWindow() {
 app.on('window-all-closed', () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
+  console.log("all close1")
   if (process.platform !== 'darwin') {
     app.quit()
   }
@@ -155,33 +170,37 @@ if (isDevelopment) {
 }
 
 ipcMain.on('resize-window', () => {
-  const win = BrowserWindow.getFocusedWindow();
-  win.setSize(1200, 720);
-  win.center();
-});
+  // startPage = false
+  const win = BrowserWindow.getFocusedWindow()
+  win.setSize(1200, 720)
+  win.center()
+})
 
 ipcMain.on('reset-window', () => {
-  const win = BrowserWindow.getFocusedWindow();
-  win.setSize(1000, 600);
-  win.center();
-});
+  const win = BrowserWindow.getFocusedWindow()
+  win.setSize(1000, 600)
+  win.center()
+})
 
 ipcMain.on('open-app-login-modal', () => {
-  appLoginModalWindow.show();
-  // appLoginModalWindow.center();
+  appLoginModalWindow.show()
+  appLoginModalWindow.center()
 })
 
 ipcMain.on('close-app-login-modal', () => {
   console.log("login")
-  appLoginModalWindow.hide();
+  const win = BrowserWindow.getFocusedWindow()
+  mainWindow = win.getParentWindow()
+  mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+  appLoginModalWindow.hide()
 })
 
 ipcMain.on('open-add-organ-modal', () => {
-  addOrganModalWindow.show();
-  // addOrganModalWindow.center();
+  addOrganModalWindow.show()
+  addOrganModalWindow.center()
 })
 
 ipcMain.on('close-add-organ-modal', () => {
   console.log("organ")
-  addOrganModalWindow.hide();
+  addOrganModalWindow.hide()
 })
