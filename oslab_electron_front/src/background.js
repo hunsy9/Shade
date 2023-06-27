@@ -171,13 +171,13 @@ if (isDevelopment) {
 
 ipcMain.on('resize-window', () => {
   // startPage = false
-  const win = BrowserWindow.getFocusedWindow();
+  const win = BrowserWindow.getFocusedWindow()
   win.setSize(1200, 720)
   win.center()
 })
 
 ipcMain.on('reset-window', () => {
-  const win = BrowserWindow.getFocusedWindow();
+  const win = BrowserWindow.getFocusedWindow()
   win.setSize(1000, 600)
   win.center()
 })
@@ -189,6 +189,9 @@ ipcMain.on('open-app-login-modal', () => {
 
 ipcMain.on('close-app-login-modal', () => {
   console.log("login")
+  const win = BrowserWindow.getFocusedWindow()
+  mainWindow = win.getParentWindow()
+  mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
   appLoginModalWindow.hide()
 })
 

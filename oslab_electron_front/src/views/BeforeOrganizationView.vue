@@ -7,7 +7,7 @@
     </div>
 
     <div class="topbarframe">
-      <TopBarButton/>
+      <TopBarButton />
     </div>
 
     <div class="contentframe">
@@ -27,12 +27,12 @@
 </template>
 
 <script>
-import AppInfo from '@/components/common/AppInfo.vue';
+import AppInfo from '@/components/common/AppInfo.vue'
 import NewOrganizationButton from '@/components/beforeorganization/NewOrganizationButton.vue'
-import TopBarButton from '@/components/common/TopBarButton.vue';
+import TopBarButton from '@/components/common/TopBarButton.vue'
 import OrganizationListItem from '@/components/beforeorganization/OrganizationListItem.vue'
-import { ipcRenderer } from 'electron';
-import router from '@/router/index.js';
+import { ipcRenderer } from 'electron'
+import router from '@/router/index.js'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('inOrganization')

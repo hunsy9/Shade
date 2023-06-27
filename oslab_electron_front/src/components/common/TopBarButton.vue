@@ -8,13 +8,13 @@
     <p v-if="isLogin">{{ userName }}</p>
     <img class="adm" src="@/assets/adminbanner.png" v-if="isAdmin == true">
   </button>
-  <h2>{{ "login " + isLogin }} {{ "admin " + isAdmin }}</h2>
+  <h2>{{ "login " + isLogin }}</h2>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapActions } = createNamespacedHelpers('login')
-import { ipcRenderer } from 'electron';
+const { mapState } = createNamespacedHelpers('login')
+import { ipcRenderer } from 'electron'
 
 export default {
   name: 'TopBarButton',
@@ -24,14 +24,11 @@ export default {
       isLogin: state => state.isLogin,
       isAdmin: state => state.isAdmin
     }),
-    // ...mapState(['userName', 'isLogin', 'isAdmin'])
   },
   methods: {
     openAppLoginModal() {
-      ipcRenderer.send('open-app-login-modal');
+      ipcRenderer.send('open-app-login-modal')
     },
-    ...mapActions(['look'])
-
   },
 }
 </script>

@@ -4,27 +4,28 @@
       class="sshdesktopicon"
       src="@/assets/right-arrow-angle-and-horizontal-down-line-code-signs.png"
     />
-    <div class="text1">SSH Desktop</div>
+    <div class="text1" :key="dsasda">SSH Desktop</div>
     <div class="text2">Welcome</div>
     <div class="text3">Log in to SSH Desktop to continue</div>
   </div>
+  <h2>{{ "login " + isLogin }}</h2>
   <div class="inpframe">
     <div class="id_bar">
       <img src="@/assets/id.png" class="bar_img" />
-      <input type="text" class="inp" placeholder="ID" v-model="loginId"/>
+      <input type="email" class="inp" placeholder="Email" v-model="loginId"/>
     </div>
     <div class="pass_bar">
       <img src="@/assets/pw.png" class="bar_img" />
-      <input type="password" class="inp" placeholder="PassWord" v-model="loginPassword"/>
+      <input type="password" class="inp" placeholder="Password" v-model="loginPassword"/>
     </div>
   </div>
-  <button class="continuebtn" @click="tryLogin(loginId, loginPassword)">continue</button>
+  <button class="continuebtn" @click="login()">continue</button>
   <a href="/" class="signup">Sign up</a>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapActions } = createNamespacedHelpers('login')
+const { mapActions, mapState } = createNamespacedHelpers('login')
 
 export default {
   name: "ModalLogin",
@@ -34,9 +35,19 @@ export default {
       loginPassword: "",
     };
   },
+  computed: {
+    ...mapState({
+      isLogin: state => state.isLogin,
+    }),
+  },
   methods: {
+    login(){
+      this.tryLogin()
+      this.loginId = null
+      this.loginPassword = null
+    },
     ...mapActions(['tryLogin']),
-  }
+  },
 };
 </script>
 
