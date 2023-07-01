@@ -1,6 +1,6 @@
 import api from '@/api/login.js'
 import { ipcRenderer } from "electron"
-import organizationInfo from './organizationInfo'
+import organizationInfo from './organizationinfo'
 
 export default ({
   namespaced: true,
