@@ -6,4 +6,7 @@ module.exports = defineConfig({
       nodeIntegration: true,
     }
   },
+  devServer: {
+    port: 8081
+  }
 })
