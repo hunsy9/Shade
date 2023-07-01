@@ -1,49 +1,49 @@
 <template>
   <div class="container">
 
-    <div class="leftsideframe">
-      <AppInfo/>
-      <hr/>
-      <ContributorButton/>
-      <LeftExpandingMenu/>
-      <NewProjectButton v-if="isAdmin == true"/>
-    </div>
-
-    <div class="topbarframe">
-      <OrganizationName/>
-      <TopBarButton :userName="userName" :existUser="existUser"/>
-    </div>
-
-    <div class="contentframe">
-      <div v-if="onTerminal == false && onContributors == false">
-        <div class="content">
-          <PathBar/>
-          <NewServerButton v-if="isAdmin == true"/>
-          <ServerListItem/>
-        </div>
-        <div class="rightframe">
-          <RightExpandingMenu/>
-          <NewCategoryButton v-if="isAdmin == true"/>
-        </div>
-      </div>
-
-      <div v-else-if="onContributors == true && onTerminal == false">
-        <NewContributorButton v-if="isAdmin == true"/>
-        <ContributorListItem/>
-      </div>
-
-      <div v-else>
-        <TerminalWindow/>
-      </div>
-    </div>
-
+  <div class="leftsideframe">
+    <AppInfo/>
+    <hr/>
+    <ContributorButton/>
+    <LeftExpandingMenu/>
+    <NewProjectButton v-if="isAdmin == true"/>
   </div>
 
-  <button @click="testIn()">
-    화면 전환 버튼(개발용 추후 삭제)
-  </button>
+  <div class="topbarframe">
+    <OrganizationName/>
+    <TopBarButton/>
+  </div>
 
+  <div class="contentframe">
+    <div v-if="onTerminal == false && onContributors == false">
+      <div class="content">
+        <PathBar/>
+        <NewServerButton v-if="isAdmin == true"/>
+        <ServerListItem/>
+      </div>
+      <div class="rightframe">
+        <RightExpandingMenu/>
+        <NewCategoryButton v-if="isAdmin == true"/>
+      </div>
+    </div>
+
+    <div v-else-if="onContributors == true && onTerminal == false">
+      <NewContributorButton v-if="isAdmin == true"/>
+      <ContributorListItem/>
+    </div>
+
+    <div v-else>
+      <TerminalWindow/>
+    </div>
+  </div>
+
+  </div>
+  <button @click="testIn()">
+  화면 전환 버튼(개발용 추후 삭제)
+  </button>
 </template>
+
+
 
 <script>
 import AppInfo from '@/components/common/AppInfo.vue'
@@ -76,14 +76,13 @@ export default {
   name: 'InOrganizationView',
   data(){
     return {
-      userName:'seunghun',
-      existUser: true,
       onTerminal: false,
       onContributors: false,
     }
   },
   computed: {
     ...mapState({
+      isLogin: state => state.isLogin,
       isAdmin: state => state.isAdmin
     }),
   },

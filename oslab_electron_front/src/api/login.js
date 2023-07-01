@@ -1,11 +1,11 @@
 export default {
-    async login(username, password) {
-        const response = await fetch('https://cdbe8898-93a7-4f31-97c0-b0c51738aa02.mock.pstmn.io/api/test', {
-            method: 'POST',
+    async login() {
+        const response = await fetch('http://localhost:8080/api/user/getUserInfo/1', {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            
         });
 
         if (!response.ok) {

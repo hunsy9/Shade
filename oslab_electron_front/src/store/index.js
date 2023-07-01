@@ -6,8 +6,6 @@ import contributorInfo from '@/store/contributorInfo.js'
 import organizationInfo from '@/store/organizationinfo.js'
 import inOrganization from '@/store/inOrganization.js'
 
-
-
 export default createStore({
   state: {
   },
@@ -26,8 +24,8 @@ export default createStore({
   },
   plugins: [
     createPersistedState({
-        paths: ["token", "inOrganization"],
-      }
+        paths: ["token", "inOrganization", "login"],
+      },
     ),
   ],
 })
