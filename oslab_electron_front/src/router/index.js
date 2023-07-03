@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import BeforeLoginView from '../views/BeforeOrganizationView.vue'
 import InOrganizationView from '../views/InOrganizationView.vue'
 import ModalLogin from '@/views/beforemodal/ModalLogin.vue'
+import ModalSignUp from '@/views/beforemodal/login/ModalSignUp.vue'
 import ModalAddOrganization from '@/views/beforemodal/ModalAddOrganization.vue'
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
     path: '/modallogin',
     name: 'modallogin',
     component: ModalLogin,
+  },
+  {
+    path: '/modalsignup',
+    name: 'modalsignup',
+    component: ModalSignUp,
   },
   {
     path: '/modaladdorganization',

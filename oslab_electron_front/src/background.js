@@ -40,6 +40,7 @@ async function createWindow() {
     parent: win, 
     titleBarStyle: 'hidden',
     show: false,
+    // 개발 끝나고 resizable, movavle false로 수정
     resizable: true,
     movavle: true,
     minimizable: false,
@@ -173,6 +174,12 @@ ipcMain.on('resize-window', () => {
   // startPage = false
   const win = BrowserWindow.getFocusedWindow()
   win.setSize(1200, 720)
+  win.center()
+})
+
+ipcMain.on('resize-for-signup-modal', () => {
+  const win = BrowserWindow.getFocusedWindow()
+  win.setSize(440, 500)
   win.center()
 })
 
