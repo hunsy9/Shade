@@ -8,7 +8,6 @@
     <div class="text2">Welcome</div>
     <div class="text3">Log in to SSH Desktop to continue</div>
   </div>
-  <h2>{{ "login " + isLogin }}</h2>
   <div class="inpframe">
     <div class="id_bar">
       <img src="@/assets/id.png" class="bar_img" />
@@ -20,10 +19,12 @@
     </div>
   </div>
   <button class="continuebtn" @click="login(loginId, loginPassword)">continue</button>
-  <a href="/" class="signup">Sign up</a>
+  <a class="signup" @click="signUp">Sign up</a>
 </template>
 
 <script>
+import { ipcRenderer } from 'electron'
+import router from '@/router/index.js'
 import { createNamespacedHelpers } from 'vuex'
 const { mapActions, mapState } = createNamespacedHelpers('login')
 const { mapMutations } = createNamespacedHelpers('organizationInfo')
@@ -49,6 +50,10 @@ export default {
       }
       this.loginId = null
       this.loginPassword = null
+    },
+    signUp(){
+      router.push('/modalsignup')
+      ipcRenderer.send('resize-for-signup-modal')
     },
     ...mapActions(['tryLogin']),
     ...mapMutations(['setOrgInfo'])
@@ -135,7 +140,6 @@ export default {
   border: none;
 }
 .continuebtn {
-  display: inline-block;
   font-size: 1rem;
   position: relative;
   left: 50%;
@@ -159,5 +163,8 @@ export default {
   margin-right: auto;
   text-align: center;
   color: #747474;
+}
+a{
+  cursor: pointer;
 }
 </style>
