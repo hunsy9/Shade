@@ -16,5 +16,21 @@ export default {
 
         const data = await response.json()
         return data
+    },
+    async getProj() {
+        const response = await fetch('http://localhost:8080/api/org/getOrgInfo/1/1', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            
+        })
+
+        if (!response.ok) {
+            throw new Error('getProj에 실패 했습니다.')
+        }
+
+        const data = await response.json()
+        return data
     }
 }

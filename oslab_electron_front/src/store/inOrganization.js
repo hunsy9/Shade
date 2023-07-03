@@ -1,49 +1,68 @@
+import api from '@/api/login.js'
+import { ipcRenderer } from "electron"
+import router from '@/router/index.js'
+
 export default ({
     namespaced: true,
   
     state: {
         organId: "",
         organName: "",
-        projInfos: [
+        projects: [
             {
-                projId: "",
-                projName: "MEGASTUDY12",
+                project_id: "",
+                project_name: "",
                 category: {
-                    level1: "",
-                    levle2: "",
-                    servers: [
-                        { 
-                            serverName: "MEGA_DEV_REDIS", 
-                            ip: "123.123.123.123" , 
-                            prev: "Develop", 
-                            next: "DBMS", 
-                        },
+                    develop: [
+                        "",
+                        ""
+                    ],
+                    operation: [
+                        "",
+                        "",
+                        ""
+                    ]
+                },
+                project_server: {
+                    "2:operation:REDIS": [
+                        {
+                            server_id: "",
+                            server_name: "",
+                            server_desc: ""
+                        }
                     ]
                 }
-                
-            },
-            {
-                projId: "",
-                projName: "MEGASTUDY22",
-                servers: [
-                    { 
-                        serverName: "MEGA_DEV_REDIS", 
-                        ip: "123.123.123.123" , 
-                        prev: "Develop", 
-                        next: "DBMS", 
-                    },
-                ]
-            },
+            }
+        ],
+        org_user_privileges: [
+            1
         ]
     },
+    
     getters: {
     },
     mutations: {
-        setData(state, organName){
-            state.organName = organName;
+        setOrg(state, org){
+            state.organName = org.org_name;
+            state.organId = org.org_id;
+        },
+        setProj(state, projects){
+            state.projects = projects
         }
     },
     actions: {
+        async getProjects(context, org){
+            const data = await api.getProj()
+            if(data){
+              context.commit("setOrg", org)
+              context.commit("setProj", data)
+              router.push('/in')
+              ipcRenderer.send('resize-window')
+            }
+            else{
+              console.log("getProj fail")
+            }
+        }
     },
     modules: {
     },
