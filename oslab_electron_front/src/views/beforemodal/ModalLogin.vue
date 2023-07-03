@@ -4,7 +4,7 @@
       class="sshdesktopicon"
       src="@/assets/right-arrow-angle-and-horizontal-down-line-code-signs.png"
     />
-    <div class="text1" :key="dsasda">SSH Desktop</div>
+    <div class="text1">SSH Desktop</div>
     <div class="text2">Welcome</div>
     <div class="text3">Log in to SSH Desktop to continue</div>
   </div>
@@ -19,13 +19,14 @@
       <input type="password" class="inp" placeholder="Password" v-model="loginPassword"/>
     </div>
   </div>
-  <button class="continuebtn" @click="login()">continue</button>
+  <button class="continuebtn" @click="login(loginId, loginPassword)">continue</button>
   <a href="/" class="signup">Sign up</a>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapActions, mapState } = createNamespacedHelpers('login')
+const { mapMutations } = createNamespacedHelpers('organizationInfo')
 
 export default {
   name: "ModalLogin",
@@ -41,12 +42,16 @@ export default {
     }),
   },
   methods: {
-    login(){
-      this.tryLogin()
+    async login(id, pw){
+      const data = await this.tryLogin(id, pw)
+      if(data){
+        this.setOrgInfo(data)
+      }
       this.loginId = null
       this.loginPassword = null
     },
     ...mapActions(['tryLogin']),
+    ...mapMutations(['setOrgInfo'])
   },
 };
 </script>

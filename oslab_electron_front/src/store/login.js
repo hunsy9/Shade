@@ -1,10 +1,8 @@
 import api from '@/api/login.js'
 import { ipcRenderer } from "electron"
-import organizationInfo from './organizationinfo'
 
 export default ({
   namespaced: true,
-
   state: {
     userName:'seunghun',
     isLogin: false,
@@ -19,13 +17,13 @@ export default ({
     async tryLogin(context) {
       const data = await api.login()
       if(data){
-        context.commit('organizationInfo/setOrgInfo', data)
-        context.commit('setLogin', true)
-        console.log(data)
+        context.commit("setLogin", true)
         ipcRenderer.send("close-app-login-modal")
+        return data
       }
       else{
         console.log("login fail")
+        return false
       }
     },
   },
@@ -33,6 +31,5 @@ export default ({
     isLogin1 : state => state.isLogin
   },
   modules: {
-    organizationInfo
   },
 })
