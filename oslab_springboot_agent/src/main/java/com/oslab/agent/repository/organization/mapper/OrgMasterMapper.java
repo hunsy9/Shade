@@ -1,5 +1,6 @@
 package com.oslab.agent.repository.organization.mapper;
 
+import com.oslab.agent.model.entity.orgEntity.OrgContributor;
 import com.oslab.agent.model.transfer.orgDto.OrgReqDto;
 import com.oslab.agent.model.entity.orgEntity.ProjectInfo;
 import com.oslab.agent.model.transfer.orgDto.RegOrgReqDto;
@@ -21,4 +22,8 @@ public interface OrgMasterMapper {
     List<ProjectInfo> getProjectInfo(Integer org_id) throws SQLException;
 
     List<Integer> getOrgUserPrivileges(Integer user_id) throws SQLException;
+
+    OrgContributor getOrgAdmin(Integer org_id) throws SQLException;
+
+    List<OrgContributor> getOrgContributors(Integer org_id) throws SQLException;
 }

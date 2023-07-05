@@ -1,10 +1,7 @@
 package com.oslab.agent.repository.organization.master;
 
-import com.oslab.agent.model.entity.orgEntity.OrgInfo;
-import com.oslab.agent.model.entity.orgEntity.OrgProject;
-import com.oslab.agent.model.entity.orgEntity.OrgServer;
+import com.oslab.agent.model.entity.orgEntity.*;
 import com.oslab.agent.model.transfer.orgDto.OrgReqDto;
-import com.oslab.agent.model.entity.orgEntity.ProjectInfo;
 import com.oslab.agent.model.transfer.orgDto.RegOrgReqDto;
 import com.oslab.agent.repository.organization.mapper.OrgMasterMapper;
 import lombok.RequiredArgsConstructor;
@@ -130,6 +127,28 @@ public class OrgMasterRepository {
                 .build();
 
         return orgInfo;
+    }
+
+    public OrgMembers getOrgMembers(Integer org_id) throws SQLException{
+
+        OrgContributor admin = orgMasterMapper.getOrgAdmin(org_id);
+        List<OrgContributor> contributors = orgMasterMapper.getOrgContributors(org_id);
+
+        List<OrgContributor> contributorsExceptAdmin = new ArrayList<>();
+
+        contributors.stream().forEach(orgContributor -> {
+            if(orgContributor.getUser_id() == admin.getUser_id()){
+                return;
+            }
+            contributorsExceptAdmin.add(orgContributor);
+        });
+
+        OrgMembers orgMembers = OrgMembers.builder()
+                .admin_email(admin)
+                .contributors(contributorsExceptAdmin)
+                .build();
+
+        return orgMembers;
     }
 
 }

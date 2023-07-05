@@ -1,6 +1,7 @@
 package com.oslab.agent.service.organization.master;
 
 import com.oslab.agent.model.entity.orgEntity.OrgInfo;
+import com.oslab.agent.model.entity.orgEntity.OrgMembers;
 import com.oslab.agent.model.transfer.orgDto.OrgReqDto;
 import com.oslab.agent.model.transfer.orgDto.RegOrgReqDto;
 import com.oslab.agent.repository.organization.master.OrgMasterRepository;
@@ -34,6 +35,10 @@ public class OrgMasterService implements OrgMasterServiceInterface {
 
     public OrgInfo getOrgInfo(Integer user_id, Integer org_id) throws SQLException{
         return orgMasterRepository.getOrgInfo(user_id, org_id);
+    }
+
+    public OrgMembers getOrgMembers(Integer org_id) throws SQLException{
+        return orgMasterRepository.getOrgMembers(org_id);
     }
 
 }

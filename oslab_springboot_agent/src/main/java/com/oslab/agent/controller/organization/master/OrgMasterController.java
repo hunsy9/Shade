@@ -1,6 +1,8 @@
 package com.oslab.agent.controller.organization.master;
 
+import com.oslab.agent.model.entity.orgEntity.OrgContributor;
 import com.oslab.agent.model.entity.orgEntity.OrgInfo;
+import com.oslab.agent.model.entity.orgEntity.OrgMembers;
 import com.oslab.agent.model.transfer.orgDto.OrgReqDto;
 import com.oslab.agent.model.transfer.orgDto.RegOrgReqDto;
 import com.oslab.agent.service.organization.master.OrgMasterService;
@@ -13,6 +15,7 @@ import java.sql.SQLException;
 
 @RestController
 @Slf4j
+@CrossOrigin(origins="*")
 @RequiredArgsConstructor
 public class OrgMasterController {
     private final OrgMasterService orgMasterService;
@@ -42,6 +45,11 @@ public class OrgMasterController {
     @GetMapping("api/org/getOrgInfo/{user_id}/{org_id}")
     public OrgInfo getOrgInfo(@PathVariable Integer user_id, @PathVariable Integer org_id) throws SQLException{
         return orgMasterService.getOrgInfo(user_id, org_id);
+    }
+
+    @GetMapping("api/org/getOrgMemberInfo/{org_id}")
+    public OrgMembers getOrgMembers(@PathVariable Integer org_id) throws SQLException{
+        return orgMasterService.getOrgMembers(org_id);
     }
 
 }

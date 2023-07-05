@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrgContributor {
     private int user_id;
-    private String org_email;
+    private String contributor_email;
 }
