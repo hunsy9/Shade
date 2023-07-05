@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins="*")
 public class ContributorController {
     private final ContributorService contributorService;
 

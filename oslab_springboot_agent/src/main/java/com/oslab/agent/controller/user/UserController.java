@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins="*")
 public class UserController {
     private final UserService userService;
 

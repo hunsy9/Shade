@@ -12,6 +12,7 @@ import java.sql.SQLException;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins="*")
 public class OrgCategoryController {
     private final OrgCategoryService orgCategoryService;
 
