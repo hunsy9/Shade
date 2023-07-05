@@ -51,6 +51,9 @@ public class OrgMasterRepository {
             String projectName = projectInfo.getProject_name();
 
             projectIdToProjectName.put(projectId, projectName); // projectId 와 projectName 매핑
+            if(projectInfo.getCategory_id() == null){
+                return;
+            }
 
             Integer categoryId = projectInfo.getCategory_id();
             String prev = projectInfo.getPrev();

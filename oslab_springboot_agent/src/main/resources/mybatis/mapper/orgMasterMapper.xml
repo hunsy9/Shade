@@ -31,7 +31,7 @@
             sm.server_name,
             sm.server_desc
         FROM organization_project op
-                 JOIN category_master cm
+                 LEFT OUTER JOIN category_master cm
                       USING (project_id)
                  LEFT OUTER JOIN server_master sm
                                  USING (category_id)
