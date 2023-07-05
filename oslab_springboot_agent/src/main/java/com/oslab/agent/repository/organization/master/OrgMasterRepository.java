@@ -88,8 +88,9 @@ public class OrgMasterRepository {
                 }
                 categoryIdToServer.get(categoryKey).add(server);
             }
-
-            categoryMap.get(prev).add(next); //존재하면 prev를 기준으로한 arraylist에 push
+            if(!categoryMap.get(prev).contains(next)){
+                categoryMap.get(prev).add(next); //존재하면 prev를 기준으로한 arraylist에 push
+            }
         });
         log.info(projectIdToProjectName.toString());
         log.info(projectIdToCategoryMap.toString());
