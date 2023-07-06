@@ -7,7 +7,8 @@
       
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapMutations } = createNamespacedHelpers('inOrganization')
+const { mapState, mapActions } = createNamespacedHelpers('inOrganization')
+const { mapMutations } = createNamespacedHelpers('contributorInfo')
 
 export default {
   name: 'ContributorButton', 
@@ -22,9 +23,13 @@ export default {
     })
   },
   methods: {
-    ...mapMutations(['selectContributors']),
-    inContributors(){
-      this.selectContributors()
+    ...mapMutations(['setContributors']),
+    ...mapActions(['Contributors']),
+    async inContributors(){
+      const data = await this.Contributors()
+      if(data){
+        this.setContributors(data)
+      }
       this.isClick = true
     }
   }
@@ -35,7 +40,6 @@ export default {
 .cont{
   cursor:pointer;
   padding-bottom: 0.7rem;
-
 }
 .click{
   background-color: #313131;

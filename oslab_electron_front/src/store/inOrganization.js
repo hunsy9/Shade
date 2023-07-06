@@ -47,12 +47,17 @@ export default ({
             }       
         },
         getServerList(state){
-
-            console.log(state.projects.find((project) => project.project_name == state.selected_proj).project_server)
-            return state.projects.find((project) => project.project_name == state.selected_proj).project_server
+            const project = state.projects.find((project) => project.project_name == state.selected_proj)
+            return project.project_server
         }
     },
     mutations: {
+        resetSelect(state){
+            state.mode = 0
+            state.selected_proj = ""
+            state.selected_categ_l1 = ""
+            state.selected_categ_l2 = ""
+        },
         setOrg(state, org){
             state.organName = org.org_name;
             state.organId = org.org_id;
@@ -81,6 +86,9 @@ export default ({
         //mode 2 contributors
         selectContributors(state){
             state.mode = 2
+            state.selected_proj = ""
+            state.selected_categ_l1 = ""
+            state.selected_categ_l2 = ""
         },
         //mode 3 terminal
     },
@@ -95,6 +103,17 @@ export default ({
             }
             else{
               console.log("getProj fail")
+            }
+        },
+        async Contributors(context){
+            const data = await api.getContributors(context.state.organId)
+            if(data){
+              context.commit("selectContributors")
+              return data
+            }
+            else{
+              console.log("Contritubors fail in store")
+              return false
             }
         }
     },

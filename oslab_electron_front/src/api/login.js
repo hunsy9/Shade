@@ -7,7 +7,6 @@ export default {
             headers: {
                 'Content-Type': 'application/json',
             },
-            
         })
 
         if (!response.ok) {
@@ -23,11 +22,25 @@ export default {
             headers: {
                 'Content-Type': 'application/json',
             },
-            
         })
 
         if (!response.ok) {
             throw new Error(org_id + '를 getProj하는 것에 실패 했습니다.')
+        }
+
+        const data = await response.json()
+        return data
+    },
+    async getContributors(org_id) {
+        const response = await fetch(`http://localhost:8080/api/org/getOrgMemberInfo/${org_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+        if (!response.ok) {
+            throw new Error(org_id + '의 contributors를 가져오는데 실패 했습니다.')
         }
 
         const data = await response.json()
