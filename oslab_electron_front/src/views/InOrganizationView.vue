@@ -15,11 +15,12 @@
   </div>
 
   <div class="contentframe">
-    <div v-if="onTerminal == false && onContributors == false">
+    <div v-if="mode == 0">뭐든 골라주세요</div>
+    <div v-else-if="mode == 1">
       <div class="content">
         <PathBar/>
         <NewServerButton v-if="isAdmin == true"/>
-        <ServerListItem/>
+        <ServerListItem v-if="catl2"/>
       </div>
       <div class="rightframe">
         <RightExpandingMenu/>
@@ -27,7 +28,7 @@
       </div>
     </div>
 
-    <div v-else-if="onContributors == true && onTerminal == false">
+    <div v-else-if="mode == 2">
       <NewContributorButton v-if="isAdmin == true"/>
       <ContributorListItem/>
     </div>
@@ -69,8 +70,7 @@ import TerminalWindow from '@/components/inorganization/TerminalWindow.vue'
 import { ipcRenderer } from 'electron';
 import router from '@/router/index.js';
 
-import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('login')
+import { mapState } from "vuex";
 
 export default {
   name: 'InOrganizationView',
@@ -81,9 +81,13 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState('login', {
       isLogin: state => state.isLogin,
       isAdmin: state => state.isAdmin
+    }),
+    ...mapState('inOrganization', {
+      mode: state => state.mode,
+      catl2: state => state.selected_categ_l2,
     }),
   },
   methods: {

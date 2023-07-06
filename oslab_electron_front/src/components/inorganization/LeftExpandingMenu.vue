@@ -6,9 +6,9 @@
   </div>
   <template v-if="isOpen == true">
     <div class="proj" v-for="(item, index) in projlist" :key="index">
-      <div :class="{click:isClick}" @click="clickProj">
+      <div :class="{click:isClick && mode == 1 && index == pickedProj }" @click="clickProj(item.project_name, index)">
         <img class="img1" src="@/assets/inproj.png">
-        <span>{{ item.projName }}</span>
+        <span>{{ item.project_name }}</span>
       </div>
     </div>
   </template>
@@ -16,7 +16,7 @@
   
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('inOrganization')
+const { mapState, mapMutations } = createNamespacedHelpers('inOrganization')
 
 export default {
   name: 'LeftExpandingMenu',  
@@ -24,19 +24,24 @@ export default {
     return{
         isOpen: false,
         isClick: false,
+        pickedProj: 0
     }
   },
   computed: {
     ...mapState({
-      projlist: state => state.projInfos
+      projlist: state => state.projects,
+      mode: state => state.mode
     }),
   },
   methods: {
+    ...mapMutations(['selectProj']),
     open(){
-      this.isOpen = !this.isOpen;
+      this.isOpen = !this.isOpen
     },
-    clickProj(){
-      this.isClick = !this.isClick;
+    clickProj(name, index){
+      this.isClick = true
+      this.pickedProj = index
+      this.selectProj(name)
     }
   }
 }
