@@ -1,7 +1,9 @@
 <template>
-  <div id="dragbar"></div>
-  <div id="frame">
-    <router-view/>
+  <div class="nodrag">
+    <div id="dragbar"></div>
+    <div id="frame">
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -21,5 +23,12 @@
   left: 0;
   width: 100%;
   height: 100%;
+}
+.nodrag {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 </style>
