@@ -52,6 +52,11 @@ export default {
   cursor:pointer;
   padding-bottom: 0.7rem;
 }
+.cont span{
+  margin-left: 1.1rem;
+  margin-bottom: 0.7rem;
+  color: white;
+}
 .click{
   background-color: #313131;
 }
@@ -60,9 +65,8 @@ export default {
   margin-left: 1.2rem;
   width: 1.2rem;
 }
-span{
+.proj span{
   margin-left: 1.1rem;
-  margin-bottom: 0.7rem;
   color: white;
 }
 .img2{

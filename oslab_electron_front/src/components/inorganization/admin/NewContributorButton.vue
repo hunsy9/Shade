@@ -12,11 +12,12 @@ export default {
 
 <style scoped>
 .button{
-  margin-left: auto;
-  margin-right: 3rem;
-  margin-top: 2rem;
+  position: absolute;
+  top: 6%;
+  right: 5%;
   color: white;
   display: block;
+  margin: 0 auto;
   background-color: #989898;
   padding-left: 1.8rem;
   padding-right: 1.8rem;

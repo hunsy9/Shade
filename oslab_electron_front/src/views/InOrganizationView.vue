@@ -29,6 +29,7 @@
     </div>
 
     <div v-else-if="mode == 2">
+      <span class="contribut">Contributors</span>
       <NewContributorButton v-if="isAdmin == true"/>
       <ContributorListItem/>
     </div>
@@ -70,7 +71,7 @@ import TerminalWindow from '@/components/inorganization/TerminalWindow.vue'
 import { ipcRenderer } from 'electron';
 import router from '@/router/index.js';
 
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: 'InOrganizationView',
@@ -91,7 +92,9 @@ export default {
     }),
   },
   methods: {
+    ...mapMutations('inOrganization',['resetSelect']),
     testIn() {
+      this.resetSelect()
       router.push('/')
       ipcRenderer.send('reset-window')
     },
@@ -120,7 +123,6 @@ export default {
   position: relative;
   height: 100vh;
 }
-
 .leftsideframe {
   position: absolute;
   top: 0;
@@ -128,6 +130,13 @@ export default {
   width: 15rem;
   height: 100%;
   background-color: #444444;
+}
+
+hr{
+  margin-top: 2.5rem;
+  margin-bottom: 0;
+  border: solid 0.001rem #c7c7c728;
+  border-bottom: 0;
 }
 
 .topbarframe {
@@ -147,6 +156,7 @@ export default {
   height: calc(100% - 7rem);
   background-color: #2B2B2B;
 }
+
 .content{
   position: absolute;
   top: 0;
@@ -162,10 +172,10 @@ export default {
   height: 100%;
   background-color: #444444;
 }
-hr{
-  margin-top: 2.5rem;
-  margin-bottom: 0;
-  border: solid 0.001rem #c7c7c728;
-  border-bottom: 0;
+
+.contribut{
+  padding-left: 5%;
+  line-height: 620%;
+  color: white;
 }
 </style>
