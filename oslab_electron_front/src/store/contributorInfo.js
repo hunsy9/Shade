@@ -3,13 +3,13 @@ export default ({
 
   state: {
     admin_email: {
-      user_id: 0,
-      contributor_email: ""
+      user_id: null,
+      contributor_email: null
     },
     contributors: [
         {
-            user_id: 0,
-            contributor_email: ""
+            user_id: null,
+            contributor_email: null
         },
     ]
   },
@@ -17,10 +17,16 @@ export default ({
   },
   mutations: {
     setContributors(state, data){
-      console.log(data.admin_email)
-      console.log(data.contributors)
-      state.admin_email = data.admin_email
-      state.contributors = data.contributors
+      if(!data) {
+        console.log(data)
+        state.admin_email.contributor_email = null
+        for(var i in state.contributors){
+          i.contributor_email = null
+        }
+      } else {
+        state.admin_email = data.admin_email
+        state.contributors = data.contributors
+      }
     },
   },
   actions: {

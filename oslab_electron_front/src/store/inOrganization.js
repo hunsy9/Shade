@@ -59,6 +59,7 @@ export default ({
             state.selected_categ_l2 = ""
         },
         setOrg(state, org){
+            state.mode = 0
             state.organName = org.org_name;
             state.organId = org.org_id;
         },
