@@ -17,8 +17,8 @@ export default {
         const data = await response.json()
         return data
     },
-    async getProj() {
-        const response = await fetch('http://localhost:8080/api/org/getOrgInfo/1/1', {
+    async getProj(org_id) {
+        const response = await fetch(`http://localhost:8080/api/org/getOrgInfo/1/${org_id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export default {
         })
 
         if (!response.ok) {
-            throw new Error('getProj에 실패 했습니다.')
+            throw new Error(org_id + '를 getProj하는 것에 실패 했습니다.')
         }
 
         const data = await response.json()
