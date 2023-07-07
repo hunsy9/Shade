@@ -15,7 +15,6 @@ import java.util.*;
 @Slf4j
 @RequiredArgsConstructor
 public class OrgMasterRepository {
-
     private final OrgMasterMapper orgMasterMapper;
 
     public boolean registerOrganizationToPlatform(RegOrgReqDto regOrgReqDto) throws SQLException {

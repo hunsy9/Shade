@@ -7,14 +7,15 @@ spring:
     password: oslab
   data:
     redis:
+      host: 144.24.78.122
       port: 6379
-      host: ec2-13-209-13-164.ap-northeast-2.compute.amazonaws.com
-      password: tingdev
+      password: oslab
 
 jwt:
   header: Authorization
   secret: fieldproject
   token-validity-in-seconds: 3600000
-
+server:
+  port: 8081
 
 

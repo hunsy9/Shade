@@ -17,6 +17,7 @@ public class ServerService implements ServerServiceInterface{
     private final ServerRepository serverRepository;
 
     public boolean addNewServer(AddServerDto addServerDto) throws SQLException {
+
         return serverRepository.addNewServer(addServerDto);
     }
 
