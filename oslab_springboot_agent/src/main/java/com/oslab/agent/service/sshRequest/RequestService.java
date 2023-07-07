@@ -1,6 +1,8 @@
 package com.oslab.agent.service.sshRequest;
 
+import com.oslab.agent.model.transfer.requestDto.ConnectingDto;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -18,5 +20,15 @@ public class RequestService {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         return response.getBody();
+    }
+
+    public void connectRoom(ConnectingDto connectingDto){
+        String url = "http://localhost:8082/api/sshService/startChannel";
+        RestTemplate restTemplate = new RestTemplate();
+        JSONObject connectingJson = new JSONObject();
+        connectingJson.put("user_id", connectingDto.getUser_id());
+        connectingJson.put("server_id", connectingDto.getServer_id());
+        connectingJson.put("room_id", connectingDto.getRoom_id());
+        restTemplate.postForEntity(url, connectingJson, void.class);
     }
 }

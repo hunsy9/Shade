@@ -1,8 +1,10 @@
 package com.oslab.agent.controller.server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.oslab.agent.model.transfer.contributorDto.ContributorDto;
 import com.oslab.agent.model.transfer.serverDto.AddServerDto;
 import com.oslab.agent.model.transfer.serverDto.EditServerDto;
+import com.oslab.agent.model.transfer.serverDto.ServerDetailDto;
 import com.oslab.agent.service.server.ServerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,11 @@ public class ServerController {
     @PostMapping("/api/server/add")
     public boolean addNewServer(@RequestBody AddServerDto addServerDto) throws SQLException {
         return serverService.addNewServer(addServerDto);
+    }
+
+    @PostMapping("/api/server/addNewServerToCloud/{server_id}")
+    public void addNewServerToCloud(@PathVariable int server_id, @RequestBody ServerDetailDto serverDetailDto) throws JsonProcessingException {
+        serverService.addNewServerToCloud(server_id, serverDetailDto);
     }
 
     @PostMapping("/api/server/edit")

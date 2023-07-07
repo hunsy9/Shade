@@ -10,9 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServerDetailDto {
-    private String public_ip;
-    private String private_ip;
+    private String username;
     private String host;
+    private int port;
     private String password;
-    private String vpn_host;
 }

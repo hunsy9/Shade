@@ -1,6 +1,7 @@
 package com.oslab.agent.controller.sshRequest;
 
 import com.oslab.agent.model.transfer.categoryDto.CategoryDto;
+import com.oslab.agent.model.transfer.requestDto.ConnectingDto;
 import com.oslab.agent.service.sshRequest.RequestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,5 +18,10 @@ public class RequestController {
     @GetMapping("/api/request/getRoomId/{user_id}/{server_id}")
     public String getWebSocketUrl(@PathVariable int user_id, @PathVariable int server_id){
         return requestService.getWebSocketUrl(user_id, server_id);
+    }
+
+    @PostMapping("/api/request/connect")
+    public void connectRoom(@RequestBody ConnectingDto connectingDto){
+        requestService.connectRoom(connectingDto);
     }
 }

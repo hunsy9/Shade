@@ -10,11 +10,11 @@ spring:
       host: 144.24.78.122
       port: 6379
       password: oslab
-
 jwt:
   header: Authorization
   secret: fieldproject
   token-validity-in-seconds: 3600000
+
 server:
   port: 8081
 

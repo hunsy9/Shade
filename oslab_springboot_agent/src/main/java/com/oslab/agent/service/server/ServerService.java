@@ -1,11 +1,14 @@
 package com.oslab.agent.service.server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.oslab.agent.model.transfer.serverDto.AddServerDto;
 import com.oslab.agent.model.transfer.serverDto.EditServerDto;
+import com.oslab.agent.model.transfer.serverDto.ServerDetailDto;
 import com.oslab.agent.repository.server.ServerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -16,10 +19,15 @@ import java.sql.SQLException;
 public class ServerService implements ServerServiceInterface{
     private final ServerRepository serverRepository;
 
+    public void addNewServerToCloud(int server_id, ServerDetailDto serverDetailDto) throws JsonProcessingException {
+        serverRepository.addNewServerToCloud(server_id, serverDetailDto);
+    }
+
     public boolean addNewServer(AddServerDto addServerDto) throws SQLException {
 
         return serverRepository.addNewServer(addServerDto);
     }
+
 
     public boolean editServerInfo(EditServerDto editServerDto) throws SQLException{
         return serverRepository.editServerInfo(editServerDto);
