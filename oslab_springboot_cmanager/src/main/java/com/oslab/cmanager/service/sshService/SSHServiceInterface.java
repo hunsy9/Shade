@@ -1,10 +1,10 @@
 package com.oslab.cmanager.service.sshService;
 
-import com.oslab.cmanager.configuration.websocket.entity.SshConnectionRoom;
 import com.oslab.cmanager.model.transfer.SSHDto.Command;
-import com.oslab.cmanager.model.transfer.SSHDto.StartingInfo;
+import com.oslab.cmanager.model.transfer.SSHDto.ConnectingInfo;
 
 public interface SSHServiceInterface {
-    public void makeNewSSHThread(StartingInfo startingInfo);
+
+    public void makeNewSSHThread(ConnectingInfo connectingInfo);
     public String command(Command command);
 }

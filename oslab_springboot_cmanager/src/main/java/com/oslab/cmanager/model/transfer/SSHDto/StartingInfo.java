@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StartingInfo {
 
-    private String username;
-    private String host;
-    private int port;
-    private String password;
+    private String username = null;
+    private String host = null;
+    private int port = 0;
+    private String password=null;
 
     private int user_id;
     private int server_id;
