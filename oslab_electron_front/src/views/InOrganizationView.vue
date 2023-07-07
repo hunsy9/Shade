@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="mode == 0 && mode == 1 && mode == 2">
+  <div class="container" v-if="full == false">
 
     <div class="leftsideframe">
       <AppInfo/>
