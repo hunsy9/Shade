@@ -20,5 +20,4 @@ public class cManagingBean {
     /* Container UUID Waiting Queue */
     private Queue<String> waitingQueue = new LinkedList<>();
 
-
 }

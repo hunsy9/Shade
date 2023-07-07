@@ -3,10 +3,12 @@ package com.oslab.cmanager.util;
 import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import com.oslab.cmanager.model.transfer.SSHDto.StartingInfo;
+import com.oslab.cmanager.configuration.websocket.entity.SshConnectionRoom;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -21,35 +23,38 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class SshThread extends Thread {
 
     private BlockingQueue<String> commandQueue;
+    private SimpMessageSendingOperations sendingOperations;
     private volatile static boolean exitRequested;
     private String command;
 
     private Session sshSession;
     private ChannelShell sshChannelShell;
     private String key;
-
     private String password;
     private SshUtil sshUtil;
 
-    public SshThread(String key, String password, String initCommand, SshUtil sshUtil) {
+    private SshConnectionRoom sshConnectionRoom;
+
+
+    public SshThread(String key, String password, String initCommand, SshUtil sshUtil, SshConnectionRoom sshConnectionRoom, SimpMessageSendingOperations sendingOperations) {
 
         System.out.println("ssh Thread generated.");
         this.command = initCommand;
         this.sshUtil = sshUtil;
         this.key = key;
         this.password = password;
+        this.sshConnectionRoom = sshConnectionRoom;
+        this.sendingOperations = sendingOperations;
         this.commandQueue = new LinkedBlockingQueue<>();
     }
 
     public String requestCommand() {
         log.info("현재 명령어: {}",command);
-
         try {
             commandQueue.put(command);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         return "";
     }
 
@@ -79,7 +84,7 @@ public class SshThread extends Thread {
 
                 // 입력 및 결과 수신 스레드 생성 및 시작
                 InputThread inputThread = new InputThread(channelShell);
-                OutputThread outputThread = new OutputThread(channelShell);
+                OutputThread outputThread = new OutputThread(channelShell, sendingOperations, sshConnectionRoom );
                 inputThread.start();
                 outputThread.start();
 
@@ -150,11 +155,21 @@ public class SshThread extends Thread {
         }
     }
 
+    @RequiredArgsConstructor
     private static class OutputThread extends Thread {
         private ChannelShell channelShell;
+        private SimpMessageSendingOperations sendingOperations;
 
-        public OutputThread(ChannelShell channelShell) {
+        private String sendingUrl;
+
+
+        public OutputThread(ChannelShell channelShell, SimpMessageSendingOperations sendingOperations, SshConnectionRoom sshConnectionRoom) {
+            int user_id = sshConnectionRoom.getUser_id();
+            int server_id = sshConnectionRoom.getServer_id();
+            String room_id = sshConnectionRoom.getRoom_id();
             this.channelShell = channelShell;
+            this.sendingOperations = sendingOperations;
+            this.sendingUrl = "/sub/ws/" + user_id + "/" + server_id + "/" + room_id;
         }
 
         @Override
@@ -165,6 +180,7 @@ public class SshThread extends Thread {
                 while (!exitRequested) {
                     while ((line = reader.readLine()) != null) {
                         System.out.println(line);
+                        sendingOperations.convertAndSend(sendingUrl, line);
                     }
                     Thread.sleep(100);
                 }
