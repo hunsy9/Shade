@@ -10,7 +10,7 @@
             <button class="ibutton">
               Info
             </button>
-            <button class="cbutton" @click="connectServer">
+            <button class="cbutton" @click="connectServer(server.server_id)">
               Connect
             </button>
           </div>
@@ -22,7 +22,8 @@
   
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapGetters, mapActions } = createNamespacedHelpers('inOrganization')
+const { mapState, mapGetters } = createNamespacedHelpers('inOrganization')
+const { mapActions } = createNamespacedHelpers('terminal')
 
 export default {
   name: 'ServerListItem',
@@ -48,8 +49,8 @@ export default {
         return true
       }
     },
-    connectServer(){
-      this.connectTerminal()
+    async connectServer(serverId){
+      await this.connectTerminal(serverId)
     }
   }
 }

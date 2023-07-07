@@ -46,6 +46,23 @@ export default {
         }
 
         const data = await response.json()
+
         return data
-    }
+    },
+    async getRoomId(server_id) {
+        const response = await fetch(`${server}api/request/getRoomId/1/${server_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+        if (!response.ok) {
+            throw new Error(server_id + '의 RoomId를 가져오는데 실패 했습니다.')
+        }
+
+        const data = await response.text()
+
+        return data
+    },
 }

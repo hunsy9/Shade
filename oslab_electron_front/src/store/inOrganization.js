@@ -55,6 +55,7 @@ export default ({
     mutations: {
         resetSelect(state){
             state.mode = 0
+            state.full = false
             state.selected_proj = ""
             state.selected_categ_l1 = ""
             state.selected_categ_l2 = ""
@@ -96,6 +97,9 @@ export default ({
         selectTerminal(state){
             state.mode = 3
         },
+        toggleFullWindow(state){
+            state.full = !state.full
+        }
     },
     actions: {
         async getProjects(context, org){
@@ -121,9 +125,6 @@ export default ({
               return false
             }
         },
-        async connectTerminal(context){
-            context.commit("selectTerminal")
-        }
     },
     modules: {
     },
