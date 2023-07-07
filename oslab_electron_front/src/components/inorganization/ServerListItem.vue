@@ -22,7 +22,7 @@
   
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapGetters } = createNamespacedHelpers('inOrganization')
+const { mapState, mapGetters, mapActions } = createNamespacedHelpers('inOrganization')
 
 export default {
   name: 'ServerListItem',
@@ -39,6 +39,7 @@ export default {
     ...mapGetters(['getServerList'])
   },
   methods: {
+    ...mapActions(['connectTerminal']),
     isTrue(key){
       let info = key.split(":")
       let l1 = info[1]
@@ -48,7 +49,7 @@ export default {
       }
     },
     connectServer(){
-      
+      this.connectTerminal()
     }
   }
 }

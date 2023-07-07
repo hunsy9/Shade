@@ -1,6 +1,6 @@
 <template>
-  <div>
-  
+  <div class="background">
+    ads
   </div>
 </template>
   
@@ -9,3 +9,10 @@ export default {
   name: 'TerminalWindow', 
 }
 </script>
+
+<style scoped>
+.background{
+  background-color: black;
+  height: 100vh;
+}
+</style>

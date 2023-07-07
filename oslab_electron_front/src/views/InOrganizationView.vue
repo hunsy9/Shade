@@ -1,44 +1,46 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="mode == 0 && mode == 1 && mode == 2">
 
-  <div class="leftsideframe">
-    <AppInfo/>
-    <hr/>
-    <ContributorButton/>
-    <LeftExpandingMenu/>
-    <NewProjectButton v-if="isAdmin == true"/>
-  </div>
+    <div class="leftsideframe">
+      <AppInfo/>
+      <hr/>
+      <ContributorButton/>
+      <LeftExpandingMenu/>
+      <NewProjectButton v-if="isAdmin == true"/>
+    </div>
 
-  <div class="topbarframe">
-    <OrganizationName/>
-    <TopBarButton/>
-  </div>
+    <div class="topbarframe">
+      <OrganizationName/>
+      <TopBarButton/>
+    </div>
 
-  <div class="contentframe">
-    <div v-if="mode == 0">뭐든 골라주세요</div>
-    <div v-else-if="mode == 1">
-      <div class="content">
-        <PathBar/>
-        <NewServerButton v-if="isAdmin == true"/>
-        <ServerListItem v-if="catl2"/>
+    <div class="contentframe">
+      <div v-if="mode == 0">뭐든 골라주세요</div>
+      <div v-else-if="mode == 1">
+        <div class="content">
+          <PathBar/>
+          <NewServerButton v-if="isAdmin == true"/>
+          <ServerListItem v-if="catl2"/>
+        </div>
+        <div class="rightframe">
+          <RightExpandingMenu/>
+          <NewCategoryButton v-if="isAdmin == true"/>
+        </div>
       </div>
-      <div class="rightframe">
-        <RightExpandingMenu/>
-        <NewCategoryButton v-if="isAdmin == true"/>
+
+      <div v-else-if="mode == 2">
+        <span class="contribut">Contributors</span>
+        <NewContributorButton v-if="isAdmin == true"/>
+        <ContributorListItem/>
+      </div>
+
+      <div v-else-if="mode == 3 && full == false">
+        <TerminalWindow/>
       </div>
     </div>
-
-    <div v-else-if="mode == 2">
-      <span class="contribut">Contributors</span>
-      <NewContributorButton v-if="isAdmin == true"/>
-      <ContributorListItem/>
-    </div>
-
-    <div v-else>
-      <TerminalWindow/>
-    </div>
   </div>
-
+  <div v-else-if="mode == 3 && full == true">
+    <TerminalWindow/>
   </div>
   <button @click="testIn()">
   화면 전환 버튼(개발용 추후 삭제)
@@ -88,6 +90,7 @@ export default {
     }),
     ...mapState('inOrganization', {
       mode: state => state.mode,
+      full: state => state.full,
       catl2: state => state.selected_categ_l2,
     }),
   },

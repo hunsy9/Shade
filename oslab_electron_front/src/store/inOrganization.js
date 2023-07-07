@@ -24,6 +24,7 @@ export default ({
             1
         ],
         mode: 0,
+        full: false,
         selected_proj: "",
         selected_categ_l1: "",
         selected_categ_l2: "",
@@ -92,6 +93,9 @@ export default ({
             state.selected_categ_l2 = ""
         },
         //mode 3 terminal
+        selectTerminal(state){
+            state.mode = 3
+        },
     },
     actions: {
         async getProjects(context, org){
@@ -116,6 +120,9 @@ export default ({
               console.log("Contritubors fail in store")
               return false
             }
+        },
+        async connectTerminal(context){
+            context.commit("selectTerminal")
         }
     },
     modules: {
