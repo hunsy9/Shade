@@ -2,8 +2,6 @@ package com.oslab.cmanager.util;
 
 import com.jcraft.jsch.*;
 import com.oslab.cmanager.configuration.websocket.entity.SshConnectionRoom;
-import com.oslab.cmanager.model.transfer.SSHDto.StartingInfo;
-import com.oslab.cmanager.service.sshService.SSHService;
 import com.oslab.cmanager.service.webSocketService.WebSocketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -39,19 +36,7 @@ public class SshUtil {
         keyToChannelMap.put(key,channelShell);
     }
 
-    public void makeNewSSHThread(StartingInfo startingInfo){
-        String username = startingInfo.getUsername();
-        String host = startingInfo.getHost();
-        int port = startingInfo.getPort();
-        String password = startingInfo.getPassword();
-
-        int user_id = startingInfo.getUser_id();
-        int server_id = startingInfo.getServer_id();
-        String room_id = startingInfo.getRoom_id();
-
-        String key = username + ":" + host + ":" + port;
-        String webSocketKey = user_id + ":" + server_id + ":"+ room_id;
-
+    public void makeNewSSHThread(String key, String webSocketKey, String password){
         SshConnectionRoom sshConnectionRoom = webSocketService.getSshRooms().get(webSocketKey);
 
         SshThread sshThread = new SshThread(key, password, "", this, sshConnectionRoom, sendingOperations);

@@ -3,10 +3,7 @@ package com.oslab.cmanager.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jcraft.jsch.JSchException;
 import com.oslab.cmanager.configuration.websocket.entity.SshConnectionRoom;
-import com.oslab.cmanager.model.transfer.SSHDto.Command;
-import com.oslab.cmanager.model.transfer.SSHDto.ConnectingInfo;
-import com.oslab.cmanager.model.transfer.SSHDto.ServerDetailDto;
-import com.oslab.cmanager.model.transfer.SSHDto.StartingInfo;
+import com.oslab.cmanager.model.transfer.SSHDto.*;
 import com.oslab.cmanager.service.sshService.SSHService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,14 +20,14 @@ import java.io.IOException;
 public class SSHController {
     private final SSHService sshService;
 
-    @GetMapping("api/sshService/getServerDetailByServerId/{server_id}")
-    public ServerDetailDto getServerDetailByServerId(@PathVariable int server_id) throws JsonProcessingException{
-        return sshService.getServerDetailByServerId(server_id);
+    @PostMapping ("api/sshService/generateKey")
+    KeyBundle generateKey(@RequestBody ConnectingInfo connectingInfo){
+        return sshService.generateKey(connectingInfo);
     }
 
     @PostMapping("api/sshService/startChannel")
-    public void startChannel(@RequestBody ConnectingInfo connectingInfo) throws JSchException, JsonProcessingException {
-        sshService.makeNewSSHThread(connectingInfo);
+    public void startChannel(@RequestBody KeyBundle keyBundle){
+        sshService.makeNewSSHThread(keyBundle);
     }
 
     @PostMapping("api/sshService/command")

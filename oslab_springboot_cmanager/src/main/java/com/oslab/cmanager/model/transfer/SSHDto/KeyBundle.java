@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-public class ConnectingInfo {
-    private int user_id;
-    private int server_id;
-    private String room_id;
+@AllArgsConstructor
+public class KeyBundle {
+    private String threadKey;
+    private String webSocketKey;
 }
