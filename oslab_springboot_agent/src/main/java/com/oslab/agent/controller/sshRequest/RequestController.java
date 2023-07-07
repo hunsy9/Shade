@@ -13,6 +13,7 @@ import java.sql.SQLException;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class RequestController {
     private final RequestService requestService;
     @GetMapping("/api/request/getRoomId/{user_id}/{server_id}")
