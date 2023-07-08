@@ -8,7 +8,6 @@
     <p v-if="isLogin">{{ userName }}</p>
     <img class="adm" src="@/assets/adminbanner.png" v-if="isAdmin == true">
   </button>
-  <h2>{{ "login " + isLogin }}</h2>
 </template>
 
 <script>

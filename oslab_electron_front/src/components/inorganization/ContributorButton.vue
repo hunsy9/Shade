@@ -1,11 +1,15 @@
 <template>
-  <div class="cont" :class="{click:isClick}" @click="inContributors">
+  <div class="cont" :class="{click:isClick && mode == 2}" @click="inContributors">
     <img src="@/assets/contributors.png">
     <span>Contributors</span>
   </div>
 </template>
       
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapActions } = createNamespacedHelpers('inOrganization')
+const { mapMutations } = createNamespacedHelpers('contributorInfo')
+
 export default {
   name: 'ContributorButton', 
   data() {
@@ -13,9 +17,20 @@ export default {
         isClick: false,
     }
   },
+  computed: {
+    ...mapState({
+      mode: state => state.mode
+    })
+  },
   methods: {
-    inContributors(){
-      this.isClick = !this.isClick;
+    ...mapMutations(['setContributors']),
+    ...mapActions(['Contributors']),
+    async inContributors(){
+      const data = await this.Contributors()
+      if(data){
+        this.setContributors(data)
+      }
+      this.isClick = true
     }
   }
 }
@@ -25,7 +40,6 @@ export default {
 .cont{
   cursor:pointer;
   padding-bottom: 0.7rem;
-
 }
 .click{
   background-color: #313131;

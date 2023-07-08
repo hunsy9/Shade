@@ -2,7 +2,7 @@
   <div class="listframe">
     <div class="itembox" v-for="(item, index) in limitedList" :key="index" :style="{ backgroundColor: colors[index % colors.length] }">
       <span class="oname"> {{ item.org_name }} </span>
-      <button class="cbutton" @click="$emit('openInOganization', item.org_name)">
+      <button class="cbutton" @click="$emit('openInOganization', item)">
         Connect
       </button>
       <button class="dbutton">

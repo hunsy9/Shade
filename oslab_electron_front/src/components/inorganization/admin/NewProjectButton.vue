@@ -20,8 +20,8 @@ export default {
   display: block;
   margin: 0 auto;
   background-color: #989898;
-  padding-left: 1.8rem;
-  padding-right: 1.8rem;
+  padding: 0 auto;
+  width: 65%;
   border-radius: 0.2rem;
   border: none;
   box-shadow: 0 1px 1px 0.5px #0000002f;

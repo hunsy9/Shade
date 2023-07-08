@@ -1,42 +1,46 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="full == false">
 
-  <div class="leftsideframe">
-    <AppInfo/>
-    <hr/>
-    <ContributorButton/>
-    <LeftExpandingMenu/>
-    <NewProjectButton v-if="isAdmin == true"/>
-  </div>
+    <div class="leftsideframe">
+      <AppInfo/>
+      <hr/>
+      <ContributorButton/>
+      <LeftExpandingMenu/>
+      <NewProjectButton v-if="isAdmin == true"/>
+    </div>
 
-  <div class="topbarframe">
-    <OrganizationName/>
-    <TopBarButton/>
-  </div>
+    <div class="topbarframe">
+      <OrganizationName/>
+      <TopBarButton/>
+    </div>
 
-  <div class="contentframe">
-    <div v-if="onTerminal == false && onContributors == false">
-      <div class="content">
-        <PathBar/>
-        <NewServerButton v-if="isAdmin == true"/>
-        <ServerListItem/>
+    <div class="contentframe">
+      <div v-if="mode == 0">뭐든 골라주세요</div>
+      <div v-else-if="mode == 1">
+        <div class="content">
+          <PathBar/>
+          <NewServerButton v-if="isAdmin == true"/>
+          <ServerListItem v-if="catl2"/>
+        </div>
+        <div class="rightframe">
+          <RightExpandingMenu/>
+          <NewCategoryButton v-if="isAdmin == true"/>
+        </div>
       </div>
-      <div class="rightframe">
-        <RightExpandingMenu/>
-        <NewCategoryButton v-if="isAdmin == true"/>
+
+      <div v-else-if="mode == 2">
+        <span class="contribut">Contributors</span>
+        <NewContributorButton v-if="isAdmin == true"/>
+        <ContributorListItem/>
+      </div>
+
+      <div v-else-if="mode == 3 && full == false">
+        <TerminalWindow/>
       </div>
     </div>
-
-    <div v-else-if="onContributors == true && onTerminal == false">
-      <NewContributorButton v-if="isAdmin == true"/>
-      <ContributorListItem/>
-    </div>
-
-    <div v-else>
-      <TerminalWindow/>
-    </div>
   </div>
-
+  <div v-else-if="mode == 3 && full == true">
+    <TerminalWindow/>
   </div>
   <button @click="testIn()">
   화면 전환 버튼(개발용 추후 삭제)
@@ -69,8 +73,7 @@ import TerminalWindow from '@/components/inorganization/TerminalWindow.vue'
 import { ipcRenderer } from 'electron';
 import router from '@/router/index.js';
 
-import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('login')
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: 'InOrganizationView',
@@ -81,13 +84,20 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState('login', {
       isLogin: state => state.isLogin,
       isAdmin: state => state.isAdmin
     }),
+    ...mapState('inOrganization', {
+      mode: state => state.mode,
+      full: state => state.full,
+      catl2: state => state.selected_categ_l2,
+    }),
   },
   methods: {
+    ...mapMutations('inOrganization',['resetSelect']),
     testIn() {
+      this.resetSelect()
       router.push('/')
       ipcRenderer.send('reset-window')
     },
@@ -116,7 +126,6 @@ export default {
   position: relative;
   height: 100vh;
 }
-
 .leftsideframe {
   position: absolute;
   top: 0;
@@ -124,6 +133,13 @@ export default {
   width: 15rem;
   height: 100%;
   background-color: #444444;
+}
+
+hr{
+  margin-top: 2.5rem;
+  margin-bottom: 0;
+  border: solid 0.001rem #c7c7c728;
+  border-bottom: 0;
 }
 
 .topbarframe {
@@ -143,6 +159,7 @@ export default {
   height: calc(100% - 7rem);
   background-color: #2B2B2B;
 }
+
 .content{
   position: absolute;
   top: 0;
@@ -158,10 +175,10 @@ export default {
   height: 100%;
   background-color: #444444;
 }
-hr{
-  margin-top: 2.5rem;
-  margin-bottom: 0;
-  border: solid 0.001rem #c7c7c728;
-  border-bottom: 0;
+
+.contribut{
+  padding-left: 5%;
+  line-height: 620%;
+  color: white;
 }
 </style>

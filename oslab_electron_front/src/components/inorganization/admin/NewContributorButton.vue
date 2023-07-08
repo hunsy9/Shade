@@ -13,9 +13,8 @@ export default {
 <style scoped>
 .button{
   position: absolute;
-  bottom: 8%;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 6%;
+  right: 5%;
   color: white;
   display: block;
   margin: 0 auto;

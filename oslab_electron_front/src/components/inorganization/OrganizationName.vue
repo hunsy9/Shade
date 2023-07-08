@@ -23,6 +23,7 @@ export default {
   position: absolute;
   top: 3rem;
   left: 3rem;
+  font-size: 1.5rem;
   color: white;
 }
 </style>

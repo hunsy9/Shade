@@ -3,8 +3,9 @@ import createPersistedState from 'vuex-persistedstate';
 import login from '@/store/login.js'
 import token from '@/store/token.js'
 import contributorInfo from '@/store/contributorInfo.js'
-import organizationInfo from '@/store/organizationinfo.js'
+import organizationInfo from '@/store/organizationInformation.js'
 import inOrganization from '@/store/inOrganization.js'
+import terminal from '@/store/terminal.js'
 
 export default createStore({
   state: {
@@ -20,11 +21,12 @@ export default createStore({
     token,
     contributorInfo,
     organizationInfo,
-    inOrganization
+    inOrganization,
+    terminal
   },
   plugins: [
     createPersistedState({
-        paths: ["token", "inOrganization", "login"],
+        paths: ["token", "inOrganization", "login", "organizationInfo","contributorInfo","terminal"],
       },
     ),
   ],

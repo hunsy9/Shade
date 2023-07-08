@@ -32,10 +32,9 @@ import NewOrganizationButton from '@/components/beforeorganization/NewOrganizati
 import TopBarButton from '@/components/common/TopBarButton.vue'
 import OrganizationListItem from '@/components/beforeorganization/OrganizationListItem.vue'
 import { ipcRenderer } from 'electron'
-import router from '@/router/index.js'
 
 import { createNamespacedHelpers } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('inOrganization')
+const { mapMutations, mapActions } = createNamespacedHelpers('inOrganization')
 const { mapState } = createNamespacedHelpers('login')
 
 export default {
@@ -55,13 +54,12 @@ export default {
     openNewOrganModal() {
       ipcRenderer.send('open-add-organ-modal')
     },
-    openInOganization(name) {
-      // 서버에 해당 org 의 내부 정보 요청
-      this.setData(name)
-      router.push('/in')
-      ipcRenderer.send('resize-window')
+    openInOganization(org) {
+      this.getProjects(org)
+      this.setOrg(org)
     },
-    ...mapMutations(['setData']),
+    ...mapMutations(['setOrg']),
+    ...mapActions(['getProjects'])
   },
   components: {
     AppInfo,
