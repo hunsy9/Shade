@@ -53,8 +53,9 @@ export default {
   padding-bottom: 0.7rem;
 }
 .cont span{
+  position: relative;
+  top: -0.6rem;
   margin-left: 1.1rem;
-  margin-bottom: 0.7rem;
   color: white;
 }
 .click{
@@ -62,16 +63,20 @@ export default {
 }
 .img1{
   margin-top: 0.7rem;
+  margin-bottom: 0.5rem;
   margin-left: 1.2rem;
   width: 1.2rem;
 }
 .proj span{
+  position: relative;
+  top: -0.7rem;
   margin-left: 1.1rem;
   color: white;
 }
 .img2{
-  margin-top: 0.7rem;
-  margin-left: 1rem;
+  position: relative;
+  top: -0.75rem;
+  margin-left: 5rem;
   width: 0.5rem;
 }
 .proj{
