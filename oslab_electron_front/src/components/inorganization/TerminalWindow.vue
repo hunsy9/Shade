@@ -74,18 +74,15 @@ export default {
             else{
               if(this.flag2){
                 this.term.write(res.body)
-                this.shell_head = res.body;
+                this.shell_head = res.body
                 this.flag2 = !this.flag2
               }
               else{
                 this.term.write("\n" + res.body)
-                this.shell_head = res.body;
+                this.shell_head = res.body
               }
 
             }
-            // const s = res.body.split(' ')
-            // console.log('구독으로 받은 메시지 입니다.', s[0])
-
           });
         },
         error => {
@@ -127,10 +124,10 @@ export default {
     this.fit_addon.fit()
 
     this.term.prompt = () => {
-      this.term.write('\n\x1b[32mseunghun> \x1b[37m' + curr_line + '\n')
+      this.term.write('\n\x1b[32mseunghun>' + curr_line + '\n')
     }
 
-    this.term.write('\x1b[32mWelcome to SSH Desktop!\n\n\x1b[37m')
+    this.term.write('\x1b[32mWelcome to SSH Desktop!\n\n\x1b[0m')
 
     this.term.attachCustomKeyEventHandler(event => {
       if (event.type == 'keydown') {
@@ -162,7 +159,7 @@ export default {
               body: JSON.stringify(commandDto)
             })
           }
-          this.term.write(`\x1b[2K\r\x1b[37m${this.shell_head} \x1b[37m` + curr_line + '\n')
+          this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line + '\n')
           curr_line = ''
           curr_line_pos = 0
         } else if (event.code == "Backspace") {
@@ -171,7 +168,7 @@ export default {
           }
           let buff_line = curr_line.slice(0,-1)
           curr_line = buff_line
-          this.term.write(`\x1b[2K\r\x1b[37m${this.shell_head} \x1b[37m` + curr_line)
+          this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line)
         } else if (event.code == "Tab") {
           curr_line_pos += 4
           curr_line += "    "
@@ -192,7 +189,7 @@ export default {
             }
             curr_line = entries[currEntryPos]
             curr_line_pos = curr_line.length
-            this.term.write(`\x1b[2K\r\x1b[37m${this.shell_head} \x1b[37m` + curr_line)
+            this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line)
           }
         } else if (event.code == "ArrowDown") {
           curr_line_pos = curr_line.length
@@ -200,10 +197,10 @@ export default {
           if (currEntryPos === entries.length || entries.length === 0) {
             currEntryPos -= 1
             curr_line = ''
-            this.term.write(`\x1b[2K\r\x1b[37m${this.shell_head} \x1b[37m`)
+            this.term.write(`\x1b[2K\r${this.shell_head}`)
           } else {
             curr_line = entries[currEntryPos]
-            this.term.write(`\x1b[2K\r\x1b[37m${this.shell_head} \x1b[37m` + curr_line)
+            this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line)
           }
         }
         else {
@@ -212,11 +209,11 @@ export default {
             let b = curr_line.slice(curr_line_pos)
             curr_line = a + event.key + b
             console.log(a + " " + b + curr_line + "cur" + "" + curr_line_pos)
-            this.term.write(`\x1b[2K\r\x1b[0m${this.shell_head} \x1b[37m` + curr_line)
+            this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line)
             this.term.write('\x1b['.concat((curr_line.length - curr_line_pos - 1).toString()).concat('D'))
           }else{
             curr_line += event.key
-            this.term.write(`\x1b[2K\r\x1b[0m${this.shell_head} \x1b[37m` + curr_line)
+            this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line)
           }
           curr_line_pos += 1
         }
