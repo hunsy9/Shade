@@ -19,12 +19,7 @@ import java.sql.SQLException;
 public class ServerService implements ServerServiceInterface{
     private final ServerRepository serverRepository;
 
-    public void addNewServerToCloud(int server_id, ServerDetailDto serverDetailDto) throws JsonProcessingException {
-        serverRepository.addNewServerToCloud(server_id, serverDetailDto);
-    }
-
-    public boolean addNewServer(AddServerDto addServerDto) throws SQLException {
-
+    public int addNewServer(AddServerDto addServerDto) throws SQLException, JsonProcessingException {
         return serverRepository.addNewServer(addServerDto);
     }
 

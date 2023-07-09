@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oslab.agent.repository.server.mapper.ServerMapper">
-    <insert id="addNewServer" parameterType="com.oslab.agent.model.transfer.serverDto.AddServerDto">
+    <insert id="addNewServer" parameterType="com.oslab.agent.model.transfer.serverDto.AddServerDto" useGeneratedKeys="true" keyProperty="server_id">
         INSERT INTO server_master VALUES (0, #{org_id}, #{category_id}, #{server_name}, #{server_desc})
     </insert>
 

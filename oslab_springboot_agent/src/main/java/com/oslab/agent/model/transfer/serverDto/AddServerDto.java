@@ -14,4 +14,11 @@ public class AddServerDto {
     private Long category_id;
     private String server_name;
     private String server_desc;
+
+    private String username;
+    private String host;
+    private int port;
+    private String password;
+
+    private Long server_id;
 }

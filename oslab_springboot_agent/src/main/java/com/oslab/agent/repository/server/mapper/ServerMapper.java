@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 @Mapper
 public interface ServerMapper {
-    boolean addNewServer(AddServerDto addServerDto) throws SQLException;
+    int addNewServer(AddServerDto addServerDto) throws SQLException;
 
     boolean editServerInfo(EditServerDto editServerDto) throws SQLException;
 

@@ -24,17 +24,26 @@ public class ServerRepository {
     private final RedisTemplate<String, String> redisTemplate;
     private final ObjectMapper objectMapper;
 
-    public void addNewServerToCloud(int server_id, ServerDetailDto serverDetailDto) throws JsonProcessingException {
+    private void addNewServerToCloud(ServerDetailDto serverDetailDto) throws JsonProcessingException {
         ValueOperations<String,String> newServerDetail = redisTemplate.opsForValue();
-        String key = String.format("Server:%s", server_id);
+        String key = String.format("Server:%s", serverDetailDto.getServer_id());
 
         String serverDetail = objectMapper.writeValueAsString(serverDetailDto);
 
         newServerDetail.set(key, serverDetail);
     }
 
-    public boolean addNewServer(AddServerDto addServerDto) throws SQLException {
-        return serverMapper.addNewServer(addServerDto);
+    public int addNewServer(AddServerDto addServerDto) throws SQLException, JsonProcessingException {
+        serverMapper.addNewServer(addServerDto);
+        ServerDetailDto serverDetailDto = ServerDetailDto.builder()
+                .server_id(addServerDto.getServer_id())
+                .host(addServerDto.getHost())
+                .username(addServerDto.getUsername())
+                .password(addServerDto.getPassword())
+                .port(addServerDto.getPort())
+                .build();
+        addNewServerToCloud(serverDetailDto);
+        return 1;
     }
 
     public boolean editServerInfo(EditServerDto editServerDto) throws SQLException{

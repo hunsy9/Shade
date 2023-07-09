@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServerDetailDto {
+    private Long server_id;
     private String username;
     private String host;
     private int port;

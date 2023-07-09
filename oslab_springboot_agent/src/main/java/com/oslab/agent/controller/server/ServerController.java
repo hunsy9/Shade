@@ -20,13 +20,8 @@ public class ServerController {
     private final ServerService serverService;
 
     @PostMapping("/api/server/add")
-    public boolean addNewServer(@RequestBody AddServerDto addServerDto) throws SQLException {
+    public int addNewServer(@RequestBody AddServerDto addServerDto) throws SQLException, JsonProcessingException {
         return serverService.addNewServer(addServerDto);
-    }
-
-    @PostMapping("/api/server/addNewServerToCloud/{server_id}")
-    public void addNewServerToCloud(@PathVariable int server_id, @RequestBody ServerDetailDto serverDetailDto) throws JsonProcessingException {
-        serverService.addNewServerToCloud(server_id, serverDetailDto);
     }
 
     @PostMapping("/api/server/edit")
