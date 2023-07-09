@@ -1,13 +1,13 @@
 <template>
   <div :class="{fullbackground:fulll, background:!fulll }">
+    <div class="bar" v-if="fulll"/>
     <div id="terminal"></div>
 
-    <img src="@/assets/zoomIn.png" class="zoomin" @click="toggleFullWindow"  v-if="!fulll"/>
-    <img src="@/assets/zoomOut.png" class="zoomin" @click="toggleFullWindow"  v-else/>
+    <img src="@/assets/zoomIn.png" class="zoomin" @click="toggle"  v-if="!fulll"/>
+    <img src="@/assets/zoomOut.png" class="zoomin" @click="toggle"  v-else/>
   </div>
 
 </template>
-
 
 <script>
 
@@ -25,7 +25,9 @@ export default {
   name: 'TerminalWindow',
   data(){
     return{
-      term : undefined
+      term : undefined,
+      fit_addon: new FitAddon(),
+      shell_head: ""
     }
   },
   computed: {
@@ -39,40 +41,55 @@ export default {
   },
   methods: {
     ...mapMutations('inOrganization',['toggleFullWindow']),
+    toggle(){
+      if(this.fulll){
+        this.term.resize(40, 80)
+        this.fit_addon.fit()
+      } else{
+        this.term.resize(40, 60)
+        this.fit_addon.fit()
+      }
+      this.toggleFullWindow()
+    },
     connect(){
       const serverURL = "http://localhost:8082/ws"
-      let socket = new SockJS(serverURL);
-      this.stompClient = Stomp.over(socket);
+      let socket = new SockJS(serverURL)
+      this.stompClient = Stomp.over(socket)
       console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
       this.stompClient.connect(
         {},
         frame => {
           // 소켓 연결 성공
-          this.connected = true;
-          console.log('소켓 연결 성공', frame);
+          this.connected = true
+          console.log('소켓 연결 성공', frame)
           // 서버의 메시지 전송 endpoint를 구독합니다.
           // 이런형태를 pub sub 구조라고 합니다.
           const subUrl = this.wskey.split(":").join("/")
           this.stompClient.subscribe("/sub/ws/" + subUrl, res => {
-            console.log('구독으로 받은 메시지 입니다.', res.body);
-            this.term.write(res.body+"\n")
-
+            // const s = res.body.split(' ')
+            // console.log('구독으로 받은 메시지 입니다.', s[0])
+            this.term.write(res.body + "\n")
           });
         },
         error => {
           // 소켓 연결 실패
-          console.log('소켓 연결 실패', error);
-          this.connected = false;
+          console.log('소켓 연결 실패', error)
+          this.connected = false
         }
       )
-    }
+    },
   },
+
   created(){
     this.term = new Terminal({
-      cursorBlink: "block",
+      cursorBlink: true,
+      cursorStyle: 'bar',
+      disableStdin: false,
       convertEol: true,
       fontSize: 13,
-      fontWeight: "normal"
+      fontWeight: "normal",
+      rows:40,
+      cols:60,
     })
     this.connect()
   },
@@ -80,7 +97,7 @@ export default {
     this.term.open(document.getElementById('terminal'));
 
     var curr_line = '';
-    // var curr_line_pos = 0;
+    var curr_line_pos = 0;
     var entries = [];
     let currEntryPos = 0;
 
@@ -88,37 +105,34 @@ export default {
     window.addEventListener('keydown',(e)=>{
       if(e.isComposing) return
     })
-    this.term.loadAddon( new WebLinksAddon())
-    const fitAddon = new FitAddon()
-    this.term.loadAddon(fitAddon)
-
-    fitAddon.fit();
+    this.term.loadAddon(new WebLinksAddon())
+    this.term.loadAddon(this.fit_addon)
+    this.fit_addon.fit()
 
     this.term.prompt = () => {
-      this.term.write('\n\r' + curr_line + '\r\n\u001b[32mseunghun> \u001b[37m');
-    };
+      this.term.write('\n\x1b[32mseunghun> \x1b[37m' + curr_line + '\n')
+    }
 
-    this.term.write('Welcome to SSH Desktop!');
-    this.term.prompt()
+    this.term.write('\x1b[32mWelcome to SSH Desktop!\n\n\x1b[37m')
 
 
 
     this.term.attachCustomKeyEventHandler(event => {
       if (event.type == 'keydown') {
         if (event.ctrlKey) {
-          this.term.write("ctrl")
+          return
         } else if (event.altKey) {
           return
         } else if (event.metaKey) {
-          return;
+          return
         } else if (event.shiftKey) {
-          return;
+          return
         } else if (event.code == "Escape") {
-          this.term.write("^[")
+          return
         } else if (event.code == "Enter") {
           if (curr_line.replace(/^\\s+|\\s+$/g, '').length != 0) {
             entries.push(curr_line)
-            currEntryPos = entries.length - 1;
+            currEntryPos = entries.length - 1
             const commandDto = {
               "key" : this.thkey,
               "command" : curr_line
@@ -130,50 +144,67 @@ export default {
               },
               body: JSON.stringify(commandDto)
             })
-            this.term.prompt()
           }
+          this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m' + curr_line + '\n')
           curr_line = ''
+          curr_line_pos = 0
         } else if (event.code == "Backspace") {
-          let buff_line = curr_line.slice(0,-2)
+          if(curr_line_pos > 0){
+            curr_line_pos -= 1
+          }
+          let buff_line = curr_line.slice(0,-1)
           curr_line = buff_line
-          this.term.write('\\33[2K\r\u001b[32mseunghun> \u001b[37m' + curr_line);
+          this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m' + curr_line)
         } else if (event.code == "Tab") {
+          curr_line_pos += 4
           curr_line += "    "
           this.term.write("    ")
-          return;
+          return
         } else if(event.code == "ArrowLeft"){
+          if (curr_line_pos == 0) return
+          curr_line_pos--
           this.term.write('\x1b[D')
         } else if(event.code == "ArrowRight"){
+          if (curr_line_pos == curr_line.length) return
+          curr_line_pos++;
           this.term.write('\x1b[C')
         } else if (event.code == "ArrowUp") {
           if (entries.length > 0) {
             if (currEntryPos > 0) {
-              currEntryPos -= 1;
+              currEntryPos -= 1
             }
-            // if(currEntryPos == 0){
-            //   return;
-            // }
-            curr_line = entries[currEntryPos];
-            this.term.write('\\33[2K\r\u001b[32mseunghun> \u001b[37m' + curr_line);
+            curr_line = entries[currEntryPos]
+            curr_line_pos = curr_line.length
+            this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m' + curr_line)
           }
         } else if (event.code == "ArrowDown") {
-          currEntryPos += 1;
+          curr_line_pos = curr_line.length
+          currEntryPos += 1
           if (currEntryPos === entries.length || entries.length === 0) {
-            currEntryPos -= 1;
-            curr_line = '';
-            this.term.write('\\33[2K\r\u001b[32mseunghun> \u001b[37m');
+            currEntryPos -= 1
+            curr_line = ''
+            this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m')
           } else {
-            curr_line = entries[currEntryPos];
-            this.term.write('\\33[2K\r\u001b[32mseunghun> \u001b[37m' + curr_line);
+            curr_line = entries[currEntryPos]
+            this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m' + curr_line)
           }
         }
         else {
-          this.term.write(event.key)
-          curr_line += event.key
+          if(curr_line.length != curr_line_pos){
+            let a = curr_line.slice(0, curr_line_pos)
+            let b = curr_line.slice(curr_line_pos)
+            curr_line = a + event.key + b
+            console.log(a + " " + b + curr_line + "cur" + "" + curr_line_pos)
+            this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m' + curr_line)
+            this.term.write('\x1b['.concat((curr_line.length - curr_line_pos - 1).toString()).concat('D'))
+          }else{
+            curr_line += event.key
+            this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m' + curr_line)
+          }
+          curr_line_pos += 1
         }
       }
     })
-
 
     // term.onData('key', (key, ev) => {
     //   const printable = !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey &&
@@ -241,12 +272,20 @@ export default {
 .fullbackground{
   background-color: black;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 2rem);
 }
 .background{
   background-color: black;
   width: calc(100vw - 16rem);
   height: calc(100vh - 7rem);
+}
+.bar{
+  height: 2rem;
+  background-color: #2B2B2B;
+}
+#terminal{
+  width: 100%;
+  height: 100%;
 }
 .zoomin{
   position: absolute;

@@ -10,6 +10,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 let mainWindow
 let appLoginModalWindow
 let addOrganModalWindow
+let addServerModalWindow
 
 // let startPage = true
 
@@ -71,11 +72,30 @@ async function createWindow() {
     }
   })
 
+  const addServerModal = new BrowserWindow({ 
+    width: 450, 
+    height: 370, 
+    parent: win, 
+    titleBarStyle: 'hidden',
+    show: false,
+    resizable: true,
+    movavle: true,
+    minimizable: false,
+    maximizable: false,
+    webPreferences: {
+      // Use pluginOptions.nodeIntegration, leave this alone
+      // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
+      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+      contextIsolation: false
+    }
+  })
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
     await appLoginModal.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#/modallogin')
     await addOrganModal.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#/modaladdorganization')
+    await addServerModal.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#/modaladdserver')
     // if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     createProtocol('app')
@@ -90,6 +110,7 @@ async function createWindow() {
 
     appLoginModal.loadURL(`file://${__dirname}/index.html#/modallogin`)
     addOrganModal.loadURL(`file://${__dirname}/index.html#/modaladdorganization`)
+    addServerModal.loadURL(`file://${__dirname}/index.html#/modaladdserver`)
   }
 
   win.on('closed', () => {
@@ -118,8 +139,14 @@ async function createWindow() {
     addOrganModal.hide()
   })
 
+  addServerModal.on('close', (e) => {
+    e.preventDefault()
+    addServerModal.hide()
+  })
+
   appLoginModalWindow = appLoginModal
   addOrganModalWindow = addOrganModal
+  addServerModalWindow = addServerModal
 
   return win
 }
@@ -210,4 +237,13 @@ ipcMain.on('open-add-organ-modal', () => {
 ipcMain.on('close-add-organ-modal', () => {
   console.log("organ")
   addOrganModalWindow.hide()
+})
+
+ipcMain.on('open-add-server-modal', () => {
+  addServerModalWindow.show()
+})
+
+ipcMain.on('close-add-server-modal', () => {
+  console.log("server")
+  addServerModalWindow.hide()
 })

@@ -4,6 +4,7 @@ import InOrganizationView from '../views/InOrganizationView.vue'
 import ModalLogin from '@/views/beforemodal/ModalLogin.vue'
 import ModalSignUp from '@/views/beforemodal/login/ModalSignUp.vue'
 import ModalAddOrganization from '@/views/beforemodal/ModalAddOrganization.vue'
+import ModalAddServer from '@/views/inmodal/ModalAddServer.vue'
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: '/modaladdorganization',
     name: 'modaladdorganization',
     component: ModalAddOrganization,
+  },
+  {
+    path: '/modaladdserver',
+    name: 'modaladdserver',
+    component: ModalAddServer,
   }
 ]
 
