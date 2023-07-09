@@ -33,4 +33,5 @@ public class ServerController {
     public boolean deleteServer(@RequestParam("server_id") String server_id) throws SQLException {
         return serverService.deleteServer(server_id);
     }
+
 }

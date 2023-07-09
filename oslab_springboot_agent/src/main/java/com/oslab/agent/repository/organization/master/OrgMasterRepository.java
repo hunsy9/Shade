@@ -72,9 +72,14 @@ public class OrgMasterRepository {
 
             String categoryKey = categoryId.toString() + ":" + prev + ":" + next;
 
+            System.out.println("categoryMap: "+categoryMap);
+            System.out.println("categoryIdToServer: "+categoryIdToServer);
+
+
             if(!categoryMap.containsKey(prev)){ //카테고리맵의 prev키가 존재하지 않으면 new ArrayList 추가
                 categoryMap.put(prev, new ArrayList<>());
             }
+
 
             if(serverId != null){ //server_id가 있을때
                 OrgServer server = OrgServer.builder()
@@ -87,6 +92,10 @@ public class OrgMasterRepository {
                 }
                 categoryIdToServer.get(categoryKey).add(server);
             }
+            else {
+                categoryIdToServer.put(categoryKey,null);
+            }
+
             if(!categoryMap.get(prev).contains(next)){
                 categoryMap.get(prev).add(next); //존재하면 prev를 기준으로한 arraylist에 push
             }
