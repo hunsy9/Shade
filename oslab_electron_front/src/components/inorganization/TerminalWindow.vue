@@ -27,7 +27,9 @@ export default {
     return{
       term : undefined,
       fit_addon: new FitAddon(),
-      shell_head: ""
+      shell_head: "",
+      flag : false,
+      flag2: false,
     }
   },
   computed: {
@@ -66,9 +68,24 @@ export default {
           // 이런형태를 pub sub 구조라고 합니다.
           const subUrl = this.wskey.split(":").join("/")
           this.stompClient.subscribe("/sub/ws/" + subUrl, res => {
+            if(this.flag){
+              this.flag = !this.flag
+            }
+            else{
+              if(this.flag2){
+                this.term.write(res.body)
+                this.shell_head = res.body;
+                this.flag2 = !this.flag2
+              }
+              else{
+                this.term.write("\n" + res.body)
+                this.shell_head = res.body;
+              }
+
+            }
             // const s = res.body.split(' ')
             // console.log('구독으로 받은 메시지 입니다.', s[0])
-            this.term.write(res.body + "\n")
+
           });
         },
         error => {
@@ -115,8 +132,6 @@ export default {
 
     this.term.write('\x1b[32mWelcome to SSH Desktop!\n\n\x1b[37m')
 
-
-
     this.term.attachCustomKeyEventHandler(event => {
       if (event.type == 'keydown') {
         if (event.ctrlKey) {
@@ -130,13 +145,15 @@ export default {
         } else if (event.code == "Escape") {
           return
         } else if (event.code == "Enter") {
-          if (curr_line.replace(/^\\s+|\\s+$/g, '').length != 0) {
+          if (curr_line.replace(/^\\s+|\\s+$/g, '').length != 0){
             entries.push(curr_line)
             currEntryPos = entries.length - 1
             const commandDto = {
               "key" : this.thkey,
               "command" : curr_line
             }
+            this.flag = true
+            this.flag2 = true
             fetch("http://localhost:8081/api/request/command",{
               method: 'POST',
               headers: {
@@ -145,7 +162,7 @@ export default {
               body: JSON.stringify(commandDto)
             })
           }
-          this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m' + curr_line + '\n')
+          this.term.write(`\x1b[2K\r\x1b[37m${this.shell_head} \x1b[37m` + curr_line + '\n')
           curr_line = ''
           curr_line_pos = 0
         } else if (event.code == "Backspace") {
@@ -154,7 +171,7 @@ export default {
           }
           let buff_line = curr_line.slice(0,-1)
           curr_line = buff_line
-          this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m' + curr_line)
+          this.term.write(`\x1b[2K\r\x1b[37m${this.shell_head} \x1b[37m` + curr_line)
         } else if (event.code == "Tab") {
           curr_line_pos += 4
           curr_line += "    "
@@ -175,7 +192,7 @@ export default {
             }
             curr_line = entries[currEntryPos]
             curr_line_pos = curr_line.length
-            this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m' + curr_line)
+            this.term.write(`\x1b[2K\r\x1b[37m${this.shell_head} \x1b[37m` + curr_line)
           }
         } else if (event.code == "ArrowDown") {
           curr_line_pos = curr_line.length
@@ -183,10 +200,10 @@ export default {
           if (currEntryPos === entries.length || entries.length === 0) {
             currEntryPos -= 1
             curr_line = ''
-            this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m')
+            this.term.write(`\x1b[2K\r\x1b[37m${this.shell_head} \x1b[37m`)
           } else {
             curr_line = entries[currEntryPos]
-            this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m' + curr_line)
+            this.term.write(`\x1b[2K\r\x1b[37m${this.shell_head} \x1b[37m` + curr_line)
           }
         }
         else {
@@ -195,11 +212,11 @@ export default {
             let b = curr_line.slice(curr_line_pos)
             curr_line = a + event.key + b
             console.log(a + " " + b + curr_line + "cur" + "" + curr_line_pos)
-            this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m' + curr_line)
+            this.term.write(`\x1b[2K\r\x1b[0m${this.shell_head} \x1b[37m` + curr_line)
             this.term.write('\x1b['.concat((curr_line.length - curr_line_pos - 1).toString()).concat('D'))
           }else{
             curr_line += event.key
-            this.term.write('\x1b[2K\r\x1b[32mseunghun> \x1b[37m' + curr_line)
+            this.term.write(`\x1b[2K\r\x1b[0m${this.shell_head} \x1b[37m` + curr_line)
           }
           curr_line_pos += 1
         }
