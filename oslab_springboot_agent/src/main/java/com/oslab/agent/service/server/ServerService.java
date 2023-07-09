@@ -1,6 +1,7 @@
 package com.oslab.agent.service.server;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.oslab.agent.model.entity.orgEntity.OrgServer;
 import com.oslab.agent.model.transfer.serverDto.AddServerDto;
 import com.oslab.agent.model.transfer.serverDto.EditServerDto;
 import com.oslab.agent.model.transfer.serverDto.ServerDetailDto;
@@ -12,6 +13,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -30,5 +32,9 @@ public class ServerService implements ServerServiceInterface{
 
     public boolean deleteServer(String server_id) throws SQLException{
         return serverRepository.deleteServer(server_id);
+    }
+
+    public List<OrgServer> reFetchServer(Integer org_id, Integer category_id) throws SQLException{
+        return serverRepository.reFetchServer(org_id,category_id);
     }
 }

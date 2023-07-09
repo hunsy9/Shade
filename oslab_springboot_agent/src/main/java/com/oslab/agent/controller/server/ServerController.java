@@ -1,6 +1,7 @@
 package com.oslab.agent.controller.server;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.oslab.agent.model.entity.orgEntity.OrgServer;
 import com.oslab.agent.model.transfer.contributorDto.ContributorDto;
 import com.oslab.agent.model.transfer.serverDto.AddServerDto;
 import com.oslab.agent.model.transfer.serverDto.EditServerDto;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,6 +34,11 @@ public class ServerController {
     @PostMapping("/api/server/delete")
     public boolean deleteServer(@RequestParam("server_id") String server_id) throws SQLException {
         return serverService.deleteServer(server_id);
+    }
+
+    @GetMapping("/api/server/reFetchServer/{org_id}/{category_id}")
+    public List<OrgServer> reFetchServer(@PathVariable Integer org_id, @PathVariable Integer category_id) throws SQLException {
+        return serverService.reFetchServer(org_id, category_id);
     }
 
 }
