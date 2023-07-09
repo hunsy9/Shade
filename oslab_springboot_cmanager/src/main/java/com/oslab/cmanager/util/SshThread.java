@@ -52,6 +52,7 @@ public class SshThread extends Thread {
         log.info("현재 명령어: {}",command);
         try {
             commandQueue.put(command);
+            commandQueue.put("");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -87,6 +88,7 @@ public class SshThread extends Thread {
                 OutputThread outputThread = new OutputThread(channelShell, sendingOperations, sshConnectionRoom );
                 inputThread.start();
                 outputThread.start();
+                commandQueue.put("");
 
                 // 입력 받기
                 while (true) {
@@ -134,6 +136,7 @@ public class SshThread extends Thread {
 
         @Override
         public void run() {
+
             try {
                 while (true) {
                     if (exitRequested) {
@@ -159,7 +162,6 @@ public class SshThread extends Thread {
     private static class OutputThread extends Thread {
         private ChannelShell channelShell;
         private SimpMessageSendingOperations sendingOperations;
-
         private String sendingUrl;
 
 
@@ -174,6 +176,7 @@ public class SshThread extends Thread {
 
         @Override
         public void run() {
+
             try (InputStream inputStream = channelShell.getInputStream();
                  BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
                 String line;
