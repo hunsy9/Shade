@@ -73,11 +73,12 @@ async function createWindow() {
   })
 
   const addServerModal = new BrowserWindow({ 
-    width: 450, 
-    height: 370, 
+    width: 500, 
+    height: 400, 
     parent: win, 
     titleBarStyle: 'hidden',
     show: false,
+    modal: true,
     resizable: true,
     movavle: true,
     minimizable: false,
@@ -241,9 +242,13 @@ ipcMain.on('close-add-organ-modal', () => {
 
 ipcMain.on('open-add-server-modal', () => {
   addServerModalWindow.show()
+  addServerModalWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#/modaladdserver')
 })
 
 ipcMain.on('close-add-server-modal', () => {
-  console.log("server")
+  console.log("server") 
+  const win = BrowserWindow.getFocusedWindow()
+  mainWindow = win.getParentWindow()
+  mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#/in')
   addServerModalWindow.hide()
 })

@@ -28,6 +28,7 @@ export default ({
         selected_proj: "",
         selected_categ_l1: "",
         selected_categ_l2: "",
+        selected_categid: "",
     },
     getters: {
         getCategory (state){
@@ -39,6 +40,7 @@ export default ({
         getSelectedCatl1(state){
             if(state.selected_categ_l1){
                 state.selected_categ_l2 = ""
+                state.selected_categid = ""
                 return " > " + state.selected_categ_l1
             }
         },
@@ -59,6 +61,7 @@ export default ({
             state.selected_proj = ""
             state.selected_categ_l1 = ""
             state.selected_categ_l2 = ""
+            state.selected_categid = ""
         },
         setOrg(state, org){
             state.mode = 0
@@ -71,12 +74,19 @@ export default ({
             state.projects.project_id = data.projects.project_id
             state.projects.project_name = data.projects.project_name
         },
+        setNewServer(state, data){
+            let key = data.k
+            alert(key)
+            alert(state.projects.project_server)
+            state.projects.project_server[key] = data.d
+        },
         //mode 1 proj
         selectProj(state, selected_proj){
             state.mode = 1
             if(state.selected_proj != selected_proj){
                 state.selected_categ_l1 = ""
                 state.selected_categ_l2 = ""
+                state.selected_categid = ""
             }
             state.selected_proj = selected_proj
         },
@@ -85,6 +95,14 @@ export default ({
         },
         selectCatl2(state, selected_categ_l2){
             state.selected_categ_l2 = selected_categ_l2
+            const a = Object.keys(state.projects.find(project => project.project_name === state.selected_proj).project_server)
+            for(var i = 0; i < a.length; i++){
+                const b = a[i].split(":")
+                console.log(b)
+                if(b[1] == state.selected_categ_l1 && b[2] == state.selected_categ_l2){
+                    state.selected_categid = b[0]
+                }
+            }
         },
         //mode 2 contributors
         selectContributors(state){
@@ -92,6 +110,7 @@ export default ({
             state.selected_proj = ""
             state.selected_categ_l1 = ""
             state.selected_categ_l2 = ""
+            state.selected_categid = ""
         },
         //mode 3 terminal
         selectTerminal(state){
@@ -123,6 +142,48 @@ export default ({
             else{
               console.log("Contritubors fail in store")
               return false
+            }
+        },
+        async addNewServer(context, server){
+            const obj = {
+                "org_id": parseInt(context.state.organId),
+                "category_id": parseInt(context.state.selected_categid),
+                "server_name": server.server_name,
+                "server_desc": server.server_desc,
+                "username": server.username,
+                "host" : server.host,
+                "port" : parseInt(server.port),
+                "password" : server.password,
+                "server_id" : null
+            }
+            console.log(obj)
+            const data = await api.postNewServer(obj)
+            if(data){
+              return true
+            }
+            else{
+              console.log("fail in addNewServer")
+              return false
+            }
+        },
+        async refetchNewServer(context){
+            const obj = {
+                "org_id": parseInt(context.state.organId),
+                "category_id": parseInt(context.state.selected_categid),
+            }
+            const data = await api.refetchServer(obj)
+            const keys = Object.keys(context.state.projects.find(project => project.project_name === context.state.selected_proj).project_server)
+            let findKey = keys.filter(key => key.split(":")[0] == obj.category_id)
+            const oo = {
+                d: data,
+                k: findKey
+            }
+            context.commit("setNewServer", oo)
+            if(data){
+                console.log("success in fetchNewServer")
+            }
+            else{
+                console.log("fail in fetchNewServer")
             }
         },
     },

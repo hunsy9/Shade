@@ -8,26 +8,29 @@
   </div>
 
   <div v-if="topbtn == true">
-    <div v-for="(value, key) in this.getCategory" :key="key">
-      <div class="level1" @click="select_l1(key)">
-        <img v-if="l1btn == true && l1index == key" src="@/assets/downSign.png">
+    <div v-for="(value, l1) in this.getCategory" :key="l1">
+      <div class="level1" @click="select_l1(l1)">
+        <img v-if="l1btn == true && l1index == l1" src="@/assets/downSign.png">
         <img v-else src="@/assets/rightSign.png">
         <span>
-          {{ key }}
+          {{ l1 }}
         </span>
       </div>
 
-      <div v-if="l1btn == true && l1index == key">
-        <div v-for="(server, indexl2) in value" :key="indexl2">
-          <div class="level2" @click="select_l2(server)">
+      <div v-if="l1btn == true && l1index == l1">
+        <div v-for="(l2, indexl2) in value" :key="indexl2">
+          <div class="level2" @click="select_l2(l2)">
             <img src="@/assets/dotSign.png">
             <span>
-              {{ server }}
+              {{ l2 }}
             </span>
           </div>
         </div>
       </div>
 
+    </div>
+    <div>
+      {{ selected_categid }}
     </div>
   </div>
 
@@ -49,7 +52,8 @@ export default {
   computed: {
     ...mapState({
       projlist: state => state.projects,
-      mode: state => state.mode
+      mode: state => state.mode,
+      selected_categid : state => state.selected_categid
     }),
     ...mapGetters(['getCategory'])
   },

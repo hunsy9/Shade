@@ -82,4 +82,37 @@ export default {
 
         return data
     },
+    async postNewServer(serverInfo) {
+        const response = await fetch(`${server}api/server/add`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(serverInfo)
+        })
+        console.log(response)
+        if (!response.ok) {
+            throw new Error(serverInfo.server_name + "가" + serverInfo.username + '를 가져오는데 실패 했습니다.')
+        }
+
+        const data = await response.text()
+
+        return data
+    },
+    async refetchServer(obj) {
+        const response = await fetch(`${server}api/server/reFetchServer/${obj.org_id}/${obj.category_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        console.log(response)
+        if (!response.ok) {
+            throw new Error(obj.org_id + "가" + obj.category_id + '를 가져오는데 실패 했습니다.')
+        }
+
+        const data = await response.text()
+
+        return data
+    },
 }

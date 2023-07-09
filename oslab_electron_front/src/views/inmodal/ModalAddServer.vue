@@ -1,91 +1,113 @@
 <template>
   <div class="background">
-    <div class="top">
-      Add New Server
+    <div class="top">Add New Server</div>
+    <div>
+      <div class="servername">
+        <span> Custom Server Name </span>
+        <input type="text" v-model="server.server_name"/>
+      </div>
+      <div class="servername">
+        <span> Custom Server Desc </span>
+        <input type="text" v-model="server.server_desc"/>
+      </div>
+      <div class="servername">
+        <span> User Name </span>
+        <input type="text" v-model="server.username"/>
+      </div>
+      <div class="servername">
+        <span> Host </span>
+        <input type="text" v-model="server.host"/>
+      </div>
+      <div class="servername">
+        <span> Ports </span>
+        <input type="number" v-model="server.port"/>
+      </div>
+      <div class="servername">
+        <span> Password </span>
+        <input type="password" v-model="server.password"/>
+      </div>
     </div>
-    <div class="servername">
-      <span>
-        Custom Server Name
-      </span>
-      <input type="text">
-    </div>
-    <div class="servername">
-      <span>
-        Public IP
-      </span>
-      <input type="text">
-    </div>
-    <div class="servername">
-      <span>
-        Private IP
-      </span>
-      <input type="text">
-    </div>
-    <div class="servername">
-      <span>
-        SSH Key
-      </span>
-      <input type="file">
-    </div>
-    <div class="servername">
-      <span>
-        VPN Host
-      </span>
-      <input type="text">
-    </div>
-    <div class="servername">
-      <span>
-        VPN Key
-      </span>
-      <input type="file">
-    </div>
+
+    <button @click="addServer(server)">Save</button>
   </div>
 </template>
 
 <script>
+import { ipcRenderer } from 'electron'
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions } = createNamespacedHelpers('inOrganization')
+
 export default {
-  name: 'ModalAddServer',
+  name: "ModalAddServer",
   data() {
     return {
-      addServerInfo: {
-        customServerName: '',
-        publicIp: '',
-        privateIp: '',
-        sshKey: '파일?',
-        vpnHost: '',
-        vpnKey: '',
+      server: {
+        server_name: "",
+        server_desc: "",
+        username: "",
+        host: "",
+        port: 0,
+        password: "",
+      },
+    };
+  },
+  methods: {
+    ...mapActions(['addNewServer', 'refetchNewServer']),
+    async addServer(server){
+      const res = await this.addNewServer(server)
+      if(res){
+        await this.refetchNewServer()
       }
-    }
-  }
+      ipcRenderer.send('close-add-server-modal')
+      server.server_name = ""
+      server.server_desc = ""
+      server.username = ""
+      server.host = ""
+      server.port = null
+      server.password = ""
+    },
+  },
 }
 </script>
 
 <style scoped>
-.background{
+.background {
   width: 100vw;
   height: 100vh;
   background-color: #242424;
 }
-.top{
+.top {
   color: white;
-  text-align : center;
+  text-align: center;
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
-.servername{
-  margin-top: 0.2rem;
+.servername {
+  float: right;
+  margin-top: 0.4rem;
+  margin-left: auto;
+  margin-right: 4rem;
 }
-span{
-  padding-right: 2rem;
+span {
+  font-size: 0.8rem;
+  padding-left: auto;
+  padding-right: 1rem;
   color: white;
 }
-input{
+input {
+  font-size: 0.9rem;
   color: white;
-  padding: 0.1rem 0;
+  padding: 0.2rem 0;
   text-align: center;
   background-color: #565656;
-  width: 45%;
-  height: 1.4rem;
+  width: 15rem;
   border: 1px;
+}
+button{
+  background-color: #989898;
+  position: absolute;
+  top: 22rem;
+  left: 25rem;
+  cursor: pointer;
 }
 </style>
