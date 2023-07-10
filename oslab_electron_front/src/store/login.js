@@ -4,7 +4,7 @@ import { ipcRenderer } from "electron"
 export default ({
   namespaced: true,
   state: {
-    userName:'seunghun',
+    userName:'adminKim',
     isLogin: false,
     isAdmin: true,
   },

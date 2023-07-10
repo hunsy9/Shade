@@ -15,7 +15,7 @@
     </div>
 
     <div class="contentframe">
-      <div v-if="mode == 0">뭐든 골라주세요</div>
+      <div v-if="mode == 0" style="color: white; text-align: center; margin-top: 16rem;">Please select any menu</div>
       <div v-else-if="mode == 1">
         <div class="content">
           <PathBar/>
@@ -42,9 +42,9 @@
   <div v-else-if="mode == 3 && full == true">
     <TerminalWindow/>
   </div>
-  <button @click="testIn()">
+  <!-- <button @click="testIn()">
   화면 전환 버튼(개발용 추후 삭제)
-  </button>
+  </button> -->
 </template>
 
 

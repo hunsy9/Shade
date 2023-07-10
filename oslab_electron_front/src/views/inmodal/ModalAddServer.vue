@@ -19,7 +19,7 @@
         <input type="text" v-model="server.host"/>
       </div>
       <div class="servername">
-        <span> Ports </span>
+        <span> Port </span>
         <input type="number" v-model="server.port"/>
       </div>
       <div class="servername">
