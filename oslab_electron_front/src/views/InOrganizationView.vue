@@ -42,9 +42,9 @@
   <div v-else-if="mode == 3 && full == true">
     <TerminalWindow/>
   </div>
-  <!-- <button @click="testIn()">
+  <button @click="testIn()">
   화면 전환 버튼(개발용 추후 삭제)
-  </button> -->
+  </button>
 </template>
 
 

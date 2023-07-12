@@ -27,7 +27,7 @@
         <input type="password" v-model="server.password"/>
       </div>
     </div>
-
+    <button @click="closeAddServer" class="cancel">Cancel</button>
     <button @click="addServer(server)">Save</button>
   </div>
 </template>
@@ -66,6 +66,9 @@ export default {
       server.port = null
       server.password = ""
     },
+    closeAddServer(){
+      ipcRenderer.send('close-add-server-modal')
+    }
   },
 }
 </script>
@@ -105,9 +108,15 @@ input {
 }
 button{
   background-color: #989898;
+  border-radius: 0.2rem;
+  border: none;
+  box-shadow: 0 0.2px 1px 1px #0000002f;
   position: absolute;
-  top: 22rem;
+  top: 19rem;
   left: 25rem;
   cursor: pointer;
+}
+.cancel{
+  left: 4rem;
 }
 </style>

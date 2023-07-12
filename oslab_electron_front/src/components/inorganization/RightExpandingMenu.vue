@@ -29,9 +29,6 @@
       </div>
 
     </div>
-    <div>
-      {{ selected_categid }}
-    </div>
   </div>
 
 </template>
