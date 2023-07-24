@@ -7,7 +7,7 @@
             <span class="sname">
               {{ server.server_name }}
             </span>
-            <button v-if="!isAdmin">
+            <button v-if="!isAdmin" @click="$emit('openModalServerInfo', server.server_name, server.server_desc)">
               Info
             </button>
             <button v-if="isAdmin">
