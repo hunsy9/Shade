@@ -7,10 +7,16 @@
             <span class="sname">
               {{ server.server_name }}
             </span>
-            <button class="ibutton">
+            <button v-if="!isAdmin">
               Info
             </button>
-            <button class="cbutton" @click="connectServer(server.server_id)">
+            <button v-if="isAdmin">
+              Delete
+            </button>
+            <button v-if="isAdmin">
+              Edit
+            </button>
+            <button @click="connectServer(server.server_id)">
               Connect
             </button>
           </div>
@@ -21,9 +27,7 @@
 </template>
   
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapGetters } = createNamespacedHelpers('inOrganization')
-const { mapActions } = createNamespacedHelpers('terminal')
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: 'ServerListItem',
@@ -33,14 +37,17 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState('inOrganization', {
       categ_l1: state => state.selected_categ_l1,
       categ_l2: state => state.selected_categ_l2
     }),
-    ...mapGetters(['getServerList'])
+    ...mapState('login', {
+      isAdmin: state => state.isAdmin,
+    }),
+    ...mapGetters('inOrganization', ['getServerList'])
   },
   methods: {
-    ...mapActions(['connectTerminal']),
+    ...mapActions('terminal', ['connectTerminal']),
     isTrue(key){
       let info = key.split(":")
       let l1 = info[1]
@@ -83,7 +90,7 @@ button{
   box-shadow: 0 1px 1px 0.5px #0000002f;
   cursor:pointer;
   color: white;
-  padding: 0.1rem 2rem;
+  padding: 0.1rem 1.5rem;
   margin-right: 1rem;
 }
 </style>
