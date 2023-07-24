@@ -2,6 +2,12 @@ import api from '@/api/login.js'
 import { ipcRenderer } from "electron"
 import router from '@/router/index.js'
 
+export const terminalState = {
+    INIT: 0,
+    OPENED: 1,
+    TERMINATED: 2,
+}
+
 export default ({
     namespaced: true,
 
@@ -29,6 +35,7 @@ export default ({
         selected_categ_l1: "",
         selected_categ_l2: "",
         selected_categid: "",
+        exitShellState: 0
     },
     getters: {
         getCategory (state){
@@ -118,6 +125,9 @@ export default ({
         },
         toggleFullWindow(state){
             state.full = !state.full
+        },
+        setExitShellstatus(state, terminalState){
+            state.exitShellState = terminalState;
         }
     },
     actions: {

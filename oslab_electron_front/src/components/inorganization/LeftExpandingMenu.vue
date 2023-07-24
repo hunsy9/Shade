@@ -16,6 +16,7 @@
   
 <script>
 import { createNamespacedHelpers } from 'vuex'
+import { terminalState } from '../../store/inOrganization';
 const { mapState, mapMutations } = createNamespacedHelpers('inOrganization')
 
 export default {
@@ -30,7 +31,8 @@ export default {
   computed: {
     ...mapState({
       projlist: state => state.projects,
-      mode: state => state.mode
+      mode: state => state.mode,
+      exitStatus: state => state.exitShellState
     }),
   },
   methods: {
@@ -39,6 +41,11 @@ export default {
       this.isOpen = !this.isOpen
     },
     clickProj(name, index){
+      if(this.exitStatus == terminalState.OPENED){
+        alert("The terminal did not shut down\n\n" +
+            "Shut down the terminal first!")
+        return
+      }
       this.isClick = true
       this.pickedProj = index
       this.selectProj(name)
