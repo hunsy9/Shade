@@ -6,7 +6,7 @@ export default ({
   state: {
     userName:'adminYou',
     isLogin: false,
-    isAdmin: true,
+    isAdmin: false,
   },
   mutations: {
     setLogin(state, value) {

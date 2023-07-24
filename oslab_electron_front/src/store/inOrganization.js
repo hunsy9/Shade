@@ -105,7 +105,6 @@ export default ({
             const a = Object.keys(state.projects.find(project => project.project_name === state.selected_proj).project_server)
             for(var i = 0; i < a.length; i++){
                 const b = a[i].split(":")
-                console.log(b)
                 if(b[1] == state.selected_categ_l1 && b[2] == state.selected_categ_l2){
                     state.selected_categid = b[0]
                 }
