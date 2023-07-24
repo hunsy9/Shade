@@ -2,12 +2,9 @@
   <div>
 
   </div>
-  <ModalPrivileges/>
 </template>
 
 <script>
-import ModalPrivileges from '@/components/inorganization/modal/contributor/ModalPrivileges.vue'
-
 export default {
   name: 'ModalAddContributor',
   data() {
@@ -16,7 +13,6 @@ export default {
     }
   },
   components: {
-    ModalPrivileges,
   }
 }
 </script>

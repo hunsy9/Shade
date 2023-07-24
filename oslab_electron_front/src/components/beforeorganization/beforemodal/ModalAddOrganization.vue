@@ -4,9 +4,9 @@
     <div class="emailbar">
       <span class="text1">Organization Email</span>
       <input class="inpmail" type="text">
-      <button class="sendbtn">Code Send</button>
+      <button class="sendbtn" @click="codeSend()">Code Send</button>
     </div>
-    <div class="codebar">
+    <div class="codebar" v-if="show">
       <span class="text2">Enter the code</span>
       <input class="inpcode" type="text">
       <button class="authbtn" @click="save()">Authentication</button>
@@ -14,6 +14,7 @@
     <div class="timeveri">
 
     </div>
+    
   </div>
 </template>
 
@@ -26,11 +27,17 @@ export default {
     return {
       organizationEmail: "",
       verificationCode: "",
+      show: false
     }
   },
   methods: {
     save(){
       ipcRenderer.send('close-add-organ-modal')
+    },
+    async codeSend(){
+
+      this.show = !this.show
+      
     }
   }
 }

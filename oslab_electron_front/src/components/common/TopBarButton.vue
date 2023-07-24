@@ -13,7 +13,6 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('login')
-import { ipcRenderer } from 'electron'
 
 export default {
   name: 'TopBarButton',
@@ -26,7 +25,7 @@ export default {
   },
   methods: {
     openAppLoginModal() {
-      ipcRenderer.send('open-app-login-modal')
+      this.$emit("openModalLogin")
     },
   },
 }

@@ -1,30 +1,34 @@
 <template>
-  <div class="modalframe">
-    <img
-      class="sshdesktopicon"
-      src="@/assets/right-arrow-angle-and-horizontal-down-line-code-signs.png"
-    />
-    <div class="text1">SSH Desktop</div>
-    <div class="text2">Welcome</div>
-    <div class="text3">Log in to SSH Desktop to continue</div>
+  <div class="zidx">
+    <main>
+      <div class="modalframe">
+        <img
+          class="sshdesktopicon"
+          src="@/assets/right-arrow-angle-and-horizontal-down-line-code-signs.png"
+        />
+        <div class="text1">SSH Desktop</div>
+        <div class="text2">Welcome</div>
+        <div class="text3">Log in to SSH Desktop to continue</div>
+      </div>
+      <div class="inpframe">
+        <div class="id_bar">
+          <img src="@/assets/id.png" class="bar_img" />
+          <input type="email" class="inp" placeholder="Email" v-model="loginId"/>
+        </div>
+        <div class="pass_bar">
+          <img src="@/assets/pw.png" class="bar_img" />
+          <input type="password" class="inp" placeholder="Password" v-model="loginPassword"/>
+        </div>
+      </div>
+      <button class="continuebtn" @click="login(loginId, loginPassword)">continue</button>
+      <a class="signup" @click="signUp">Sign up</a>
+    </main>
   </div>
-  <div class="inpframe">
-    <div class="id_bar">
-      <img src="@/assets/id.png" class="bar_img" />
-      <input type="email" class="inp" placeholder="Email" v-model="loginId"/>
-    </div>
-    <div class="pass_bar">
-      <img src="@/assets/pw.png" class="bar_img" />
-      <input type="password" class="inp" placeholder="Password" v-model="loginPassword"/>
-    </div>
-  </div>
-  <button class="continuebtn" @click="login(loginId, loginPassword)">continue</button>
-  <a class="signup" @click="signUp">Sign up</a>
+
 </template>
 
 <script>
-import { ipcRenderer } from 'electron'
-import router from '@/router/index.js'
+
 import { createNamespacedHelpers } from 'vuex'
 const { mapActions, mapState } = createNamespacedHelpers('login')
 const { mapMutations } = createNamespacedHelpers('organizationInfo')
@@ -50,10 +54,9 @@ export default {
       }
       this.loginId = null
       this.loginPassword = null
+      this.$emit("closeAppLoginModal")
     },
     signUp(){
-      router.push('/modalsignup')
-      ipcRenderer.send('resize-for-signup-modal')
     },
     ...mapActions(['tryLogin']),
     ...mapMutations(['setOrgInfo'])
@@ -62,6 +65,24 @@ export default {
 </script>
 
 <style scoped>
+.zidx{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  /* display: flex; */
+}
+.zidx > main {
+  display: block;
+  margin: 0 auto;
+  width: 400px;
+  height: 500px;
+  background-color: white;
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0.2px 0.2px 4px 4px #0000002f;
+}
 .modalframe {
   position: relative;
 }

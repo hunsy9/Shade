@@ -7,22 +7,22 @@
     </div>
 
     <div class="topbarframe">
-      <TopBarButton />
+      <TopBarButton @openModalLogin="openModalLogin = true"/>
     </div>
 
     <div class="contentframe">
       <template v-if="isLogin ==true && hasOrganization == true">
         <OrganizationListItem @openInOganization="openInOganization"/>
+        
       </template>
       <div class="nocontent" v-else>
         Please Sign Up and Create New Organization !
       </div>
     </div>
-
+    <ModalLogin v-if="openModalLogin" @closeAppLoginModal="openModalLogin = false"/>
+  
   </div>
-  <!-- <button @click="testIn()">
-    화면 전환 버튼(개발용 추후 삭제)
-  </button> -->
+  
 
 </template>
 
@@ -31,6 +31,9 @@ import AppInfo from '@/components/common/AppInfo.vue'
 import NewOrganizationButton from '@/components/beforeorganization/NewOrganizationButton.vue'
 import TopBarButton from '@/components/common/TopBarButton.vue'
 import OrganizationListItem from '@/components/beforeorganization/OrganizationListItem.vue'
+
+import ModalLogin from '@/components/beforeorganization/beforemodal/ModalLogin.vue'
+
 import { ipcRenderer } from 'electron'
 
 import { createNamespacedHelpers } from 'vuex'
@@ -43,6 +46,7 @@ export default {
     return {
       hasOrganization: true,
       organizationNames: [],
+      openModalLogin: false
     }
   },
   computed: {
@@ -65,7 +69,10 @@ export default {
     AppInfo,
     NewOrganizationButton,
     TopBarButton,
-    OrganizationListItem
+    OrganizationListItem,
+
+    ModalLogin,
+
   }
 }
 </script>
