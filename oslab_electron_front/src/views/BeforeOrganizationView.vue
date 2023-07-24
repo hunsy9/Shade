@@ -3,26 +3,28 @@
 
     <div class="leftsideframe">
       <AppInfo/>
-      <NewOrganizationButton v-if="isLogin ==true" @openNewOrganModal="openNewOrganModal"/>
+      <NewOrganizationButton v-if="isLogin ==true" @openModalAddOrganization="openModalAddOrganization = true"/>
     </div>
 
     <div class="topbarframe">
-      <TopBarButton />
+      <TopBarButton @openModalLogin="openModalLogin = true"/>
     </div>
 
     <div class="contentframe">
       <template v-if="isLogin ==true && hasOrganization == true">
         <OrganizationListItem @openInOganization="openInOganization"/>
+        
       </template>
       <div class="nocontent" v-else>
         Please Sign Up and Create New Organization !
       </div>
     </div>
+    <ModalLogin v-if="openModalLogin" @closeAppLoginModal="openModalLogin = false"/>
+    <ModalAddOrganization v-if="openModalAddOrganization" @closeModalAddOrganization="openModalAddOrganization = false"/>
 
+  
   </div>
-  <!-- <button @click="testIn()">
-    화면 전환 버튼(개발용 추후 삭제)
-  </button> -->
+  
 
 </template>
 
@@ -31,7 +33,9 @@ import AppInfo from '@/components/common/AppInfo.vue'
 import NewOrganizationButton from '@/components/beforeorganization/NewOrganizationButton.vue'
 import TopBarButton from '@/components/common/TopBarButton.vue'
 import OrganizationListItem from '@/components/beforeorganization/OrganizationListItem.vue'
-import { ipcRenderer } from 'electron'
+
+import ModalLogin from '@/components/beforeorganization/beforemodal/ModalLogin.vue'
+import ModalAddOrganization from '@/components/beforeorganization/beforemodal/ModalAddOrganization.vue'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapMutations, mapActions } = createNamespacedHelpers('inOrganization')
@@ -43,6 +47,8 @@ export default {
     return {
       hasOrganization: true,
       organizationNames: [],
+      openModalLogin: false,
+      openModalAddOrganization: false
     }
   },
   computed: {
@@ -51,9 +57,6 @@ export default {
     }),
   },
   methods: {
-    openNewOrganModal() {
-      ipcRenderer.send('open-add-organ-modal')
-    },
     openInOganization(org) {
       this.getProjects(org)
       this.setOrg(org)
@@ -65,7 +68,10 @@ export default {
     AppInfo,
     NewOrganizationButton,
     TopBarButton,
-    OrganizationListItem
+    OrganizationListItem,
+    ModalLogin,
+    ModalAddOrganization,
+
   }
 }
 </script>

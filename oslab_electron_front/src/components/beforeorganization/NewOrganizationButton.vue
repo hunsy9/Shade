@@ -1,5 +1,5 @@
 <template>
-  <button class="button" @click="$emit('openNewOrganModal')">
+  <button class="button" @click="$emit('openModalAddOrganization')">
     New Organization
   </button>
 </template>

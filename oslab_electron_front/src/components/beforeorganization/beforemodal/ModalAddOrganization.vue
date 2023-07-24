@@ -1,47 +1,71 @@
 <template>
-  <div class="modalframe">
-    <div class="header">Add Your Organization </div>
-    <div class="emailbar">
-      <span class="text1">Organization Email</span>
-      <input class="inpmail" type="text">
-      <button class="sendbtn">Code Send</button>
-    </div>
-    <div class="codebar">
-      <span class="text2">Enter the code</span>
-      <input class="inpcode" type="text">
-      <button class="authbtn" @click="save()">Authentication</button>
-    </div>
-    <div class="timeveri">
+  <div class="zidx">
+    <main>
+      <div class="modalframe">
+        <div class="header">Add Your Organization </div>
+        <div class="emailbar">
+          <span class="text1">Organization Email</span>
+          <input class="inpmail" type="text">
+          <button class="sendbtn" @click="codeSend()">Code Send</button>
+        </div>
+        <div class="codebar" v-if="show">
+          <span class="text2">Enter the code</span>
+          <input class="inpcode" type="text">
+          <button class="authbtn" @click="save()">Authentication</button>
+        </div>
+        <div class="timeveri">
 
-    </div>
+        </div>
+        
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
-import { ipcRenderer } from "electron";
-
 export default {  
   name: 'ModalAddOrganization',
   data() {
     return {
       organizationEmail: "",
       verificationCode: "",
+      show: false
     }
   },
   methods: {
     save(){
-      ipcRenderer.send('close-add-organ-modal')
+      this.$emit('closeModalAddOrganization')
+    },
+    async codeSend(){
+
+      this.show = !this.show
+      
     }
   }
 }
 </script>
 
 <style scoped>
+.zidx{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.zidx > main {
+  display: block;
+  margin: 0 auto;
+  width: 625px;
+  height: 375px;
+  background-color: #242424;
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0.2px 0.2px 4px 4px #0000002f;
+}
 .modalframe{
-  position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #242424;
 }
 .header{
   margin-top: 2rem;
