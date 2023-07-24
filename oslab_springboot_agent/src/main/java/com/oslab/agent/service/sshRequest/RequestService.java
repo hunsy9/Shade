@@ -2,6 +2,7 @@ package com.oslab.agent.service.sshRequest;
 
 import com.oslab.agent.model.transfer.requestDto.CommandDto;
 import com.oslab.agent.model.transfer.requestDto.ConnectingDto;
+import com.oslab.agent.model.transfer.requestDto.ExitDto;
 import com.oslab.agent.model.transfer.requestDto.KeyBundle;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,7 @@ import java.net.http.HttpClient;
 @Slf4j
 public class RequestService {
     public String getWebSocketUrl(int user_id, int server_id){
-        String url = "http://localhost:8082/api/wsService/makews/" + user_id +"/" + server_id;
+        String url = "http://144.24.78.122:8082/api/wsService/makews/" + user_id +"/" + server_id;
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
@@ -27,7 +28,7 @@ public class RequestService {
     }
 
     public ResponseEntity<KeyBundle> generateKey(ConnectingDto connectingDto){
-        String url = "http://localhost:8082/api/sshService/generateKey";
+        String url = "http://144.24.78.122:8082/api/sshService/generateKey";
         log.info("들어");
         RestTemplate restTemplate = new RestTemplate();
         JSONObject generatingJson = new JSONObject();
@@ -39,7 +40,7 @@ public class RequestService {
     }
 
     public void connectRoom(KeyBundle keyBundle){
-        String url = "http://localhost:8082/api/sshService/startChannel";
+        String url = "http://144.24.78.122:8082/api/sshService/startChannel";
         RestTemplate restTemplate = new RestTemplate();
         JSONObject runningJson = new JSONObject();
         runningJson.put("threadKey", keyBundle.getThreadKey());
@@ -48,12 +49,25 @@ public class RequestService {
     }
 
     public ResponseEntity<Boolean> command(CommandDto commandDto){
-        String url = "http://localhost:8082/api/sshService/command";
+        String url = "http://144.24.78.122:8082/api/sshService/command";
         RestTemplate restTemplate = new RestTemplate();
         JSONObject commandJson = new JSONObject();
         commandJson.put("key", commandDto.getKey());
         commandJson.put("command" , commandDto.getCommand());
         ResponseEntity<Boolean> response = restTemplate.postForEntity(url, commandDto, Boolean.class);
+        return response;
+    }
+
+    public ResponseEntity<Boolean> exitShell(ExitDto exitDto){
+        String url = "http://144.24.78.122:8082/api/sshService/exitShell";
+        RestTemplate restTemplate = new RestTemplate();
+        System.out.println(exitDto.getWsKey());
+        System.out.println(exitDto.getThKey());
+
+        JSONObject exitJson = new JSONObject();
+        exitJson.put("wsKey", exitDto.getWsKey());
+        exitJson.put("thKey" , exitDto.getThKey());
+        ResponseEntity<Boolean> response = restTemplate.postForEntity(url, exitJson, Boolean.class);
         return response;
     }
 }

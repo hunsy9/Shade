@@ -17,5 +17,6 @@ jwt:
 
 server:
   port: 8081
+#  address: 10.0.0.219
 
 

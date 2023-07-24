@@ -3,6 +3,7 @@ package com.oslab.agent.controller.sshRequest;
 import com.oslab.agent.model.transfer.categoryDto.CategoryDto;
 import com.oslab.agent.model.transfer.requestDto.CommandDto;
 import com.oslab.agent.model.transfer.requestDto.ConnectingDto;
+import com.oslab.agent.model.transfer.requestDto.ExitDto;
 import com.oslab.agent.model.transfer.requestDto.KeyBundle;
 import com.oslab.agent.service.sshRequest.RequestService;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,10 @@ public class RequestController {
     @PostMapping("/api/request/command")
     public ResponseEntity<Boolean> command(@RequestBody CommandDto commandDto){
         return requestService.command(commandDto);
+    }
+
+    @PostMapping("/api/request/exitShell")
+    public ResponseEntity<Boolean> exitShell(@RequestBody ExitDto exitDto){
+        return requestService.exitShell(exitDto);
     }
 }
