@@ -8,6 +8,7 @@ import com.oslab.cmanager.util.SshUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -80,5 +81,9 @@ public class SSHService implements SSHServiceInterface{
 
     public String command(Command command) {
         return sshUtil.sendCommand(command.getKey(), command.getCommand());
+    }
+
+    public ResponseEntity<Boolean> exitShell(ExitDto exitDto){
+        return sshUtil.exitShell(exitDto);
     }
 }

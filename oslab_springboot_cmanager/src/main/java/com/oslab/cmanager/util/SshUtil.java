@@ -2,9 +2,11 @@ package com.oslab.cmanager.util;
 
 import com.jcraft.jsch.*;
 import com.oslab.cmanager.configuration.websocket.entity.SshConnectionRoom;
+import com.oslab.cmanager.model.transfer.SSHDto.ExitDto;
 import com.oslab.cmanager.service.webSocketService.WebSocketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
@@ -50,11 +52,30 @@ public class SshUtil {
         return connection.requestCommand();
     }
 
-    public void disConnectSSH(String key) {
-        Session session = keyToSessionMap.get(key);
-        ChannelShell channelExec = keyToChannelMap.get(key);
+    public ResponseEntity<Boolean> exitShell(ExitDto exitDto) {
+        String wsKey = exitDto.getWsKey();
+        String thKey = exitDto.getThKey();
+
+        Session session = keyToSessionMap.get(thKey);
+        ChannelShell channelExec = keyToChannelMap.get(thKey);
+        SshThread sshThread = (SshThread) keyToSshThread.get(thKey);
+
+        sshThread.terminateThread();
         if (session != null) session.disconnect();
         if (channelExec != null) channelExec.disconnect();
-    }
 
+        boolean success = sshThread.getState()== Thread.State.TERMINATED;
+
+        if(success){
+            System.out.println("success");
+            keyToSessionMap.remove(thKey);
+            keyToChannelMap.remove(thKey);
+            keyToSshThread.remove(thKey);
+            webSocketService.terminateWsRoom(wsKey);
+            return ResponseEntity.ok().body(true);
+        }
+        else{
+            return ResponseEntity.ok().body(false);
+        }
+    }
 }

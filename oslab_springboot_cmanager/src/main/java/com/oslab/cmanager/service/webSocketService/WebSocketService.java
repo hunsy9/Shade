@@ -25,4 +25,8 @@ public class WebSocketService {
 
         return room.getRoom_id();
     }
+
+    public SshConnectionRoom terminateWsRoom(String key){
+        return sshRooms.remove(key);
+    }
 }

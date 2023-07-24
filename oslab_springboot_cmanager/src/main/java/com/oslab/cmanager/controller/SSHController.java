@@ -7,6 +7,7 @@ import com.oslab.cmanager.model.transfer.SSHDto.*;
 import com.oslab.cmanager.service.sshService.SSHService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,10 @@ public class SSHController {
     @PostMapping("api/sshService/command")
     public String command(@RequestBody Command command) throws JSchException, IOException {
         return sshService.command(command);
+    }
+    @PostMapping("api/sshService/exitShell")
+    public ResponseEntity<Boolean> exitShell(@RequestBody ExitDto exitDto){
+        return sshService.exitShell(exitDto);
     }
 
 }

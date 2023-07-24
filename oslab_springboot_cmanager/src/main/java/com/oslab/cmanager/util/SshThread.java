@@ -24,7 +24,7 @@ public class SshThread extends Thread {
 
     private BlockingQueue<String> commandQueue;
     private SimpMessageSendingOperations sendingOperations;
-    private volatile static boolean exitRequested;
+    private boolean exitRequested;
     private String command;
 
     private Session sshSession;
@@ -32,6 +32,9 @@ public class SshThread extends Thread {
     private String key;
     private String password;
     private SshUtil sshUtil;
+
+    private InputThread inputThread;
+    private OutputThread outputThread;
 
     private SshConnectionRoom sshConnectionRoom;
 
@@ -45,6 +48,7 @@ public class SshThread extends Thread {
         this.password = password;
         this.sshConnectionRoom = sshConnectionRoom;
         this.sendingOperations = sendingOperations;
+        this.exitRequested = false;
         this.commandQueue = new LinkedBlockingQueue<>();
     }
 
@@ -59,8 +63,16 @@ public class SshThread extends Thread {
         return "";
     }
 
+    public Boolean terminateThread(){
+        this.exitRequested = true;
+        inputThread.closeInputThread();
+        outputThread.closeOutputThread();
+        return this.exitRequested;
+    }
+
     @Override
     public void run() {
+        while(!exitRequested){
             try {
                 // SSH 연결 설정
                 JSch jsch = new JSch();
@@ -86,6 +98,8 @@ public class SshThread extends Thread {
                 // 입력 및 결과 수신 스레드 생성 및 시작
                 InputThread inputThread = new InputThread(channelShell);
                 OutputThread outputThread = new OutputThread(channelShell, sendingOperations, sshConnectionRoom );
+                this.inputThread = inputThread;
+                this.outputThread = outputThread;
                 inputThread.start();
                 outputThread.start();
                 commandQueue.put("");
@@ -115,14 +129,20 @@ public class SshThread extends Thread {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            System.out.println("sshThread has been Stopped.");
+        }
         }
 
     private static class InputThread extends Thread {
         private ChannelShell channelShell;
         private BlockingQueue<String> commandQueue;
 
+        private boolean exitRequest;
+
         public InputThread(ChannelShell channelShell) {
             this.channelShell = channelShell;
+            this.exitRequest = false;
             this.commandQueue = new LinkedBlockingQueue<>();
         }
 
@@ -134,27 +154,34 @@ public class SshThread extends Thread {
             }
         }
 
+        public void closeInputThread(){
+            exitRequest = !exitRequest;
+        }
+
         @Override
         public void run() {
+            while(!exitRequest){
+                try {
+                    while (true) {
+                        if (exitRequest) {
+                            break;
+                        }
 
-            try {
-                while (true) {
-                    if (exitRequested) {
-                        break;
+                        String command = commandQueue.poll();
+                        if (command != null) {
+                            // 외부에서 명령어 전달받으면 ChannelShell로 전송
+                            OutputStream outputStream = channelShell.getOutputStream();
+                            PrintStream commander = new PrintStream(outputStream,true);
+                            commander.println(command);
+                        }
+                        Thread.sleep(100);
                     }
-
-                    String command = commandQueue.poll();
-                    if (command != null) {
-                        // 외부에서 명령어 전달받으면 ChannelShell로 전송
-                        OutputStream outputStream = channelShell.getOutputStream();
-                        PrintStream commander = new PrintStream(outputStream,true);
-                        commander.println(command);
-                    }
-                    Thread.sleep(100);
+                } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (InterruptedException | IOException e) {
-                e.printStackTrace();
             }
+            System.out.println("sshInputThread has been Stopped.");
+
         }
     }
 
@@ -164,6 +191,8 @@ public class SshThread extends Thread {
         private SimpMessageSendingOperations sendingOperations;
         private String sendingUrl;
 
+        private boolean exitRequest;
+
 
         public OutputThread(ChannelShell channelShell, SimpMessageSendingOperations sendingOperations, SshConnectionRoom sshConnectionRoom) {
             int user_id = sshConnectionRoom.getUser_id();
@@ -171,28 +200,36 @@ public class SshThread extends Thread {
             String room_id = sshConnectionRoom.getRoom_id();
             this.channelShell = channelShell;
             this.sendingOperations = sendingOperations;
+            this.exitRequest = false;
             this.sendingUrl = "/sub/ws/" + user_id + "/" + server_id + "/" + room_id;
+        }
+
+        public void closeOutputThread(){
+            exitRequest = !exitRequest;
         }
 
         @Override
         public void run() {
-
-            try (InputStream inputStream = channelShell.getInputStream();
-                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-                String line;
-                while (!exitRequested) {
-                    while ((line = reader.readLine()) != null) {
-                        System.out.println(line);
-                        sendingOperations.convertAndSend(sendingUrl, line);
+            while(!exitRequest){
+                try (InputStream inputStream = channelShell.getInputStream();
+                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+                    String line;
+                    while (!exitRequest) {
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);
+                            sendingOperations.convertAndSend(sendingUrl, line);
+                        }
+                        Thread.sleep(100);
                     }
-                    Thread.sleep(100);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                Thread.currentThread().interrupt();
             }
+            System.out.println("sshOutputThread has been Stopped.");
+
         }
     }
 }
