@@ -1,14 +1,22 @@
 <template>
-  <button class="button" @click="$emit('openModalAddServer')">
+  <button class="button" @click="$emit('openModalAddServer')" v-if="categ_l2 && categ_l1 && proj">
     Add New Server
   </button>
 </template>
     
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState } = createNamespacedHelpers('inOrganization')
+
 export default {
   name: 'NewServerButton',
-  methods: {
-  } 
+  computed: {
+    ...mapState({
+      proj: state => state.selected_proj,
+      categ_l1: state => state.selected_categ_l1,
+      categ_l2: state => state.selected_categ_l2
+    }),
+  }
 }
 </script>
 
