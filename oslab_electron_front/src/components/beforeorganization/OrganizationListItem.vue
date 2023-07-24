@@ -2,12 +2,13 @@
   <div class="listframe">
     <div class="itembox" v-for="(item, index) in limitedList" :key="index" :style="{ backgroundColor: colors[index % colors.length] }">
       <span class="oname"> {{ item.org_name }} </span>
-      <button class="cbutton" @click="$emit('openInOganization', item)">
-        Connect
-      </button>
-      <button class="dbutton">
+      <button>
         Delete
       </button>
+      <button @click="$emit('openInOganization', item)">
+        Connect
+      </button>
+
     </div>
   </div>
 </template>
@@ -54,30 +55,15 @@ export default {
   width: 20rem;
   margin: 0;
 }
-.cbutton{
-  font-size: 1rem;
-  position: absolute;
-  right: 11rem;
-  color: white;
-  background-color: #989898;
-  padding-left: 1.8rem;
-  padding-right: 1.8rem;
+button{  
+  float: right;
+  background-color: #989898c2;
   border-radius: 0.2rem;
   border: none;
   box-shadow: 0 1px 1px 0.5px #0000002f;
   cursor:pointer;
-}
-.dbutton{
-  font-size: 1rem;
-  position: absolute;
-  right: 4rem;
   color: white;
-  background-color: #989898;
-  padding-left: 1.8rem;
-  padding-right: 1.8rem;
-  border-radius: 0.2rem;
-  border: none;
-  box-shadow: 0 1px 1px 0.5px #0000002f;
-  cursor:pointer;
+  padding: 0.1rem 1.8rem;
+  margin-right: 1rem;
 }
 </style>

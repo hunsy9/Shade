@@ -3,12 +3,12 @@
     <div class="admin">
       <img src="@/assets/contriAdmin.png">
       <span>{{ admin_email }}</span>
-      <button class="edit">Edit</button>
+      <button>Edit</button>
     </div>
     <div v-for="(item, index) in contributors" :key="index" class="normal">
       <span>{{ item.contributor_email }}</span>
-      <button>Edit</button>
       <button>Delete</button>
+      <button>Edit</button>
     </div>
   </div>
 </template>

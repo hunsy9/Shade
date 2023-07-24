@@ -75,24 +75,15 @@ export default {
   width: 20rem;
   margin: 0;
 }
-.ibutton{
+button{  
+  float: right;
+  background-color: #989898c2;
+  border-radius: 0.2rem;
+  border: none;
+  box-shadow: 0 1px 1px 0.5px #0000002f;
+  cursor:pointer;
+  color: white;
   padding: 0.1rem 2rem;
-  margin-left: 17rem;
-  color: white;
-  background-color: #989898;
-  border-radius: 0.2rem;
-  border: none;
-  box-shadow: 0 1px 1px 0.5px #0000002f;
-  cursor:pointer;
-}
-.cbutton{
-  padding: 0.1rem 1rem;
-  margin-left: 1rem;
-  color: white;
-  background-color: #989898;
-  border-radius: 0.2rem;
-  border: none;
-  box-shadow: 0 1px 1px 0.5px #0000002f;
-  cursor:pointer;
+  margin-right: 1rem;
 }
 </style>
