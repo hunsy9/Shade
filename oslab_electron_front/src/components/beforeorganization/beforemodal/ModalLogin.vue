@@ -71,7 +71,6 @@ export default {
   left: 0;
   bottom: 0;
   right: 0;
-  /* display: flex; */
 }
 .zidx > main {
   display: block;
@@ -84,6 +83,8 @@ export default {
   box-shadow: 0.2px 0.2px 4px 4px #0000002f;
 }
 .modalframe {
+  margin-top: 2rem;
+  padding-top: 5rem;
   position: relative;
 }
 .sshdesktopicon {
@@ -92,7 +93,6 @@ export default {
   background-color: #d9d9d9;
   border-radius: 0.5rem;
   display: block;
-  margin-top: 5rem;
   margin-left: auto;
   margin-right: auto;
 }

@@ -19,7 +19,7 @@
       <div v-else-if="mode == 1">
         <div class="content">
           <PathBar/>
-          <NewServerButton v-if="isAdmin == true"/>
+          <NewServerButton v-if="isAdmin == true" @openModalAddServer="openModalAddServer = true"/>
           <ServerListItem v-if="catl2"/>
         </div>
         <div class="rightframe">
@@ -42,6 +42,9 @@
   <div v-else-if="mode == 3 && full == true">
     <TerminalWindow/>
   </div>
+
+  <ModalAddServer v-if="openModalAddServer" @closeModalAddServer="openModalAddServer = false"/>
+
   <button @click="testIn()">
   화면 전환 버튼(개발용 추후 삭제)
   </button>
@@ -70,6 +73,8 @@ import ContributorListItem from '@/components/inorganization/ContributorListItem
 
 import TerminalWindow from '@/components/inorganization/TerminalWindow.vue'
 
+import ModalAddServer from '@/components/inorganization/inmodal/ModalAddServer.vue'
+
 import { ipcRenderer } from 'electron';
 import router from '@/router/index.js';
 
@@ -81,6 +86,7 @@ export default {
     return {
       onTerminal: false,
       onContributors: false,
+      openModalAddServer: false,
     }
   },
   computed: {
@@ -117,6 +123,7 @@ export default {
     NewContributorButton,
     ContributorListItem,
     TerminalWindow,
+    ModalAddServer,
   }
 }
 </script>

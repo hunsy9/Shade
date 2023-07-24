@@ -1,5 +1,5 @@
 <template>
-  <button @click="openAppLoginModal" v-if="isLogin == false">
+  <button @click="$emit('openModalLogin')" v-if="isLogin == false">
     <p>Sign in</p>
     <img src="@/assets/user.png">
   </button>
@@ -22,11 +22,6 @@ export default {
       isLogin: state => state.isLogin,
       isAdmin: state => state.isAdmin
     }),
-  },
-  methods: {
-    openAppLoginModal() {
-      this.$emit("openModalLogin")
-    },
   },
 }
 </script>

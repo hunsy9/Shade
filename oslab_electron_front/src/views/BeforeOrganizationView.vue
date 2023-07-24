@@ -3,7 +3,7 @@
 
     <div class="leftsideframe">
       <AppInfo/>
-      <NewOrganizationButton v-if="isLogin ==true" @openNewOrganModal="openNewOrganModal"/>
+      <NewOrganizationButton v-if="isLogin ==true" @openModalAddOrganization="openModalAddOrganization = true"/>
     </div>
 
     <div class="topbarframe">
@@ -20,6 +20,8 @@
       </div>
     </div>
     <ModalLogin v-if="openModalLogin" @closeAppLoginModal="openModalLogin = false"/>
+    <ModalAddOrganization v-if="openModalAddOrganization" @closeModalAddOrganization="openModalAddOrganization = false"/>
+
   
   </div>
   
@@ -33,8 +35,7 @@ import TopBarButton from '@/components/common/TopBarButton.vue'
 import OrganizationListItem from '@/components/beforeorganization/OrganizationListItem.vue'
 
 import ModalLogin from '@/components/beforeorganization/beforemodal/ModalLogin.vue'
-
-import { ipcRenderer } from 'electron'
+import ModalAddOrganization from '@/components/beforeorganization/beforemodal/ModalAddOrganization.vue'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapMutations, mapActions } = createNamespacedHelpers('inOrganization')
@@ -46,7 +47,8 @@ export default {
     return {
       hasOrganization: true,
       organizationNames: [],
-      openModalLogin: false
+      openModalLogin: false,
+      openModalAddOrganization: false
     }
   },
   computed: {
@@ -55,9 +57,6 @@ export default {
     }),
   },
   methods: {
-    openNewOrganModal() {
-      ipcRenderer.send('open-add-organ-modal')
-    },
     openInOganization(org) {
       this.getProjects(org)
       this.setOrg(org)
@@ -70,8 +69,8 @@ export default {
     NewOrganizationButton,
     TopBarButton,
     OrganizationListItem,
-
     ModalLogin,
+    ModalAddOrganization,
 
   }
 }

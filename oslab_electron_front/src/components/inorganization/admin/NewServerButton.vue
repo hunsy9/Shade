@@ -1,18 +1,13 @@
 <template>
-  <button class="button" @click="openNewServerModal">
+  <button class="button" @click="$emit('openModalAddServer')">
     Add New Server
   </button>
 </template>
     
 <script>
-import { ipcRenderer } from 'electron'
-
 export default {
   name: 'NewServerButton',
   methods: {
-    openNewServerModal(){
-      ipcRenderer.send('open-add-server-modal')
-    }
   } 
 }
 </script>
