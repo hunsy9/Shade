@@ -146,7 +146,7 @@ export default ({
         async Contributors(context){
             const data = await api.getContributors(context.state.organId)
             if(data){
-              context.commit("selectContributors")
+            //   context.commit("selectContributors")
               return data
             }
             else{

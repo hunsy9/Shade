@@ -3,27 +3,29 @@
     <div class="admin">
       <img src="@/assets/contriAdmin.png">
       <span>{{ admin_email }}</span>
-      <button>Edit</button>
+      <button v-if="isAdmin">Edit</button>
     </div>
     <div v-for="(item, index) in contributors" :key="index" class="normal">
       <span>{{ item.contributor_email }}</span>
-      <button>Delete</button>
-      <button>Edit</button>
+      <button v-if="isAdmin">Delete</button>
+      <button v-if="isAdmin">Edit</button>
     </div>
   </div>
 </template>
     
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('contributorInfo')
+import { mapState } from "vuex";
 
 export default {
   name: 'ContributorListItem', 
   computed:{
-    ...mapState({
+    ...mapState('login', {
+      isAdmin: state => state.isAdmin
+    }),
+    ...mapState('contributorInfo', {
       admin_email: state => state.admin_email.contributor_email,
       contributors: state => state.contributors
-    })
+    }),
   }
 }
 </script>
