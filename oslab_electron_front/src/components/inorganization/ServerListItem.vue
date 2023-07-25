@@ -7,10 +7,16 @@
             <span class="sname">
               {{ server.server_name }}
             </span>
-            <button class="ibutton">
+            <button v-if="!isAdmin" @click="$emit('openModalServerInfo', server.server_name, server.server_desc)">
               Info
             </button>
-            <button class="cbutton" @click="connectServer(server.server_id)">
+            <button v-if="isAdmin">
+              Delete
+            </button>
+            <button v-if="isAdmin">
+              Edit
+            </button>
+            <button @click="connectServer(server.server_id)">
               Connect
             </button>
           </div>
@@ -21,9 +27,7 @@
 </template>
   
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapGetters } = createNamespacedHelpers('inOrganization')
-const { mapActions } = createNamespacedHelpers('terminal')
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: 'ServerListItem',
@@ -33,14 +37,17 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState('inOrganization', {
       categ_l1: state => state.selected_categ_l1,
       categ_l2: state => state.selected_categ_l2
     }),
-    ...mapGetters(['getServerList'])
+    ...mapState('login', {
+      isAdmin: state => state.isAdmin,
+    }),
+    ...mapGetters('inOrganization', ['getServerList'])
   },
   methods: {
-    ...mapActions(['connectTerminal']),
+    ...mapActions('terminal', ['connectTerminal']),
     isTrue(key){
       let info = key.split(":")
       let l1 = info[1]
@@ -75,24 +82,15 @@ export default {
   width: 20rem;
   margin: 0;
 }
-.ibutton{
-  padding: 0.1rem 2rem;
-  margin-left: 17rem;
-  color: white;
-  background-color: #989898;
+button{  
+  float: right;
+  background-color: #989898c2;
   border-radius: 0.2rem;
   border: none;
   box-shadow: 0 1px 1px 0.5px #0000002f;
   cursor:pointer;
-}
-.cbutton{
-  padding: 0.1rem 1rem;
-  margin-left: 1rem;
   color: white;
-  background-color: #989898;
-  border-radius: 0.2rem;
-  border: none;
-  box-shadow: 0 1px 1px 0.5px #0000002f;
-  cursor:pointer;
+  padding: 0.1rem 1.5rem;
+  margin-right: 1rem;
 }
 </style>

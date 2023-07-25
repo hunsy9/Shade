@@ -5,7 +5,10 @@
 
     <img src="@/assets/zoomIn.png" class="zoomin" @click="toggle" v-if="!fulll" />
     <img src="@/assets/zoomOut.png" class="zoomin" @click="toggle" v-else />
+
+    <button class="exitShell" @click="exitShell">x</button>
   </div>
+
 </template>
 
 <script>
@@ -18,6 +21,7 @@ import { Terminal } from "xterm";
 import { WebLinksAddon } from "xterm-addon-web-links";
 import { FitAddon } from "xterm-addon-fit";
 import "xterm/css/xterm.css";
+import { terminalState } from '../../store/inOrganization';
 
 export default {
   name: "TerminalWindow",
@@ -40,7 +44,29 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations("inOrganization", ["toggleFullWindow"]),
+    ...mapMutations("inOrganization", ["toggleFullWindow","setExitShellstatus"]),
+    async exitShell(){
+      var returnValue = confirm("Are you sure you want to shut down the terminal?");
+      if(returnValue){
+        const keyBundle = {
+          wsKey: this.wskey,
+          thKey: this.thkey
+        }
+        console.log(keyBundle.thKey)
+        let response = await fetch("http://152.67.213.248:8081/api/request/exitShell", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(keyBundle),
+        });
+        if(response.body){
+          this.setExitShellstatus(terminalState.TERMINATED)
+        }
+      }
+
+
+    },
     toggle() {
       if (this.fulll) {
         this.term.resize(40, 80);
@@ -101,6 +127,7 @@ export default {
       cols: 60,
     });
     this.connect();
+
   },
   mounted() {
     this.term.open(document.getElementById("terminal"));
@@ -116,6 +143,8 @@ export default {
     this.term.loadAddon(new WebLinksAddon());
     this.term.loadAddon(this.fit_addon);
     this.fit_addon.fit();
+
+    this.setExitShellstatus(terminalState.OPENED)
 
     this.term.prompt = () => {
       this.term.write("\n\x1b[32mseunghun>" + curr_line + "\n");
@@ -301,9 +330,20 @@ export default {
   position: absolute;
   width: 2rem;
   height: 2rem;
-  right: 2rem;
+  right: 4.5rem;
   bottom: 2rem;
   z-index: 1;
   cursor: pointer;
+}
+.exitShell{
+  backgroung-color: #D9D9D9;
+  border-radius: 5px;
+  color: #F96464;
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 1;
 }
 </style>

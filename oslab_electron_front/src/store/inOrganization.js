@@ -2,6 +2,12 @@ import api from '@/api/login.js'
 import { ipcRenderer } from "electron"
 import router from '@/router/index.js'
 
+export const terminalState = {
+    INIT: 0,
+    OPENED: 1,
+    TERMINATED: 2,
+}
+
 export default ({
     namespaced: true,
 
@@ -29,6 +35,7 @@ export default ({
         selected_categ_l1: "",
         selected_categ_l2: "",
         selected_categid: "",
+        exitShellState: 0
     },
     getters: {
         getCategory (state){
@@ -98,7 +105,6 @@ export default ({
             const a = Object.keys(state.projects.find(project => project.project_name === state.selected_proj).project_server)
             for(var i = 0; i < a.length; i++){
                 const b = a[i].split(":")
-                console.log(b)
                 if(b[1] == state.selected_categ_l1 && b[2] == state.selected_categ_l2){
                     state.selected_categid = b[0]
                 }
@@ -118,6 +124,9 @@ export default ({
         },
         toggleFullWindow(state){
             state.full = !state.full
+        },
+        setExitShellstatus(state, terminalState){
+            state.exitShellState = terminalState;
         }
     },
     actions: {
@@ -136,7 +145,7 @@ export default ({
         async Contributors(context){
             const data = await api.getContributors(context.state.organId)
             if(data){
-              context.commit("selectContributors")
+            //   context.commit("selectContributors")
               return data
             }
             else{

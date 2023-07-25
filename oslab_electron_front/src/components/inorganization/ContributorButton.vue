@@ -6,9 +6,9 @@
 </template>
       
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapActions } = createNamespacedHelpers('inOrganization')
-const { mapMutations } = createNamespacedHelpers('contributorInfo')
+import { mapState, mapActions, mapMutations } from "vuex";
+import { terminalState } from '../../store/inOrganization';
+
 
 export default {
   name: 'ContributorButton', 
@@ -18,17 +18,25 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      mode: state => state.mode
+    ...mapState('inOrganization',{
+      mode: state => state.mode,
+      exitStatus : state => state.exitShellState
     })
   },
   methods: {
-    ...mapMutations(['setContributors']),
-    ...mapActions(['Contributors']),
+    ...mapMutations('contributorInfo',['setContributors']),
+    ...mapMutations('inOrganization',['selectContributors']),
+    ...mapActions('inOrganization',['Contributors']),
     async inContributors(){
+      if(this.exitStatus == terminalState.OPENED){
+        alert("The terminal did not shut down\n\n" +
+            "Shut down the terminal first!")
+        return
+      }
       const data = await this.Contributors()
-      if(data){
+      if(data.admin_email.user_id){
         this.setContributors(data)
+        this.selectContributors()
       }
       this.isClick = true
     }

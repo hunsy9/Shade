@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD:oslab_electron_front/src/views/beforemodal/ModalAddOrganization.vue
   <div class="modalframe">
     <div class="header">Add Your Organization </div>
     <div class="emailbar">
@@ -20,23 +21,48 @@
       <button class="authbtn" @click="auth" v-if="is_auth==false"> Authentication </button>
       <button class="save" @click="save" v-if="is_auth==true"> Save to your Desktop </button>
     </div>
+=======
+  <div class="zidx">
+    <main>
+      <div class="modalframe">
+        <div class="header">Add Your Organization </div>
+        <div class="emailbar">
+          <span class="text1">Organization Email</span>
+          <input class="inpmail" type="text">
+          <button class="sendbtn" @click="codeSend()">Code Send</button>
+        </div>
+        <div class="codebar" v-if="show">
+          <span class="text2">Enter the code</span>
+          <input class="inpcode" type="text">
+          <button class="authbtn" @click="save()">Authentication</button>
+        </div>
+        <div class="timeveri">
+
+        </div>
+        
+      </div>
+    </main>
+>>>>>>> 893467719e7745e9f4dd532438e0ea583e02e4a7:oslab_electron_front/src/components/beforeorganization/beforemodal/ModalAddOrganization.vue
   </div>
 </template>
 
 <script>
-import { ipcRenderer } from "electron";
-
 export default {  
   name: 'ModalAddOrganization',
   data() {
     return {
       organizationEmail: "",
       verificationCode: "",
+<<<<<<< HEAD:oslab_electron_front/src/views/beforemodal/ModalAddOrganization.vue
       is_auth: false,
+=======
+      show: false
+>>>>>>> 893467719e7745e9f4dd532438e0ea583e02e4a7:oslab_electron_front/src/components/beforeorganization/beforemodal/ModalAddOrganization.vue
     }
   },
   methods: {
     save(){
+<<<<<<< HEAD:oslab_electron_front/src/views/beforemodal/ModalAddOrganization.vue
       this.is_auth = false
       ipcRenderer.send('close-add-organ-modal')
     },
@@ -47,16 +73,40 @@ export default {
       this.is_auth = false
       ipcRenderer.send('close-add-organ-modal')
     },
+=======
+      this.$emit('closeModalAddOrganization')
+    },
+    async codeSend(){
+
+      this.show = !this.show
+      
+    }
+>>>>>>> 893467719e7745e9f4dd532438e0ea583e02e4a7:oslab_electron_front/src/components/beforeorganization/beforemodal/ModalAddOrganization.vue
   }
 }
 </script>
 
 <style scoped>
+.zidx{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.zidx > main {
+  display: block;
+  margin: 0 auto;
+  width: 625px;
+  height: 375px;
+  background-color: #242424;
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0.2px 0.2px 4px 4px #0000002f;
+}
 .modalframe{
-  position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #242424;
 }
 .header{
   margin-top: 2rem;

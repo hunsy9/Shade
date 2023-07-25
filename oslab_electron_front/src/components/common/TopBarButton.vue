@@ -1,5 +1,5 @@
 <template>
-  <button @click="openAppLoginModal" v-if="isLogin == false">
+  <button @click="$emit('openModalLogin')" v-if="isLogin == false">
     <p>Sign in</p>
     <img src="@/assets/user.png">
   </button>
@@ -13,7 +13,6 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('login')
-import { ipcRenderer } from 'electron'
 
 export default {
   name: 'TopBarButton',
@@ -23,11 +22,6 @@ export default {
       isLogin: state => state.isLogin,
       isAdmin: state => state.isAdmin
     }),
-  },
-  methods: {
-    openAppLoginModal() {
-      ipcRenderer.send('open-app-login-modal')
-    },
   },
 }
 </script>

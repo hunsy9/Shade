@@ -1,34 +1,36 @@
 <template>
-  <div class="background">
-    <div class="top">Add New Server</div>
-    <div>
-      <div class="servername">
-        <span> Custom Server Name </span>
-        <input type="text" v-model="server.server_name"/>
+  <div class="zidx">
+    <main>
+      <div class="top">Add New Server</div>
+      <div>
+        <div class="servername">
+          <span> Custom Server Name </span>
+          <input type="text" v-model="server.server_name"/>
+        </div>
+        <div class="servername">
+          <span> Custom Server Desc </span>
+          <input type="text" v-model="server.server_desc"/>
+        </div>
+        <div class="servername">
+          <span> User Name </span>
+          <input type="text" v-model="server.username"/>
+        </div>
+        <div class="servername">
+          <span> Host </span>
+          <input type="text" v-model="server.host"/>
+        </div>
+        <div class="servername">
+          <span> Port </span>
+          <input type="number" v-model="server.port"/>
+        </div>
+        <div class="servername">
+          <span> Password </span>
+          <input type="password" v-model="server.password"/>
+        </div>
       </div>
-      <div class="servername">
-        <span> Custom Server Desc </span>
-        <input type="text" v-model="server.server_desc"/>
-      </div>
-      <div class="servername">
-        <span> User Name </span>
-        <input type="text" v-model="server.username"/>
-      </div>
-      <div class="servername">
-        <span> Host </span>
-        <input type="text" v-model="server.host"/>
-      </div>
-      <div class="servername">
-        <span> Port </span>
-        <input type="number" v-model="server.port"/>
-      </div>
-      <div class="servername">
-        <span> Password </span>
-        <input type="password" v-model="server.password"/>
-      </div>
-    </div>
-    <button @click="closeAddServer" class="cancel">Cancel</button>
-    <button @click="addServer(server)">Save</button>
+      <button @click="$emit('closeModalAddServer')" class="cancel">Cancel</button>
+      <button @click="addServer(server)">Save</button>
+    </main>
   </div>
 </template>
 
@@ -66,18 +68,29 @@ export default {
       server.port = null
       server.password = ""
     },
-    closeAddServer(){
-      ipcRenderer.send('close-add-server-modal')
-    }
   },
 }
 </script>
 
 <style scoped>
-.background {
-  width: 100vw;
-  height: 100vh;
+.zidx{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.zidx > main {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  width: 500px;
+  height: 400px;
   background-color: #242424;
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0.2px 0.2px 4px 4px #0000002f;
 }
 .top {
   color: white;
@@ -111,7 +124,6 @@ button{
   border-radius: 0.2rem;
   border: none;
   box-shadow: 0 0.2px 1px 1px #0000002f;
-  position: absolute;
   top: 19rem;
   left: 25rem;
   cursor: pointer;

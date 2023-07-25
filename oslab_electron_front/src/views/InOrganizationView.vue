@@ -19,8 +19,8 @@
       <div v-else-if="mode == 1">
         <div class="content">
           <PathBar/>
-          <NewServerButton v-if="isAdmin == true"/>
-          <ServerListItem v-if="catl2"/>
+          <NewServerButton v-if="isAdmin == true" @openModalAddServer="openModalAddServer = true"/>
+          <ServerListItem v-if="catl2" @openModalServerInfo="doOpenModalServerInfo"/>
         </div>
         <div class="rightframe">
           <RightExpandingMenu/>
@@ -42,6 +42,10 @@
   <div v-else-if="mode == 3 && full == true">
     <TerminalWindow/>
   </div>
+
+  <ModalAddServer v-if="openModalAddServer" @closeModalAddServer="openModalAddServer = false"/>
+  <ModalServerInfo :sName="sName" :sDesc="sDesc" v-if="openModalServerInfo" @closeModalAddServer="openModalServerInfo = false"/>
+
   <button @click="testIn()">
   화면 전환 버튼(개발용 추후 삭제)
   </button>
@@ -58,7 +62,6 @@ import NewProjectButton from '@/components/inorganization/admin/NewProjectButton
 import OrganizationName from '@/components/inorganization/OrganizationName.vue'
 import TopBarButton from '@/components/common/TopBarButton.vue'
 
-
 import PathBar from '@/components/inorganization/PathBar.vue'
 import NewServerButton from '@/components/inorganization/admin/NewServerButton.vue'
 import ServerListItem from '@/components/inorganization/ServerListItem.vue'
@@ -69,6 +72,9 @@ import NewContributorButton from '@/components/inorganization/admin/NewContribut
 import ContributorListItem from '@/components/inorganization/ContributorListItem.vue'
 
 import TerminalWindow from '@/components/inorganization/TerminalWindow.vue'
+
+import ModalAddServer from '@/components/inorganization/inmodal/ModalAddServer.vue'
+import ModalServerInfo from '@/components/inorganization/inmodal/ModalServerInfo.vue'
 
 import { ipcRenderer } from 'electron';
 import router from '@/router/index.js';
@@ -81,6 +87,10 @@ export default {
     return {
       onTerminal: false,
       onContributors: false,
+      openModalAddServer: false,
+      openModalServerInfo: false,
+      sName: "",
+      sDesc: ""
     }
   },
   computed: {
@@ -101,6 +111,12 @@ export default {
       router.push('/')
       ipcRenderer.send('reset-window')
     },
+    doOpenModalServerInfo(name, desc){
+      console.log("자식한테 받음" + name + desc)
+      this.sName = name
+      this.sDesc = desc
+      this.openModalServerInfo = true
+    }
   },
   components: {
     AppInfo,
@@ -117,6 +133,8 @@ export default {
     NewContributorButton,
     ContributorListItem,
     TerminalWindow,
+    ModalAddServer,
+    ModalServerInfo
   }
 }
 </script>

@@ -1,19 +1,22 @@
 <template>
-  <button class="button" @click="openNewServerModal">
+  <button class="button" @click="$emit('openModalAddServer')" v-if="categ_l2 && categ_l1 && proj">
     Add New Server
   </button>
 </template>
     
 <script>
-import { ipcRenderer } from 'electron'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState } = createNamespacedHelpers('inOrganization')
 
 export default {
   name: 'NewServerButton',
-  methods: {
-    openNewServerModal(){
-      ipcRenderer.send('open-add-server-modal')
-    }
-  } 
+  computed: {
+    ...mapState({
+      proj: state => state.selected_proj,
+      categ_l1: state => state.selected_categ_l1,
+      categ_l2: state => state.selected_categ_l2
+    }),
+  }
 }
 </script>
 
