@@ -59,6 +59,7 @@ async function createWindow() {
     height: 375, 
     parent: win, 
     titleBarStyle: 'hidden',
+    modal: true,
     show: false,
     resizable: true,
     movavle: true,

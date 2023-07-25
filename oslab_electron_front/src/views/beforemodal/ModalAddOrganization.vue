@@ -4,15 +4,21 @@
     <div class="emailbar">
       <span class="text1">Organization Email</span>
       <input class="inpmail" type="text">
-      <button class="sendbtn">Code Send</button>
     </div>
-    <div class="codebar">
+    <div class="codebar" v-if="is_auth==true">
       <span class="text2">Enter the code</span>
       <input class="inpcode" type="text">
-      <button class="authbtn" @click="save()">Authentication</button>
+    </div>
+    <div class="dumydiv" v-if="is_auth==false">
+      <input class="dumyinp" type="text">
     </div>
     <div class="timeveri">
 
+    </div>
+    <div class="btn">
+      <button class="cancelbtn" @click="closeNewOrganModal"> Cancel </button>
+      <button class="authbtn" @click="auth" v-if="is_auth==false"> Authentication </button>
+      <button class="save" @click="save" v-if="is_auth==true"> Save to your Desktop </button>
     </div>
   </div>
 </template>
@@ -26,12 +32,21 @@ export default {
     return {
       organizationEmail: "",
       verificationCode: "",
+      is_auth: false,
     }
   },
   methods: {
     save(){
+      this.is_auth = false
       ipcRenderer.send('close-add-organ-modal')
-    }
+    },
+    auth() {
+      this.is_auth = true
+    },
+    closeNewOrganModal() {
+      this.is_auth = false
+      ipcRenderer.send('close-add-organ-modal')
+    },
   }
 }
 </script>
@@ -98,16 +113,56 @@ export default {
   left: 0.5rem;
   text-align: center;
   background-color: #565656;
-  width: 45%;
+  width: 19.5%;
   height: 1.4rem;
   border: 1px;
 }
-.authbtn{
+.dumydiv {
+  margin-top: 0.3rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.dumyinp {
   position: relative;
-  left: 0.7rem;
+  left: 0.5rem;
+  width: 0%;
+  height: 1.4rem;
+  border: 1px;
+  visibility: hidden;
+}
+.cancelbtn {
+  position: relative;
+  left: 1rem;
+  top: 9.3rem;
   color: white;
   background-color: #989898cf;
   width: 6rem;
+  height: 1.7rem;
+  border-radius: 0.2rem;
+  border: none;
+  box-shadow: 0 0.2px 1px 1px #0000002f;
+  cursor:pointer;
+}
+.authbtn{
+  position: relative;
+  left: 26.3rem;
+  top: 9.3rem;
+  color: white;
+  background-color: #989898cf;
+  width: 6rem;
+  height: 1.7rem;
+  border-radius: 0.2rem;
+  border: none;
+  box-shadow: 0 0.2px 1px 1px #0000002f;
+  cursor:pointer;
+}
+.save {
+  position: relative;
+  left: 20.3rem;
+  top: 9.3rem;
+  color: white;
+  background-color: #989898cf;
+  width: 12rem;
   height: 1.7rem;
   border-radius: 0.2rem;
   border: none;
