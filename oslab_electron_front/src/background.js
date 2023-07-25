@@ -54,26 +54,7 @@ async function createWindow() {
   //   }
   // })
 
-<<<<<<< HEAD
-  const addOrganModal = new BrowserWindow({ 
-    width: 625, 
-    height: 375, 
-    parent: win, 
-    titleBarStyle: 'hidden',
-    modal: true,
-    show: false,
-    resizable: true,
-    movavle: true,
-    minimizable: false,
-    maximizable: false,
-    webPreferences: {
-      // Use pluginOptions.nodeIntegration, leave this alone
-      // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-      contextIsolation: false
-    }
-  })
-=======
+
   // const addOrganModal = new BrowserWindow({ 
   //   width: 625, 
   //   height: 375, 
@@ -91,7 +72,7 @@ async function createWindow() {
   //     contextIsolation: false
   //   }
   // })
->>>>>>> 893467719e7745e9f4dd532438e0ea583e02e4a7
+
 
   // const addServerModal = new BrowserWindow({ 
   //   width: 500, 
