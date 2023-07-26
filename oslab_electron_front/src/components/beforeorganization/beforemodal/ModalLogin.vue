@@ -57,6 +57,8 @@ export default {
       this.$emit("closeAppLoginModal")
     },
     signUp(){
+      this.$emit("closeAppLoginModal")
+      this.$emit("openAppSignUpModal")
     },
     ...mapActions(['tryLogin']),
     ...mapMutations(['setOrgInfo'])
