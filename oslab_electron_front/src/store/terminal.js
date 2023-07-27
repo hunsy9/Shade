@@ -1,4 +1,5 @@
 import api from '@/api/login.js'
+import inOrganization from "@/store/inOrganization";
 
 export default ({
     namespaced: true,
@@ -8,7 +9,7 @@ export default ({
         server_id: 0,
         room_id: "",
         threadKey: "",
-        webSocketKey: ""
+        webSocketKey: "",
     },
     getters: {
     },
@@ -24,7 +25,8 @@ export default ({
         },
         setWSKey(state, webSocketKey){
             state.webSocketKey = webSocketKey
-        }
+        },
+
     },
     actions: {
         async connectTerminal(context, server_id){
@@ -47,13 +49,20 @@ export default ({
                         context.commit('setThreadKey', key.threadKey)
                         context.commit('setWSKey', key.webSocketKey)
                         if(key){
+                            const keyBundle = {
+                                "threadKey": key.threadKey,
+                                "webSocketKey": key.webSocketKey,
+                                "org_id" : inOrganization.state.organId,
+                                "server_id" : server_id,
+                                "keyExistence" : key.keyExistence
+                            }
                             const server = "http://152.67.213.248:8081/"
                             fetch(`${server}api/request/connect`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
                                 },
-                                body: JSON.stringify(key)
+                                body: JSON.stringify(keyBundle)
                             })
                             // 터미널 모드로 설정
                             context.commit('inOrganization/selectTerminal', null, { root: true })

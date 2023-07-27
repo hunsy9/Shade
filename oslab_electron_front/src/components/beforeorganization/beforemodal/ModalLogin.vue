@@ -171,6 +171,7 @@ export default {
   width: 16rem;
   height: 2rem;
   border: none;
+  outline: none;
 }
 .continuebtn {
   font-size: 1rem;

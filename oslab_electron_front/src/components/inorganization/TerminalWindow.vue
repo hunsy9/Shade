@@ -5,10 +5,9 @@
 
     <img src="@/assets/zoomIn.png" class="zoomin" @click="toggle" v-if="!fulll" />
     <img src="@/assets/zoomOut.png" class="zoomin" @click="toggle" v-else />
-
+    <LoadingSpinner v-if="isLoading"></LoadingSpinner>
     <button class="exitShell" @click="exitShell">x</button>
   </div>
-
 </template>
 
 <script>
@@ -21,10 +20,14 @@ import { Terminal } from "xterm";
 import { WebLinksAddon } from "xterm-addon-web-links";
 import { FitAddon } from "xterm-addon-fit";
 import "xterm/css/xterm.css";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { terminalState } from '../../store/inOrganization';
 
 export default {
   name: "TerminalWindow",
+  components:{
+    LoadingSpinner
+  },
   data() {
     return {
       term: undefined,
@@ -32,6 +35,7 @@ export default {
       shell_head: "",
       flag: false,
       flag2: false,
+      isLoading: false
     };
   },
   computed: {
@@ -64,8 +68,6 @@ export default {
           this.setExitShellstatus(terminalState.TERMINATED)
         }
       }
-
-
     },
     toggle() {
       if (this.fulll) {
@@ -105,6 +107,7 @@ export default {
               }
             }
           });
+
         },
         (error) => {
           // 소켓 연결 실패
@@ -127,7 +130,6 @@ export default {
       cols: 60,
     });
     this.connect();
-
   },
   mounted() {
     this.term.open(document.getElementById("terminal"));
@@ -336,7 +338,7 @@ export default {
   cursor: pointer;
 }
 .exitShell{
-  backgroung-color: #D9D9D9;
+  background-color: #D9D9D9;
   border-radius: 5px;
   color: #F96464;
   position: absolute;
