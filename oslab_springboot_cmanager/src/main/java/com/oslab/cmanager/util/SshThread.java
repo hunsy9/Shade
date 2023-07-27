@@ -32,15 +32,14 @@ public class SshThread extends Thread {
     private String key;
     private String password;
     private SshUtil sshUtil;
-
     private InputThread inputThread;
     private OutputThread outputThread;
-
     private SshConnectionRoom sshConnectionRoom;
+    private Long org_id;
+    private Long server_id;
+    private Boolean keyExistence;
 
-
-    public SshThread(String key, String password, String initCommand, SshUtil sshUtil, SshConnectionRoom sshConnectionRoom, SimpMessageSendingOperations sendingOperations) {
-
+    public SshThread(String key, String password, String initCommand, SshUtil sshUtil, SshConnectionRoom sshConnectionRoom, SimpMessageSendingOperations sendingOperations, Long org_id, Long server_id, Boolean keyExistence) {
         System.out.println("ssh Thread generated.");
         this.command = initCommand;
         this.sshUtil = sshUtil;
@@ -50,6 +49,9 @@ public class SshThread extends Thread {
         this.sendingOperations = sendingOperations;
         this.exitRequested = false;
         this.commandQueue = new LinkedBlockingQueue<>();
+        this.org_id = org_id;
+        this.server_id = server_id;
+        this.keyExistence = keyExistence;
     }
 
     public String requestCommand() {
@@ -70,12 +72,24 @@ public class SshThread extends Thread {
         return this.exitRequested;
     }
 
+    public String findSSHKey(Long org_id, Long server_id){
+        String DATA_DIRECTORY = "/home/opc/oidc/key/"+org_id+"/"+server_id;
+        File dir = new File(DATA_DIRECTORY);
+        File files[] = dir.listFiles();
+        File targetKey = Arrays.stream(files).toList().get(0);
+        return targetKey.toString();
+    }
+
     @Override
     public void run() {
         while(!exitRequested){
             try {
                 // SSH 연결 설정
                 JSch jsch = new JSch();
+                if(keyExistence){
+                    String publicKey = findSSHKey(org_id, server_id);
+                    jsch.addIdentity(publicKey);
+                }
                 List<String> info = Arrays.stream(key.split(":")).toList();
                 Session session = jsch.getSession(info.get(0), info.get(1), Integer.parseInt(info.get(2)));
                 session.setPassword(password);

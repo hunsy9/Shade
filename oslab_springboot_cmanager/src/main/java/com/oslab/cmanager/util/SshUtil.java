@@ -38,10 +38,10 @@ public class SshUtil {
         keyToChannelMap.put(key,channelShell);
     }
 
-    public void makeNewSSHThread(String key, String webSocketKey, String password){
+    public void makeNewSSHThread(String key, String webSocketKey, String password, Long org_id, Long server_id, Boolean keyExistence){
         SshConnectionRoom sshConnectionRoom = webSocketService.getSshRooms().get(webSocketKey);
 
-        SshThread sshThread = new SshThread(key, password, "", this, sshConnectionRoom, sendingOperations);
+        SshThread sshThread = new SshThread(key, password, "", this, sshConnectionRoom, sendingOperations, org_id, server_id, keyExistence);
         keyToSshThread.put(key, sshThread);
         sshThread.run();
     }

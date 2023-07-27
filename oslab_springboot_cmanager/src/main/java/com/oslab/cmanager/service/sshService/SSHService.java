@@ -3,14 +3,23 @@ package com.oslab.cmanager.service.sshService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oslab.cmanager.model.enums.TestResult;
 import com.oslab.cmanager.model.transfer.SSHDto.*;
+import com.oslab.cmanager.model.transfer.connectionTest.ConnectionTestDto;
+import com.oslab.cmanager.util.SshTestThread;
 import com.oslab.cmanager.util.SshUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +36,8 @@ public class SSHService implements SSHServiceInterface{
     private final ObjectMapper objectMapper;
 
     private Map<String,String> pwds = new HashMap<>();
+
+    private Map<String,String> filenamesMap = new HashMap<>();
 
     public ServerDetailDto getServerDetailByServerId(int server_id) throws JsonProcessingException{
 
@@ -67,6 +78,7 @@ public class SSHService implements SSHServiceInterface{
         return KeyBundle.builder()
                 .threadKey(threadKey)
                 .webSocketKey(webSocketKey)
+                .keyExistence(serverDetail.getKeyExistence())
                 .build();
     }
 
@@ -75,8 +87,11 @@ public class SSHService implements SSHServiceInterface{
         String threadKey = keyBundle.getThreadKey();
         String webSocketKey = keyBundle.getWebSocketKey();
         String password = pwds.get(threadKey);
+        Long org_id = keyBundle.getOrg_id();
+        Long server_id = keyBundle.getServer_id();
+        Boolean keyExistence = keyBundle.getKeyExistence();
         pwds.remove(threadKey);
-        sshUtil.makeNewSSHThread(threadKey, webSocketKey, password);
+        sshUtil.makeNewSSHThread(threadKey, webSocketKey, password, org_id, server_id,keyExistence);
     }
 
     public String command(Command command) {
@@ -86,4 +101,49 @@ public class SSHService implements SSHServiceInterface{
     public ResponseEntity<Boolean> exitShell(ExitDto exitDto){
         return sshUtil.exitShell(exitDto);
     }
+
+    public ResponseEntity<?> startTestChannel(ConnectionTestDto connectionTestDto){
+        Map<String, Object> m = new HashMap<>();
+        SshTestThread sshTestThread = new SshTestThread(connectionTestDto);
+        sshTestThread.run();
+        TestResult testResult = sshTestThread.getTestSuccess();
+        System.out.println(testResult);
+        if(testResult == TestResult.SUCCESS){
+            return ResponseEntity.status(HttpStatus.OK).body(m);
+        }
+        else if(testResult == TestResult.CONNECTIONERR){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(m);
+        }
+        return ResponseEntity.ok().body("");
+    }
+
+    public String fileStoreBuffer(MultipartFile keyfile) throws IOException {
+        String dir = "/home/opc/oidc/keyBuffer/";
+        String fullFilePath = dir + File.separator + keyfile.getOriginalFilename();
+        Path path = Paths.get(fullFilePath).toAbsolutePath();
+        keyfile.transferTo(path.toFile());
+        return path.toString();
+    }
+
+    public String keyFileStore(MultipartFile keyfile, int org_id, int server_id) throws IOException {
+        String dir = "/home/opc/oidc/key/"+org_id+"/"+server_id+"/";
+        File folder = new File(dir);
+        if(!folder.exists()){
+            try {
+                folder.mkdirs();
+                log.info(dir+" keyFile folder generated!");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        String fullPath = dir + File.separator + keyfile.getOriginalFilename();
+        Path path = Paths.get(fullPath).toAbsolutePath();
+        keyfile.transferTo(path.toFile());
+        return path.toString();
+    }
+
+    private void fileDel(){
+
+    }
+
 }
