@@ -2,32 +2,16 @@
   <div class="zidx">
     <main>
       <div class="modalframe">
-        <div class="header">Add Your Organization </div>
-        <div class="emailbar">
-          <span class="text1">Organization Email</span>
-          <input class="inpmail" type="text">
-        </div>
-        <div class="codebar" v-if="is_auth==true">
-          <span class="text2" v-if="is_verify==false">Enter the code</span>
-          <input class="inpcode" v-if="is_verify==false" type="text">
-          <span class="loding_text" v-if="is_verify == false"> veryfing ... </span>
-          <img src="@/assets/loading.gif" class="loding_img" v-if="is_verify == false">
-          <button class="verybtn" v-if="is_verify==false" @click="very"> Verify </button>
-
-          <span class="success_text" v-if="is_verify == true"> email verifed </span>
-          <img src="@/assets/email_verified.png" class="success_img" v-if="is_verify == true">
-          <input class="dumyinp2" v-if="is_verify == true" type="text">
-        </div>
-        <div class="dumydiv" v-if="is_auth==false">
-          <input class="dumyinp" type="text">
-        </div>
-        <div class="timeveri">
-
+        <div class="header">Create Organization </div>
+        <div class="namebar">
+          <span class="text1">Organization Name</span>
+          <input class="inpname" type="text" v-model="org_name">
+          <span class="dummyspan" v-if="is_valid==true">dummy</span>
+          <span class="orgspan" @click="create" v-if="is_valid==false"> Please Enter the Organization Name !</span>
         </div>
         <div class="btn">
           <button class="cancelbtn" @click="closeNewOrganModal"> Cancel </button>
-          <button class="authbtn" @click="auth" v-if="is_auth==false"> Authentication </button>
-          <button class="save" @click="save" v-if="is_auth==true"> Save to your Desktop </button>
+          <button class="createbtn" @click="create"> Create </button>
         </div>
       </div>
     </main>
@@ -39,28 +23,24 @@ export default {
   name: 'ModalAddOrganization',
   data() {
     return {
-      organizationEmail: "",
-      verificationCode: "",
-      is_auth: false,
-      is_verify: false,
+      org_name: "",
+      is_valid: true,
     }
   },
   methods: {
-    save(){
-      this.is_auth = false
-      //this.$emit("closeModalAddOrganization")
-    },
-    auth() {
-      // need to async, api
-      this.is_auth = true
+    create(){
+      if (this.org_name == "") {
+        this.is_valid = false
+        return
+      }
+      this.is_valid = true
+      //api 추가 후 종료
+      this.$emit("closeModalAddOrganization")
     },
     closeNewOrganModal() {
       this.is_auth = false
       this.$emit("closeModalAddOrganization")
     },
-    very() {
-      this.is_verify = true
-    }
   }
 }
 </script>
@@ -96,8 +76,8 @@ export default {
   color: white;
   text-align: center;
 }
-.emailbar{
-  margin-top: 5rem;
+.namebar{
+  margin-top: 7.5rem;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -107,7 +87,7 @@ export default {
   /* margin-left: calc(10rem); */
   color: white;
 }
-.inpmail{
+.inpname{
   color: white;
   position: relative;
   left: 0.5rem;
@@ -117,50 +97,24 @@ export default {
   height: 1.4rem;
   border: 1px;
 }
-.codebar{
-  margin-top: 0.3rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-.text2{
-  margin-left: 6.96rem;
-  color: white;
-}
-.inpcode{
-  color: white;
+.dummyspan {
   position: relative;
-  left: 0.5rem;
-  text-align: center;
-  background-color: #565656;
-  width: 19.5%;
-  height: 1.4rem;
-  border: 1px;
+  left: 22.5rem;
+  display: block;
+  color: #242424;
+  font-size: 9px;
 }
-.dumydiv {
-  margin-top: 0.15rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-.dumyinp {
+.orgspan {
   position: relative;
-  left: 0.5rem;
-  width: 0%;
-  height: 1.73rem;
-  border: 1px;
-  visibility: hidden;
-}
-.dumyinp2 {
-  position: relative;
-  left: 0.5rem;
-  width: 0%;
-  height: 1.4rem;
-  border: 1px;
-  visibility: hidden;
+  left: 22.5rem;
+  display: block;
+  color: tomato;
+  font-size: 9px;
 }
 .cancelbtn {
   position: relative;
   left: 1rem;
-  top: 9rem;
+  top: 8.7rem;
   color: white;
   background-color: #989898cf;
   width: 6rem;
@@ -170,10 +124,10 @@ export default {
   box-shadow: 0 0.2px 1px 1px #0000002f;
   cursor:pointer;
 }
-.authbtn{
+.createbtn{
   position: relative;
   left: 25.3rem;
-  top: 9rem;
+  top: 8.7rem;
   color: white;
   padding: 0px;
   background-color: #989898cf;
@@ -183,74 +137,5 @@ export default {
   border: none;
   box-shadow: 0 0.2px 1px 1px #0000002f;
   cursor:pointer;
-}
-.save {
-  position: relative;
-  left: 20.3rem;
-  top: 9rem;
-  color: white;
-  padding: 0px;
-  background-color: #989898cf;
-  width: 12rem;
-  height: 1.4rem;
-  border-radius: 0.4rem;
-  border: none;
-  box-shadow: 0 0.2px 1px 1px #0000002f;
-  cursor:pointer;
-}
-.loding_img {
-  position: relative;
-  left: 2rem;
-  top: 0rem;
-  bottom: 0rem;
-  padding: 0px;
-  margin: 0px;
-  width: 1rem;
-  height: 1rem;
-}
-.success_img {
-  position: relative;
-  left: 22.8rem;
-  top: 0.1rem;
-  bottom: 0rem;
-  padding: 0px;
-  margin: 0.2rem 0rem 0rem 0rem;
-  width: 1rem;
-  height: 1rem;
-}
-.verybtn{
-  position: relative;
-  left: 3rem;
-  top: 0rem;
-  color: white;
-  padding: 0rem;
-  margin: 0rem;
-  background-color: #989898cf;
-  width: 6rem;
-  height: 1.7rem;
-  border-radius: 0.2rem;
-  border: none;
-  box-shadow: 0 0.2px 1px 1px #0000002f;
-  cursor:pointer;
-}
-.loding_text {
-  position: relative;
-  left: 4rem;
-  color: white;
-  font-size: 1rem;
-  padding: 0rem 2rem 0rem 0rem;
-  margin: 0rem;
-}
-.success_text {
-  position: relative;
-  left: 24.7rem;
-  color: #3DF22D;
-  font-size: 1rem;
-  padding: 0rem 2rem 0rem 0rem;
-  margin:02rem 0rem;
-}
-
-.timeveri{
-  margin-top: 0.3rem;
 }
 </style>
