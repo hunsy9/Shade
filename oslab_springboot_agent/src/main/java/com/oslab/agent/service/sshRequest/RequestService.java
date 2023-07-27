@@ -27,7 +27,7 @@ import static com.fasterxml.jackson.databind.type.LogicalType.Map;
 @Slf4j
 public class RequestService {
     public String getWebSocketUrl(int user_id, int server_id) {
-        String url = "http://localhost:8082/api/wsService/makews/" + user_id + "/" + server_id;
+        String url = "http://144.24.78.122:8082/api/wsService/makews/" + user_id + "/" + server_id;
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
@@ -35,7 +35,7 @@ public class RequestService {
     }
 
     public ResponseEntity<KeyBundle> generateKey(ConnectingDto connectingDto) {
-        String url = "http://localhost:8082/api/sshService/generateKey";
+        String url = "http://144.24.78.122:8082/api/sshService/generateKey";
         log.info("들어");
         RestTemplate restTemplate = new RestTemplate();
         JSONObject generatingJson = new JSONObject();
@@ -47,13 +47,13 @@ public class RequestService {
     }
 
     public void connectRoom(KeyBundle keyBundle) {
-        String url = "http://localhost:8082/api/sshService/startChannel";
+        String url = "http://144.24.78.122:8082/api/sshService/startChannel";
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForEntity(url, keyBundle, String.class);
     }
 
     public ResponseEntity<Boolean> command(CommandDto commandDto) {
-        String url = "http://localhost:8082/api/sshService/command";
+        String url = "http://144.24.78.122:8082/api/sshService/command";
         RestTemplate restTemplate = new RestTemplate();
         JSONObject commandJson = new JSONObject();
         commandJson.put("key", commandDto.getKey());
@@ -63,7 +63,7 @@ public class RequestService {
     }
 
     public ResponseEntity<Boolean> exitShell(ExitDto exitDto) {
-        String url = "http://localhost:8082/api/sshService/exitShell";
+        String url = "http://144.24.78.122:8082/api/sshService/exitShell";
         RestTemplate restTemplate = new RestTemplate();
         System.out.println(exitDto.getWsKey());
         System.out.println(exitDto.getThKey());
@@ -90,7 +90,7 @@ public class RequestService {
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(body, headers);
 
         return restTemplate.exchange(
-                "http://localhost:8082/api/sshService/test1",
+                "http://144.24.78.122:8082/api/sshService/test1",
                 HttpMethod.POST,
                 entity,
                 new ParameterizedTypeReference<Map<String, Object>>() {
