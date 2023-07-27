@@ -28,7 +28,7 @@
           <input type="password" v-model="server.password"/>
         </div>
       </div>
-      <button @click="$emit('closeModalAddServer')" class="cancel">Cancel</button>
+      <button @click="$emit('')" class="cancel">Cancel</button>
       <button @click="addServer(server)">Save</button>
     </main>
   </div>

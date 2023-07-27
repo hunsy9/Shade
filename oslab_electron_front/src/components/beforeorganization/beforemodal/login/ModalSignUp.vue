@@ -1,42 +1,130 @@
 <template>
   <div class="zidx">
     <main>
+      <img src="@/assets/xbutton.png" class="xbtn" @click="$emit('closeAppModalSignUp')">
+      <button class="signin_btn" @click="back">Sign in</button>
       <div class="modalframe">
         <img
           class="sshdesktopicon"
           src="@/assets/right-arrow-angle-and-horizontal-down-line-code-signs.png"
-        />
+        >
         <div class="text1">SSH Desktop</div>
       </div>
       <div class="modalframe">
-        <div class="inpbar">
-          <span>
-            Your Name
-          </span>
-          <input class="nameinp">
+        <div class="inpbar_m">
+          <input class="nameinp" placeholder="Enter Your Name" v-model="name_">
+          <span class="name_span" v-if="no_name==true">Please Enter the Name !</span>
         </div>
-        <div class="inpbar">
-          <input type="email" class="emailinp" placeholder="      Enter Your Email">
-          <button class="verifybtn">Verify</button>
+        <div class="inpbar_m" v-if="click_verify==false">
+          <input type="email" class="emailinp" placeholder="Enter Your Email" v-model="email_">
+          <button class="verifybtn" @click="verifing">Verify</button>
+          <span class="email_span" v-if="no_email==true">Plese Enter the E-mail !</span>
+          <span class="email_span" v-if="dup_email==true">This is a duplicate email</span>
         </div>
-        <div class="inpbar">
-          <input type="password" class="passinp" placeholder="      Enter Your Password">
+        <div class="inpbar_s" v-if="click_verify==true">
+          <input type="text" class="codeinp" placeholder="Enter the Code" v-model="code_">
+          <button class="okbtn" @click="code_chk">OK !</button>
+          <button class="resendbtn" @click="resend">Resend</button>
+          <span class="email_span" v-if="no_veri_code==true">Plese Enter the Code !</span>
+          <span class="email_span" v-if="invalid_code==true">Invalid Code !</span>
         </div>
-        <div class="inpbar">
-          <input type="password" class="passinp" placeholder="      Check Your Password ">
+        <div class="inpbar_l">
+          <input type="password" class="passinp" placeholder="Enter Your Password" v-model="pwd_">
+          <span class="pwd_span" v-if="no_pwd==true">Please Enter the Password !</span>
+        </div>
+        <div class="inpbar_l">
+          <input type="password" class="passinp" placeholder="Check Your Password " v-model="pwd_chk_">
+          <span class="pwd_chk_span" v-if="no_pwd_chk==true">Please Enter the Password !</span>
+          <span class="pwd_chk_span" v-if="no_same_pwd==true">Passwords are Different !</span>
         </div>
       </div>
       <button class="signupbtn" @click="signUp">Sign Up!</button>
+      <span class="signup_span" v-if="signup_msg==true">Please Verify the E-mail !</span>
     </main>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "ModalSignUp",
+  data() {
+    return {
+      name_: "",
+      email_: "",
+      pwd_: "",
+      pwd_chk_: "",
+      code_: "",
+
+      no_name: false,
+      no_email: false,
+      no_pwd: false,
+      no_pwd_chk: false,
+      no_same_pwd: false,
+      no_veri_code: false,
+      invalid_code: false,
+      pass_code: false,
+      
+      chk_email: true,
+      dup_email: false,
+      veri_email: false,
+      click_verify: false,
+      signup_msg: false,
+    };
+  },
   methods: {
-    signUp(){
+    chk_null(cmp) { // 비어있는지 체크하는 함수
+      if (cmp == "") { return true }
+      return false
+    },
+    signUp() { // sign up 버튼
+      if ((this.no_name = this.chk_null(this.name_))) { return }        // name 비어있으면 종료
+      else { this.no_name = false }
+      if ((this.no_email = this.chk_null(this.email_))) { return }      // email 비어있으면 종료
+      else { this.no_email = false }
+      if ((this.no_pwd = this.chk_null(this.pwd_))) { return }          // pwd 비어있으면 종료
+      else { this.no_pwd = false }
+      if ((this.no_pwd_chk = this.chk_null(this.pwd_chk_))) { return }  // pwd check 비어있으면 종료
+      else { this.no_pwd_chk = false }
+
+      if (this.pwd_ != this.pwd_chk_) {                                 // pwd 같은지 체크
+        this.no_same_pwd = true
+        return false
+      }
+      else { this.no_same_pwd = false }
+
+      if (this.pass_code == false) {   // email verify, code check 안했으면 종료
+        this.signup_msg = true
+        return
+      }
+      else { this.signup_msg = false }
       this.$emit("closeAppModalSignUp")
+    },
+    back() { // 뒤로가기 sign in 버튼
+      this.$emit("closeAppModalSignUp")
+      this.$emit("openModalLogin")
+    },
+    verifing() {
+      if ((this.dup_email = this.is_dup())) { return } // 중복이면 종료
+      this.click_verify = true
+      this.signup_msg = false
+    },
+    is_dup() {
+        // 중복 체크 후 중복이면 return true
+        // 아니면 return false
+        return false
+    },
+    code_chk() {
+      if ((this.no_veri_code = this.chk_null(this.code_))) { return } // 비어있으면 종료
+      // 코드 맞는지 체크
+      // 맞으면 this.invalid_code = false, this.pass_code = true, this.signup_msg = false,
+      // 틀리면 this.invalid_code = true,
+      this.signup_msg = false
+      this.invalid_code = false
+      this.pass_code = true
+    },
+    resend() { // code resend
+
     },
   }
 };
@@ -53,22 +141,65 @@ export default {
 .zidx > main {
   display: block;
   margin: 0 auto;
-  width: 440px;
+  width: 400px;
   height: 500px;
   background-color: white;
   border-radius: 0.5rem;
   border: none;
   box-shadow: 0.2px 0.2px 4px 4px #0000002f;
 }
-
-input{
-  border: 2px solid #B8A5C3;
-  border-radius: 4px;
-}
 .modalframe {
   margin-top: 2rem;
-  padding-top: 1rem;
+  padding-top: 0rem;
   position: relative;
+}
+.xbtn {
+  position: relative;
+  top: 0.68rem;
+  left: 1rem;
+  width: 0.7rem;
+  height: 0.7rem;
+}
+.signin_btn {
+  position: relative;
+  top: 0.7rem;
+  left: 20rem;
+  background-color: white;
+  border-radius: 1.5rem;
+  border-color: #454545;
+  cursor: pointer;
+}
+.inpbar_s {
+  width: 9.6rem;
+  height: 2.35rem;
+  margin-top: 0.5rem;
+  margin-left: 2.3rem;
+  margin-right: auto;
+  border: solid 0.2rem #b8a5c3;
+  border-radius: 0.4rem;
+}
+.inpbar_m {
+  width: 14.82rem;
+  height: 2.35rem;
+  margin-top: 0.5rem;
+  margin-left: 2.3rem;
+  margin-right: auto;
+  border: solid 0.2rem #b8a5c3;
+  border-radius: 0.4rem;
+}
+.inpbar_l {
+  width: 20rem;
+  height: 2.35rem;
+  margin-top: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  border: solid 0.2rem #b8a5c3;
+  border-radius: 0.4rem;
+}
+input {
+  border: none;
+  height: auto;
+  width: auto;
 }
 .sshdesktopicon {
   width: 4rem;
@@ -76,7 +207,7 @@ input{
   background-color: #d9d9d9;
   border-radius: 0.5rem;
   display: block;
-  margin-top: 2rem;
+  margin-top: 0rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -89,37 +220,70 @@ input{
   margin-bottom: 2rem;
   margin-left: auto;
   margin-right: auto;
-}
-.inpbar{
-  width: 80%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0.5rem;
-}
+ }
 span{
   position: relative;
   top: -0.3rem;
 }
 .nameinp{
   position: relative;
-  left: 14%;
-  width: 60%;
-  height: 2.3rem;
+  margin-top: 0.12rem;
+  margin-left: 2rem;
+  width: 85%;
+  height: 2rem;
   font-size: 0.7rem;
 }
 .emailinp{ 
   position: relative;
-  width: 70%;
-  height: 2.3rem;
+  margin-top: 0.12rem;
+  margin-left: 2rem;
+  width: 84%;
+  height: 2rem;
   font-size: 0.7rem;
 }
-.verifybtn{
+.codeinp{ 
+  position: relative;
+  margin-top: 0.12rem;
+  margin-left: 2rem;
+  width: 75%;
+  height: 2rem;
+  font-size: 0.7rem;
+}
+.verifybtn {
   position: absolute;
   color: #454545;
+  top: 3.33rem;
   width: 19%;
   font-size: 0.7rem;
-  margin-left: 1rem;
+  margin-left: 0.73rem;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  background-color: #b8a5c3;
+  border-radius: 0.2rem;
+  border: none;
+  cursor: pointer;
+}
+.okbtn {
+  position: absolute;
+  color: #454545;
+  top: 3.33rem;
+  width: 19%;
+  font-size: 0.7rem;
+  margin-left: 0.73rem;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  background-color: #b8a5c3;
+  border-radius: 0.2rem;
+  border: none;
+  cursor: pointer;
+}
+.resendbtn {
+  position: absolute;
+  color: #454545;
+  top: 3.33rem;
+  width: 19%;
+  font-size: 0.7rem;
+  margin-left: 6rem;
   padding-top: 0.9rem;
   padding-bottom: 0.9rem;
   background-color: #b8a5c3;
@@ -129,13 +293,15 @@ span{
 }
 .passinp{
   position: relative;
-  width: 98%;
-  height: 2.3rem;
+  margin-top: 0.12rem;
+  margin-left: 2rem;
+  width: 88%;
+  height: 2rem;
   font-size: 0.7rem;
 }
 .signupbtn{
   height: 8%;
-  width: 80%;
+  width: 81.5%;
   font-size: 1rem;
   color: black;
   margin-top: 2rem;
@@ -146,5 +312,49 @@ span{
   border-radius: 0.2rem;
   border: none;
   cursor: pointer;
+}
+.name_span {
+  position: inherit;
+  display: block;
+  margin-top: 0.25rem;
+  margin-left: 0.25rem;
+  font-size: 9px;
+  color: tomato;
+  font-weight: 600;
+}
+.email_span {
+  position: inherit;
+  display: block;
+  margin-top: 0.25rem;
+  margin-left: 0.25rem;
+  font-size: 9px;
+  color: tomato;
+  font-weight: 600;
+}
+.pwd_span {
+  position: inherit;
+  display: block;
+  margin-top: 0.25rem;
+  margin-left: 0.25rem;
+  font-size: 9px;
+  color: tomato;
+  font-weight: 600;
+}
+.pwd_chk_span {
+  position: inherit;
+  display: block;
+  margin-top: 0.25rem;
+  margin-left: 0.25rem;
+  font-size: 9px;
+  color: tomato;
+  font-weight: 600;
+}
+.signup_span {
+  position: inherit;
+  display: block;
+  margin-left: 9rem;
+  font-size: 9px;
+  color: tomato;
+  font-weight: 600;
 }
 </style>
