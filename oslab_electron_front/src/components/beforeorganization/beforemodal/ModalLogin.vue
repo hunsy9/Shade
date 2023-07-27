@@ -1,26 +1,27 @@
 <template>
   <div class="zidx">
     <main>
+      <img src="@/assets/xbutton.png" class="xbtn" @click="$emit('closeAppLoginModal')">
       <div class="modalframe">
         <img
           class="sshdesktopicon"
           src="@/assets/right-arrow-angle-and-horizontal-down-line-code-signs.png"
-        />
+        >
         <div class="text1">SSH Desktop</div>
         <div class="text2">Welcome</div>
         <div class="text3">Log in to SSH Desktop to continue</div>
       </div>
       <div class="inpframe">
         <div class="id_bar">
-          <img src="@/assets/id.png" class="bar_img" />
+          <!-- <img src="@/assets/id.png" class="bar_img" /> -->
           <input type="email" class="inp" placeholder="Email" v-model="loginId"/>
         </div>
         <div class="pass_bar">
-          <img src="@/assets/pw.png" class="bar_img" />
+          <!-- <img src="@/assets/pw.png" class="bar_img" /> -->
           <input type="password" class="inp" placeholder="Password" v-model="loginPassword"/>
         </div>
       </div>
-      <button class="continuebtn" @click="login(loginId, loginPassword)">continue</button>
+      <button class="continuebtn" @click="login(loginId, loginPassword)">Continue</button>
       <a class="signup" @click="signUp">Sign up</a>
     </main>
   </div>
@@ -86,8 +87,15 @@ export default {
 }
 .modalframe {
   margin-top: 2rem;
-  padding-top: 5rem;
+  padding-top: 1.7rem;
   position: relative;
+}
+.xbtn {
+  position: relative;
+  top: 0.7rem;
+  left: 1rem;
+  width: 0.7rem;
+  height: 0.7rem;
 }
 .sshdesktopicon {
   width: 4rem;
@@ -103,7 +111,7 @@ export default {
   color: black;
   font-weight: 500;
   display: block;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -111,8 +119,9 @@ export default {
   text-align: center;
   color: black;
   font-weight: 500;
+  font-size: 1.5rem;
   display: block;
-  margin-top: 3rem;
+  margin-top: 2rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -121,7 +130,7 @@ export default {
   text-align: center;
   color: #747474;
   display: block;
-  margin-top: 1.5rem;
+  margin-top: 0.3rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -133,7 +142,7 @@ export default {
 }
 .id_bar{
   width: 20rem;
-  height: 1.9rem;
+  height: 2.74rem;
   margin-top: 0.5rem;
   margin-left: auto;
   margin-right: auto;
@@ -142,7 +151,7 @@ export default {
 }
 .pass_bar{
   width: 20rem;
-  height: 1.9rem;
+  height: 2.74rem;
   margin-top: 0.5rem;
   margin-left: auto;
   margin-right: auto;
@@ -155,11 +164,12 @@ export default {
   height: 1.4rem;
 }
 .inp{
-  margin-top: 0.1rem;
+  margin-top: 0.3rem;
   margin-bottom: 0.1rem;
+  margin-left: 1.5rem;
   position: absolute;
   width: 16rem;
-  height: 1.4rem;
+  height: 2rem;
   border: none;
   outline: none;
 }
@@ -173,20 +183,22 @@ export default {
   margin-left: auto;
   margin-right: auto;
   background-color: #b8a5c3;
-  padding: 0.7rem 8rem;
+  padding: 1rem 8.3rem;
   border-radius: 0.2rem;
   border: none;
   cursor: pointer;
 }
 .signup{
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   position: relative;
+  left: 0.1.5rem;
   display: block;
-  margin-top: 1rem;
+  margin-top: 1.3rem;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
   color: #747474;
+  text-decoration: underline;
 }
 a{
   cursor: pointer;
