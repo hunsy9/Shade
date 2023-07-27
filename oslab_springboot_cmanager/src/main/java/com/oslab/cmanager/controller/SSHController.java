@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jcraft.jsch.JSchException;
 import com.oslab.cmanager.configuration.websocket.entity.SshConnectionRoom;
 import com.oslab.cmanager.model.transfer.SSHDto.*;
+import com.oslab.cmanager.model.transfer.connectionTest.ConTestDto;
+import com.oslab.cmanager.model.transfer.connectionTest.ConnectionTestDto;
 import com.oslab.cmanager.service.sshService.SSHService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -40,4 +44,18 @@ public class SSHController {
         return sshService.exitShell(exitDto);
     }
 
+    @PostMapping("api/sshService/test1")
+    public ResponseEntity<?> test(@RequestPart("keyfile") MultipartFile keyfile, @RequestPart("serverDetail") ConnectionTestDto server) throws IOException {
+        if (!keyfile.getOriginalFilename().equals("nFile")){
+            String dir = sshService.fileStoreBuffer(keyfile);
+            server.setFileDir(dir);
+        }
+        return sshService.startTestChannel(server);
+    }
+
+    @PostMapping("api/sshService/registerKeyfile")
+    public ResponseEntity<?> registerKeyFile(@RequestPart("keyfile") MultipartFile keyfile, @RequestPart("regKeyInfo") RegKeyInfoDto regKeyInfoDto) throws IOException {
+        sshService.keyFileStore(keyfile, regKeyInfoDto.getOrg_id(), regKeyInfoDto.getServer_id());
+        return ResponseEntity.ok().body("");
+    }
 }

@@ -12,4 +12,7 @@ import lombok.NoArgsConstructor;
 public class KeyBundle {
     private String threadKey;
     private String webSocketKey;
+    private Long org_id;
+    private Long server_id;
+    private Boolean keyExistence;
 }
