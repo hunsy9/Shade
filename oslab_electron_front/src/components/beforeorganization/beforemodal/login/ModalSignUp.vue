@@ -1,45 +1,74 @@
 <template>
-  <div class="modalframe">
-    <img
-      class="sshdesktopicon"
-      src="@/assets/right-arrow-angle-and-horizontal-down-line-code-signs.png"
-    />
-    <div class="text1">SSH Desktop</div>
+  <div class="zidx">
+    <main>
+      <div class="modalframe">
+        <img
+          class="sshdesktopicon"
+          src="@/assets/right-arrow-angle-and-horizontal-down-line-code-signs.png"
+        />
+        <div class="text1">SSH Desktop</div>
+      </div>
+      <div class="modalframe">
+        <div class="inpbar">
+          <span>
+            Your Name
+          </span>
+          <input class="nameinp">
+        </div>
+        <div class="inpbar">
+          <input type="email" class="emailinp" placeholder="      Enter Your Email">
+          <button class="verifybtn">Verify</button>
+        </div>
+        <div class="inpbar">
+          <input type="password" class="passinp" placeholder="      Enter Your Password">
+        </div>
+        <div class="inpbar">
+          <input type="password" class="passinp" placeholder="      Check Your Password ">
+        </div>
+      </div>
+      <button class="signupbtn" @click="signUp">Sign Up!</button>
+    </main>
   </div>
-  <div class="modalframe">
-    <div class="inpbar">
-      <span>
-        Your Name
-      </span>
-      <input class="nameinp">
-    </div>
-    <div class="inpbar">
-      <input type="email" class="emailinp" placeholder="      Enter Your Email">
-      <button class="verifybtn">Verify</button>
-    </div>
-    <div class="inpbar">
-      <input type="password" class="passinp" placeholder="      Enter Your Password">
-    </div>
-    <div class="inpbar">
-      <input type="password" class="passinp" placeholder="      Check Your Password ">
-    </div>
-  </div>
-  <button class="signupbtn">Sign Up!</button>
 </template>
 
 <script>
 export default {
   name: "ModalSignUp",
+  methods: {
+    signUp(){
+      this.$emit("closeAppModalSignUp")
+    },
+  }
 };
 </script>
 
 <style scoped>
+.zidx{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.zidx > main {
+  display: block;
+  margin: 0 auto;
+  width: 440px;
+  height: 500px;
+  background-color: white;
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0.2px 0.2px 4px 4px #0000002f;
+}
+
 input{
   border: 2px solid #B8A5C3;
   border-radius: 4px;
   outline: none;
 }
 .modalframe {
+  margin-top: 2rem;
+  padding-top: 1rem;
   position: relative;
 }
 .sshdesktopicon {
@@ -58,7 +87,7 @@ input{
   font-weight: 500;
   display: block;
   margin-top: 1rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   margin-left: auto;
   margin-right: auto;
 }

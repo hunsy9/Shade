@@ -19,10 +19,9 @@
         Please Sign Up and Create New Organization !
       </div>
     </div>
-    <ModalLogin v-if="openModalLogin" @closeAppLoginModal="openModalLogin = false"/>
+    <ModalLogin v-if="openModalLogin" @closeAppLoginModal="openModalLogin = false" @openAppSignUpModal="openAppModalSignUp = true"/>
+    <ModalSignUp v-if="openAppModalSignUp" @closeAppModalSignUp="openAppModalSignUp = false"/>
     <ModalAddOrganization v-if="openModalAddOrganization" @closeModalAddOrganization="openModalAddOrganization = false"/>
-
-  
   </div>
   
 
@@ -35,6 +34,7 @@ import TopBarButton from '@/components/common/TopBarButton.vue'
 import OrganizationListItem from '@/components/beforeorganization/OrganizationListItem.vue'
 
 import ModalLogin from '@/components/beforeorganization/beforemodal/ModalLogin.vue'
+import ModalSignUp from '@/components/beforeorganization/beforemodal/login/ModalSignUp.vue'
 import ModalAddOrganization from '@/components/beforeorganization/beforemodal/ModalAddOrganization.vue'
 
 import { createNamespacedHelpers } from 'vuex'
@@ -48,7 +48,8 @@ export default {
       hasOrganization: true,
       organizationNames: [],
       openModalLogin: false,
-      openModalAddOrganization: false
+      openAppModalSignUp: false,
+      openModalAddOrganization: false,
     }
   },
   computed: {
@@ -70,8 +71,8 @@ export default {
     TopBarButton,
     OrganizationListItem,
     ModalLogin,
+    ModalSignUp,
     ModalAddOrganization,
-
   }
 }
 </script>
