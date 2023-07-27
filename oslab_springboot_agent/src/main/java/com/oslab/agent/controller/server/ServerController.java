@@ -10,6 +10,7 @@ import com.oslab.agent.service.server.ServerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -22,8 +23,9 @@ public class ServerController {
     private final ServerService serverService;
 
     @PostMapping("/api/server/add")
-    public int addNewServer(@RequestBody AddServerDto addServerDto) throws SQLException, JsonProcessingException {
-        return serverService.addNewServer(addServerDto);
+    public int addNewServer(@RequestPart(value = "keyfile", required = false) MultipartFile keyfile, @RequestPart("serverDetail") AddServerDto addServerDto) throws SQLException, JsonProcessingException {
+        System.out.println(keyfile.toString());
+        return serverService.addNewServer(keyfile, addServerDto);
     }
 
     @PostMapping("/api/server/edit")

@@ -10,7 +10,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -21,8 +27,8 @@ import java.util.List;
 public class ServerService implements ServerServiceInterface{
     private final ServerRepository serverRepository;
 
-    public int addNewServer(AddServerDto addServerDto) throws SQLException, JsonProcessingException {
-        return serverRepository.addNewServer(addServerDto);
+    public int addNewServer(MultipartFile keyfile, AddServerDto addServerDto) throws SQLException, JsonProcessingException {
+        return serverRepository.addNewServer(keyfile,addServerDto);
     }
 
 

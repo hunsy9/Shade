@@ -1,19 +1,18 @@
-package com.oslab.agent.model.transfer.serverDto;
+package com.oslab.agent.model.transfer.requestDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class ServerDetailDto {
-    private Long server_id;
+@NoArgsConstructor
+public class ConTestDto {
     private String username;
     private String host;
-    private int port;
+    private String port;
     private String password;
-    private Boolean keyExistence;
 }
