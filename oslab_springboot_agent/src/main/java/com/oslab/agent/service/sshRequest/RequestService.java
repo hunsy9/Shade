@@ -1,33 +1,40 @@
 package com.oslab.agent.service.sshRequest;
 
-import com.oslab.agent.model.transfer.requestDto.CommandDto;
-import com.oslab.agent.model.transfer.requestDto.ConnectingDto;
-import com.oslab.agent.model.transfer.requestDto.ExitDto;
-import com.oslab.agent.model.transfer.requestDto.KeyBundle;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oslab.agent.model.transfer.requestDto.*;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.net.http.HttpClient;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import static com.fasterxml.jackson.databind.type.LogicalType.Map;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class RequestService {
-    public String getWebSocketUrl(int user_id, int server_id){
-        String url = "http://144.24.78.122:8082/api/wsService/makews/" + user_id +"/" + server_id;
+    public String getWebSocketUrl(int user_id, int server_id) {
+        String url = "http://144.24.78.122:8082/api/wsService/makews/" + user_id + "/" + server_id;
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         return response.getBody();
     }
 
-    public ResponseEntity<KeyBundle> generateKey(ConnectingDto connectingDto){
+    public ResponseEntity<KeyBundle> generateKey(ConnectingDto connectingDto) {
         String url = "http://144.24.78.122:8082/api/sshService/generateKey";
         log.info("들어");
         RestTemplate restTemplate = new RestTemplate();
@@ -39,26 +46,23 @@ public class RequestService {
         return response;
     }
 
-    public void connectRoom(KeyBundle keyBundle){
+    public void connectRoom(KeyBundle keyBundle) {
         String url = "http://144.24.78.122:8082/api/sshService/startChannel";
         RestTemplate restTemplate = new RestTemplate();
-        JSONObject runningJson = new JSONObject();
-        runningJson.put("threadKey", keyBundle.getThreadKey());
-        runningJson.put("webSocketKey", keyBundle.getWebSocketKey());
-        restTemplate.postForEntity(url, runningJson, String.class);
+        restTemplate.postForEntity(url, keyBundle, String.class);
     }
 
-    public ResponseEntity<Boolean> command(CommandDto commandDto){
+    public ResponseEntity<Boolean> command(CommandDto commandDto) {
         String url = "http://144.24.78.122:8082/api/sshService/command";
         RestTemplate restTemplate = new RestTemplate();
         JSONObject commandJson = new JSONObject();
         commandJson.put("key", commandDto.getKey());
-        commandJson.put("command" , commandDto.getCommand());
+        commandJson.put("command", commandDto.getCommand());
         ResponseEntity<Boolean> response = restTemplate.postForEntity(url, commandDto, Boolean.class);
         return response;
     }
 
-    public ResponseEntity<Boolean> exitShell(ExitDto exitDto){
+    public ResponseEntity<Boolean> exitShell(ExitDto exitDto) {
         String url = "http://144.24.78.122:8082/api/sshService/exitShell";
         RestTemplate restTemplate = new RestTemplate();
         System.out.println(exitDto.getWsKey());
@@ -66,8 +70,32 @@ public class RequestService {
 
         JSONObject exitJson = new JSONObject();
         exitJson.put("wsKey", exitDto.getWsKey());
-        exitJson.put("thKey" , exitDto.getThKey());
+        exitJson.put("thKey", exitDto.getThKey());
         ResponseEntity<Boolean> response = restTemplate.postForEntity(url, exitJson, Boolean.class);
         return response;
     }
+
+    public ResponseEntity<?> sshConnectionTest(MultipartFile keyfile, ConTestDto server) throws IOException {
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        HttpHeaders headers = new HttpHeaders();
+        RestTemplate restTemplate = new RestTemplate();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        if(keyfile==null){
+            body.add("keyfile", null);
+        }else{
+            body.add("keyfile", keyfile.getResource());
+        }
+        body.add("serverDetail", server);
+
+        HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(body, headers);
+
+        return restTemplate.exchange(
+                "http://144.24.78.122:8082/api/sshService/test1",
+                HttpMethod.POST,
+                entity,
+                new ParameterizedTypeReference<Map<String, Object>>() {
+                });
+    }
+
 }
+
