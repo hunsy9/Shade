@@ -64,6 +64,7 @@ export default {
 input{
   border: 2px solid #B8A5C3;
   border-radius: 4px;
+  outline: none;
 }
 .modalframe {
   margin-top: 2rem;

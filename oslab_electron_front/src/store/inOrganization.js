@@ -81,11 +81,10 @@ export default ({
             state.projects.project_id = data.projects.project_id
             state.projects.project_name = data.projects.project_name
         },
-        setNewServer(state, data){
-            let key = data.k
-            alert(key)
-            alert(state.projects.project_server)
-            state.projects.project_server[key] = data.d
+        reFetchServer(state, dto){
+            let key = dto.key
+            let newData = JSON.parse(dto.newData)
+            state.projects.find(projects => projects.project_name == state.selected_proj).project_server[key] = newData
         },
         //mode 1 proj
         selectProj(state, selected_proj){
@@ -154,6 +153,8 @@ export default ({
             }
         },
         async addNewServer(context, server){
+            let publicKey = server.publicKey
+            console.log(publicKey)
             const obj = {
                 "org_id": parseInt(context.state.organId),
                 "category_id": parseInt(context.state.selected_categid),
@@ -165,8 +166,18 @@ export default ({
                 "password" : server.password,
                 "server_id" : null
             }
+
+            let formData = new FormData();
+
+            if (publicKey == "") {
+                formData.append("keyfile", new File([], "nFile"))
+            } else {
+                formData.append("keyfile", publicKey)
+            }
+
+            formData.append("serverDetail", new Blob([JSON.stringify(obj)], {type: "application/json"}))
             console.log(obj)
-            const data = await api.postNewServer(obj)
+            const data = await api.postNewServer(formData)
             if(data){
               return true
             }
@@ -183,11 +194,11 @@ export default ({
             const data = await api.refetchServer(obj)
             const keys = Object.keys(context.state.projects.find(project => project.project_name === context.state.selected_proj).project_server)
             let findKey = keys.filter(key => key.split(":")[0] == obj.category_id)
-            const oo = {
-                d: data,
-                k: findKey
+            const dto = {
+                newData: data,
+                key: findKey
             }
-            context.commit("setNewServer", oo)
+            context.commit("reFetchServer", dto)
             if(data){
                 console.log("success in fetchNewServer")
             }
