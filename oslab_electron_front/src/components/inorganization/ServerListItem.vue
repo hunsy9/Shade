@@ -58,7 +58,6 @@ export default {
       }
     },
     async connectServer(serverId,org_id){
-      alert(org_id)
       const data = {
         server_id: serverId,
         org_id: org_id
