@@ -5,7 +5,7 @@
         <template v-for="(server, idx) in value" :key="idx">
           <div class="itembox" :style="{ backgroundColor: colors[idx % colors.length]}">
             <span class="sname">
-              {{ server.server_name }}
+              {{ server.server_name}}
             </span>
             <button v-if="!isAdmin" @click="$emit('openModalServerInfo', server.server_name, server.server_desc)">
               Info
@@ -16,7 +16,7 @@
             <button v-if="isAdmin">
               Edit
             </button>
-            <button @click="connectServer(server.server_id)">
+            <button @click="connectServer(server.server_id, org_id)">
               Connect
             </button>
           </div>
@@ -39,7 +39,8 @@ export default {
   computed: {
     ...mapState('inOrganization', {
       categ_l1: state => state.selected_categ_l1,
-      categ_l2: state => state.selected_categ_l2
+      categ_l2: state => state.selected_categ_l2,
+      org_id: state => state.organId
     }),
     ...mapState('login', {
       isAdmin: state => state.isAdmin,
@@ -56,8 +57,13 @@ export default {
         return true
       }
     },
-    async connectServer(serverId){
-      await this.connectTerminal(serverId)
+    async connectServer(serverId,org_id){
+      alert(org_id)
+      const data = {
+        server_id: serverId,
+        org_id: org_id
+      }
+      await this.connectTerminal(data)
     }
   }
 }

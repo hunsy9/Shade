@@ -1,5 +1,4 @@
 import api from '@/api/login.js'
-import inOrganization from "@/store/inOrganization";
 
 export default ({
     namespaced: true,
@@ -29,11 +28,11 @@ export default ({
 
     },
     actions: {
-        async connectTerminal(context, server_id){
-            context.commit('setServerId', server_id)
+        async connectTerminal(context, data){
+            context.commit('setServerId', data.server_id)
 
-            if(context.state.server_id == server_id){
-                const room_id = await api.getRoomId(server_id, context.state.user_id)
+            if(context.state.server_id == data.server_id){
+                const room_id = await api.getRoomId(data.server_id, context.state.user_id)
                 if(room_id){
                     context.commit('setRommId', room_id)
 
@@ -52,8 +51,8 @@ export default ({
                             const keyBundle = {
                                 "threadKey": key.threadKey,
                                 "webSocketKey": key.webSocketKey,
-                                "org_id" : inOrganization.state.organId,
-                                "server_id" : server_id,
+                                "org_id" : data.org_id,
+                                "server_id" : data.server_id,
                                 "keyExistence" : key.keyExistence
                             }
                             const server = "http://152.67.213.248:8081/"
