@@ -1,4 +1,5 @@
 import api from '@/api/login.js'
+import inOrganization from "@/store/inOrganization";
 
 export default ({
     namespaced: true,
@@ -51,11 +52,11 @@ export default ({
                             const keyBundle = {
                                 "threadKey": key.threadKey,
                                 "webSocketKey": key.webSocketKey,
-                                "org_id" : 1,
+                                "org_id" : inOrganization.state.organId,
                                 "server_id" : server_id,
                                 "keyExistence" : key.keyExistence
                             }
-                            const server = "http://localhost:8081/"
+                            const server = "http://152.67.213.248:8081/"
                             fetch(`${server}api/request/connect`, {
                                 method: 'POST',
                                 headers: {

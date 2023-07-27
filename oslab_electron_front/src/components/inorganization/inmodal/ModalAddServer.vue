@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import {ipcRenderer} from 'electron'
 import {createNamespacedHelpers} from 'vuex'
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
@@ -123,7 +122,7 @@ export default {
         "password": this.server.password
       }
       formData.append("server", new Blob([JSON.stringify(testDto)], {type: "application/json"}))
-      let res = await fetch("http://localhost:8081/api/request/test", {
+      let res = await fetch("http://152.67.213.248:8081/api/request/test", {
         method: "POST",
         body: formData,
       })
@@ -141,16 +140,11 @@ export default {
         if (res) {
           await this.refetchNewServer()
         }
-        ipcRenderer.send('close-add-server-modal')
-        server.server_name = ""
-        server.server_desc = ""
-        server.username = ""
-        server.host = ""
-        server.port = null
-        server.password = ""
+        this.$emit('closeModalAddServer')
       } else {
         alert("you should test server before save!")
       }
+
     },
   },
 }

@@ -8,7 +8,6 @@
     <LoadingSpinner v-if="isLoading"></LoadingSpinner>
     <button class="exitShell" @click="exitShell">x</button>
   </div>
-
 </template>
 
 <script>
@@ -58,7 +57,7 @@ export default {
           thKey: this.thkey
         }
         console.log(keyBundle.thKey)
-        let response = await fetch("http://localhost:8081/api/request/exitShell", {
+        let response = await fetch("http://152.67.213.248:8081/api/request/exitShell", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -81,7 +80,7 @@ export default {
       this.toggleFullWindow();
     },
     connect() {
-      const serverURL = "http://localhost:8082/ws";
+      const serverURL = "http://144.24.78.122:8082/ws";
       let socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);
       console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`);
@@ -177,7 +176,7 @@ export default {
             };
             this.flag = true;
             this.flag2 = true;
-            fetch("http://localhost:8081/api/request/command", {
+            fetch("http://152.67.213.248:8081/api/request/command", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

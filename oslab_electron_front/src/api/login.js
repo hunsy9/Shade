@@ -1,4 +1,4 @@
-const server = "http://localhost:8081/"
+const server = "http://152.67.213.248:8081/"
 
 export default {
     async login(id, pw) {
