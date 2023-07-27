@@ -1,46 +1,66 @@
 <template>
-  <div class="zidx">
-    <main>
-      <div class="top">Add New Server</div>
-      <div>
-        <div class="servername">
-          <span> Custom Server Name </span>
-          <input type="text" v-model="server.server_name"/>
-        </div>
-        <div class="servername">
-          <span> Custom Server Desc </span>
-          <input type="text" v-model="server.server_desc"/>
-        </div>
-        <div class="servername">
-          <span> User Name </span>
-          <input type="text" v-model="server.username"/>
-        </div>
-        <div class="servername">
-          <span> Host </span>
-          <input type="text" v-model="server.host"/>
-        </div>
-        <div class="servername">
-          <span> Port </span>
-          <input type="number" v-model="server.port"/>
-        </div>
-        <div class="servername">
-          <span> Password </span>
-          <input type="password" v-model="server.password"/>
-        </div>
+  <div class="modal">
+    <div class="overlay"></div>
+    <div class="modal-card">
+      <div class="header">Add New Server</div>
+      <div class="serverInfo">
+        <label class="server"> Custom Server Name </label>
+        <input type="text" v-model="server.server_name"/>
       </div>
-      <button @click="$emit('closeModalAddServer')" class="cancel">Cancel</button>
-      <button @click="addServer(server)">Save</button>
-    </main>
+      <div class="serverInfo">
+        <label class="server"> Custom Server Desc </label>
+        <input type="text" v-model="server.server_desc"/>
+      </div>
+      <div class="serverInfo">
+        <label class="server"> User Name </label>
+        <input type="text" v-model="server.username"/>
+      </div>
+      <div class="serverInfo">
+        <label class="server"> Host </label>
+        <input type="text" v-model="server.host"/>
+      </div>
+      <div class="serverInfo">
+        <label class="server"> Port </label>
+        <input type="number" v-model="server.port"/>
+      </div>
+      <div class="serverInfo">
+        <label class="server"> Password </label>
+        <input type="password" v-model="server.password"/>
+      </div>
+      <div class="fileInfo">
+        <label class="server" id="fileLab"> Public Key </label>
+        <label for="file" class="fileLabel">
+          <div class="fileUpload">{{keyFileName}}</div>
+        </label>
+        <input type="file" name="file" id="file" @change="handleFileChange"/>
+      </div>
+      <div class="conTestLoading" v-if="isTesting">
+        <span class="loadingLabel" v-if="isTesting" :class="{'fade-in-down':this.successStatus, bounce:this.failStatus}"> {{ connectingStatus }} </span>
+        <LoadingSpinner v-if="isLoading" width="10px" height="10px"></LoadingSpinner>
+        <img src="@/assets/testSuccess.png" :class="{'fade-in-down':this.successStatus}" width="15" height="15" v-if="successStatus === true">
+        <img src="@/assets/testFail.png" :class="{bounce:this.failStatus}" width="15" height="15" v-if="failStatus === true">
+      </div>
+      <div class="btnWrapper">
+        <button @click="$emit('closeModalAddServer')" class="cancel">Cancel</button>
+        <button @click="testConnection" class="testCon" >Connection Test</button>
+        <button @click="addServer(server)" class="saveBtn" :class="{testCompleted:testCompleted}">Save</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { ipcRenderer } from 'electron'
-import { createNamespacedHelpers } from 'vuex'
-const { mapActions } = createNamespacedHelpers('inOrganization')
+import {ipcRenderer} from 'electron'
+import {createNamespacedHelpers} from 'vuex'
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+
+const {mapActions} = createNamespacedHelpers('inOrganization')
 
 export default {
   name: "ModalAddServer",
+  components: {
+    LoadingSpinner
+  },
   data() {
     return {
       server: {
@@ -50,66 +70,117 @@ export default {
         host: "",
         port: 0,
         password: "",
+        publicKey: ""
       },
+      publicKey: "",
+      keyFileName: "Upload",
+      testCompleted: false,
+      isLoading: false,
+      isTesting: false,
+      connectingStatus: "",
+      successStatus: false,
+      failStatus: false,
     };
   },
   methods: {
     ...mapActions(['addNewServer', 'refetchNewServer']),
-    async addServer(server){
-      const res = await this.addNewServer(server)
-      if(res){
-        await this.refetchNewServer()
+    handleFileChange(e) {
+      let file = e.target.files[0];
+      this.publicKey = file;
+      this.keyFileName = file.name
+    },
+    testConnectionInit(){
+      this.connectingStatus = "connecting..."
+      this.testCompleted = false
+      this.failStatus = false
+      this.successStatus = false
+      this.isLoading = true
+      this.isTesting = true
+    },
+    testSuccess(){
+      this.testCompleted = true
+      this.connectingStatus = "Success"
+      this.successStatus = true
+    },
+    testFailed(){
+      this.connectingStatus = "Failed"
+      this.failStatus = true
+    },
+    async testConnection() {
+      this.testConnectionInit()
+      var formData = new FormData();
+
+      if (this.publicKey === "") {
+        formData.append("keyfile", new File([], "nFile"))
+      } else {
+        formData.append("keyfile", this.publicKey)
       }
-      ipcRenderer.send('close-add-server-modal')
-      server.server_name = ""
-      server.server_desc = ""
-      server.username = ""
-      server.host = ""
-      server.port = null
-      server.password = ""
+
+      const testDto = {
+        "username": this.server.username,
+        "host": this.server.host,
+        "port": this.server.port,
+        "password": this.server.password
+      }
+      formData.append("server", new Blob([JSON.stringify(testDto)], {type: "application/json"}))
+      let res = await fetch("http://localhost:8081/api/request/test", {
+        method: "POST",
+        body: formData,
+      })
+      if (res.status == 200) {
+        this.testSuccess()
+      } else {
+        this.testFailed()
+      }
+      this.isLoading = false
+    },
+    async addServer(server) {
+      if (this.testCompleted) {
+        this.server.publicKey = this.publicKey
+        const res = await this.addNewServer(server)
+        if (res) {
+          await this.refetchNewServer()
+        }
+        ipcRenderer.send('close-add-server-modal')
+        server.server_name = ""
+        server.server_desc = ""
+        server.username = ""
+        server.host = ""
+        server.port = null
+        server.password = ""
+      } else {
+        alert("you should test server before save!")
+      }
     },
   },
 }
 </script>
 
 <style scoped>
-.zidx{
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
-.zidx > main {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 2rem;
-  width: 500px;
-  height: 400px;
-  background-color: #242424;
-  border-radius: 0.5rem;
-  border: none;
-  box-shadow: 0.2px 0.2px 4px 4px #0000002f;
-}
-.top {
-  color: white;
-  text-align: center;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-.servername {
-  float: right;
-  margin-top: 0.4rem;
-  margin-left: auto;
-  margin-right: 4rem;
-}
-span {
+
+.server{
   font-size: 0.8rem;
-  padding-left: auto;
-  padding-right: 1rem;
+  padding-right: 2rem;
   color: white;
 }
+
+#fileLab{
+  margin-top: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.fileLabel{
+  font-size: 0.8rem;
+  color: white;
+}
+
+.loadingLabel {
+  padding-left: 100px;
+  padding-right: 0.1rem;
+  color: #DDDDDD;
+  font-size: 0.8rem;
+}
+
 input {
   font-size: 0.9rem;
   color: white;
@@ -117,18 +188,157 @@ input {
   text-align: center;
   background-color: #565656;
   width: 15rem;
-  border: 1px;
+  border: none;
+  outline: none;
 }
-button{
+
+input::-webkit-inner-spin-button {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+button {
   background-color: #989898;
   border-radius: 0.2rem;
   border: none;
   box-shadow: 0 0.2px 1px 1px #0000002f;
-  top: 19rem;
-  left: 25rem;
   cursor: pointer;
+  display: inline-block;
+  font-size: 0.8rem;
+  color: white;
 }
-.cancel{
-  left: 4rem;
+
+.saveBtn {
+  margin-right: 30px;
+  background-color: #646464;
+}
+
+.testCon {
+  margin-left: 200px;
+  margin-right: 20px;
+}
+
+.cancel {
+  margin-left: 20px;
+}
+
+.modal,
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.modal-card {
+  position: relative;
+  max-width: 475px;
+  min-height: 350px;
+  margin: auto;
+  margin-top: 150px;
+  padding: 20px;
+  background-color: white;
+  z-index: 10;
+  background-color: #242424;
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0.2px 0.2px 4px 4px #0000002f;
+  animation: fade-in-down 0.5s;
+}
+
+.header {
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+  margin-top: 15px;
+}
+
+.serverInfo {
+  text-align: center;
+  float: right;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  margin-right: 40px;
+}
+
+.fileInfo{
+  text-align: center;
+  float: right;
+  display: flex;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  margin-right: 40px;
+}
+
+.conTestLoading {
+  text-align: right;
+  float: right;
+  display: flex;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  margin-right: 40px;
+}
+
+.btnWrapper {
+  top: 30px;
+  width: 100%;
+  display: flex;
+  text-align: center;
+  position: relative;
+}
+
+.testCompleted {
+  animation-name: testCompletedAnimation;
+  animation-iteration-count: infinite;
+  animation-duration: 2s;
+}
+
+@keyframes testCompletedAnimation {
+  from{background-color: #8E8E8E}
+  to{background-color: #2C2C2C}
+}
+
+.fade-in-down {
+  animation: fade-in-down 2s ease;
+  animation-fill-mode: forwards;
+}
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bounce {
+  animation: bounce 2s ease infinite;
+}
+@keyframes bounce {
+  70% { transform:translateY(0%); }
+  80% { transform:translateY(-15%); }
+  90% { transform:translateY(0%); }
+  95% { transform:translateY(-7%); }
+  97% { transform:translateY(0%); }
+  99% { transform:translateY(-3%); }
+  100% { transform:translateY(0); }
+}
+
+.fileUpload{
+  background-color: #989898;
+  border-radius: 0.2rem;
+  border: none;
+  box-shadow: 0 0.2px 1px 1px #0000002f;
+  width: 15rem;
+  margin-top: 0.1rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+#file{
+  display: none;
 }
 </style>

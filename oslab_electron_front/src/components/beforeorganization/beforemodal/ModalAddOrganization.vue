@@ -1,7 +1,6 @@
 <template>
-<<<<<<< HEAD:oslab_electron_front/src/views/beforemodal/ModalAddOrganization.vue
   <div class="modalframe">
-    <div class="header">Add Your Organization </div>
+    <div class="header">Add Your Organization</div>
     <div class="emailbar">
       <span class="text1">Organization Email</span>
       <input class="inpmail" type="text">
@@ -17,83 +16,72 @@
 
     </div>
     <div class="btn">
-      <button class="cancelbtn" @click="closeNewOrganModal"> Cancel </button>
-      <button class="authbtn" @click="auth" v-if="is_auth==false"> Authentication </button>
-      <button class="save" @click="save" v-if="is_auth==true"> Save to your Desktop </button>
+      <button class="cancelbtn" @click="closeNewOrganModal"> Cancel</button>
+      <button class="authbtn" @click="auth" v-if="is_auth==false"> Authentication</button>
+      <button class="save" @click="save" v-if="is_auth==true"> Save to your Desktop</button>
     </div>
-=======
-  <div class="zidx">
-    <main>
-      <div class="modalframe">
-        <div class="header">Add Your Organization </div>
-        <div class="emailbar">
-          <span class="text1">Organization Email</span>
-          <input class="inpmail" type="text">
-          <button class="sendbtn" @click="codeSend()">Code Send</button>
-        </div>
-        <div class="codebar" v-if="show">
-          <span class="text2">Enter the code</span>
-          <input class="inpcode" type="text">
-          <button class="authbtn" @click="save()">Authentication</button>
-        </div>
-        <div class="timeveri">
+    <div class="zidx">
+      <main>
+        <div class="modalframe">
+          <div class="header">Add Your Organization</div>
+          <div class="emailbar">
+            <span class="text1">Organization Email</span>
+            <input class="inpmail" type="text">
+            <button class="sendbtn" @click="codeSend()">Code Send</button>
+          </div>
+          <div class="codebar" v-if="show">
+            <span class="text2">Enter the code</span>
+            <input class="inpcode" type="text">
+            <button class="authbtn" @click="save()">Authentication</button>
+          </div>
+          <div class="timeveri">
+
+          </div>
 
         </div>
-        
-      </div>
-    </main>
->>>>>>> 893467719e7745e9f4dd532438e0ea583e02e4a7:oslab_electron_front/src/components/beforeorganization/beforemodal/ModalAddOrganization.vue
+      </main>
+    </div>
   </div>
 </template>
 
 <script>
-export default {  
+export default {
   name: 'ModalAddOrganization',
   data() {
     return {
       organizationEmail: "",
       verificationCode: "",
-<<<<<<< HEAD:oslab_electron_front/src/views/beforemodal/ModalAddOrganization.vue
       is_auth: false,
-=======
       show: false
->>>>>>> 893467719e7745e9f4dd532438e0ea583e02e4a7:oslab_electron_front/src/components/beforeorganization/beforemodal/ModalAddOrganization.vue
     }
   },
   methods: {
-    save(){
-<<<<<<< HEAD:oslab_electron_front/src/views/beforemodal/ModalAddOrganization.vue
+    save() {
       this.is_auth = false
-      ipcRenderer.send('close-add-organ-modal')
     },
     auth() {
       this.is_auth = true
     },
     closeNewOrganModal() {
       this.is_auth = false
-      ipcRenderer.send('close-add-organ-modal')
-    },
-=======
       this.$emit('closeModalAddOrganization')
     },
-    async codeSend(){
-
-      this.show = !this.show
-      
-    }
->>>>>>> 893467719e7745e9f4dd532438e0ea583e02e4a7:oslab_electron_front/src/components/beforeorganization/beforemodal/ModalAddOrganization.vue
+  },
+  async codeSend() {
+    this.show = !this.show
   }
 }
 </script>
 
 <style scoped>
-.zidx{
+.zidx {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
 }
+
 .zidx > main {
   display: block;
   margin: 0 auto;
@@ -104,29 +92,34 @@ export default {
   border: none;
   box-shadow: 0.2px 0.2px 4px 4px #0000002f;
 }
-.modalframe{
+
+.modalframe {
   width: 100%;
   height: 100%;
 }
-.header{
+
+.header {
   margin-top: 2rem;
   margin-left: auto;
   margin-right: auto;
   color: white;
   text-align: center;
 }
-.emailbar{
+
+.emailbar {
   margin-top: 5rem;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
 }
-.text1{
+
+.text1 {
   padding-left: 5rem;
   /* margin-left: calc(10rem); */
   color: white;
 }
-.inpmail{
+
+.inpmail {
   color: white;
   position: relative;
   left: 0.5rem;
@@ -136,7 +129,8 @@ export default {
   height: 1.4rem;
   border: 1px;
 }
-.sendbtn{
+
+.sendbtn {
   color: white;
   background-color: #989898cf;
   position: relative;
@@ -146,18 +140,21 @@ export default {
   border-radius: 0.2rem;
   border: none;
   box-shadow: 0 0.2px 1px 1px #0000002f;
-  cursor:pointer;
+  cursor: pointer;
 }
-.codebar{
+
+.codebar {
   margin-top: 0.3rem;
   margin-left: auto;
   margin-right: auto;
 }
-.text2{
+
+.text2 {
   margin-left: 6.96rem;
   color: white;
 }
-.inpcode{
+
+.inpcode {
   color: white;
   position: relative;
   left: 0.5rem;
@@ -167,11 +164,13 @@ export default {
   height: 1.4rem;
   border: 1px;
 }
+
 .dumydiv {
   margin-top: 0.3rem;
   margin-left: auto;
   margin-right: auto;
 }
+
 .dumyinp {
   position: relative;
   left: 0.5rem;
@@ -180,6 +179,7 @@ export default {
   border: 1px;
   visibility: hidden;
 }
+
 .cancelbtn {
   position: relative;
   left: 1rem;
@@ -191,9 +191,10 @@ export default {
   border-radius: 0.2rem;
   border: none;
   box-shadow: 0 0.2px 1px 1px #0000002f;
-  cursor:pointer;
+  cursor: pointer;
 }
-.authbtn{
+
+.authbtn {
   position: relative;
   left: 26.3rem;
   top: 9.3rem;
@@ -204,8 +205,9 @@ export default {
   border-radius: 0.2rem;
   border: none;
   box-shadow: 0 0.2px 1px 1px #0000002f;
-  cursor:pointer;
+  cursor: pointer;
 }
+
 .save {
   position: relative;
   left: 20.3rem;
@@ -217,9 +219,10 @@ export default {
   border-radius: 0.2rem;
   border: none;
   box-shadow: 0 0.2px 1px 1px #0000002f;
-  cursor:pointer;
+  cursor: pointer;
 }
-.timeveri{
+
+.timeveri {
   margin-top: 0.3rem;
 }
 </style>

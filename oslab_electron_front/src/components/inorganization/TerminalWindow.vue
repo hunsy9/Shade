@@ -5,7 +5,7 @@
 
     <img src="@/assets/zoomIn.png" class="zoomin" @click="toggle" v-if="!fulll" />
     <img src="@/assets/zoomOut.png" class="zoomin" @click="toggle" v-else />
-
+    <LoadingSpinner v-if="isLoading"></LoadingSpinner>
     <button class="exitShell" @click="exitShell">x</button>
   </div>
 
@@ -21,10 +21,14 @@ import { Terminal } from "xterm";
 import { WebLinksAddon } from "xterm-addon-web-links";
 import { FitAddon } from "xterm-addon-fit";
 import "xterm/css/xterm.css";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { terminalState } from '../../store/inOrganization';
 
 export default {
   name: "TerminalWindow",
+  components:{
+    LoadingSpinner
+  },
   data() {
     return {
       term: undefined,
@@ -32,6 +36,7 @@ export default {
       shell_head: "",
       flag: false,
       flag2: false,
+      isLoading: false
     };
   },
   computed: {
@@ -53,7 +58,7 @@ export default {
           thKey: this.thkey
         }
         console.log(keyBundle.thKey)
-        let response = await fetch("http://152.67.213.248:8081/api/request/exitShell", {
+        let response = await fetch("http://localhost:8081/api/request/exitShell", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -64,8 +69,6 @@ export default {
           this.setExitShellstatus(terminalState.TERMINATED)
         }
       }
-
-
     },
     toggle() {
       if (this.fulll) {
@@ -78,7 +81,7 @@ export default {
       this.toggleFullWindow();
     },
     connect() {
-      const serverURL = "http://144.24.78.122:8082/ws";
+      const serverURL = "http://localhost:8082/ws";
       let socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);
       console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`);
@@ -105,6 +108,7 @@ export default {
               }
             }
           });
+
         },
         (error) => {
           // 소켓 연결 실패
@@ -127,7 +131,6 @@ export default {
       cols: 60,
     });
     this.connect();
-
   },
   mounted() {
     this.term.open(document.getElementById("terminal"));
@@ -174,7 +177,7 @@ export default {
             };
             this.flag = true;
             this.flag2 = true;
-            fetch("http://152.67.213.248:8081/api/request/command", {
+            fetch("http://localhost:8081/api/request/command", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

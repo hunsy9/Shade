@@ -154,6 +154,8 @@ export default ({
             }
         },
         async addNewServer(context, server){
+            let publicKey = server.publicKey
+            console.log(publicKey)
             const obj = {
                 "org_id": parseInt(context.state.organId),
                 "category_id": parseInt(context.state.selected_categid),
@@ -165,8 +167,18 @@ export default ({
                 "password" : server.password,
                 "server_id" : null
             }
+
+            let formData = new FormData();
+
+            if (publicKey == "") {
+                formData.append("keyfile", new File([], "nFile"))
+            } else {
+                formData.append("keyfile", publicKey)
+            }
+
+            formData.append("serverDetail", new Blob([JSON.stringify(obj)], {type: "application/json"}))
             console.log(obj)
-            const data = await api.postNewServer(obj)
+            const data = await api.postNewServer(formData)
             if(data){
               return true
             }

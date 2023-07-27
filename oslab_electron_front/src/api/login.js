@@ -1,4 +1,4 @@
-const server = "http://152.67.213.248:8081/"
+const server = "http://localhost:8081/"
 
 export default {
     async login(id, pw) {
@@ -85,14 +85,11 @@ export default {
     async postNewServer(serverInfo) {
         const response = await fetch(`${server}api/server/add`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(serverInfo)
+            body: serverInfo
         })
         console.log(response)
         if (!response.ok) {
-            throw new Error(serverInfo.server_name + "가" + serverInfo.username + '를 가져오는데 실패 했습니다.')
+            throw new Error()
         }
 
         const data = await response.text()

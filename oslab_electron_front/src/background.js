@@ -54,8 +54,7 @@ async function createWindow() {
   //   }
   // })
 
-<<<<<<< HEAD
-  const addOrganModal = new BrowserWindow({ 
+  const addOrganModal = new BrowserWindow({
     width: 625, 
     height: 375, 
     parent: win, 
@@ -73,8 +72,7 @@ async function createWindow() {
       contextIsolation: false
     }
   })
-=======
-  // const addOrganModal = new BrowserWindow({ 
+  // const addOrganModal = new BrowserWindow({
   //   width: 625, 
   //   height: 375, 
   //   parent: win, 
@@ -91,7 +89,6 @@ async function createWindow() {
   //     contextIsolation: false
   //   }
   // })
->>>>>>> 893467719e7745e9f4dd532438e0ea583e02e4a7
 
   // const addServerModal = new BrowserWindow({ 
   //   width: 500, 
