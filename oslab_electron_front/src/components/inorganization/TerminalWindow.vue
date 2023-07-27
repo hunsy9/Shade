@@ -338,7 +338,7 @@ export default {
   cursor: pointer;
 }
 .exitShell{
-  backgroung-color: #D9D9D9;
+  background-color: #D9D9D9;
   border-radius: 5px;
   color: #F96464;
   position: absolute;
