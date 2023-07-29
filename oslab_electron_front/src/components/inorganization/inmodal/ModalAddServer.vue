@@ -2,7 +2,7 @@
   <div class="modal">
     <div class="overlay"></div>
     <div class="modal-card">
-      <div class="header">Add New Server</div>
+      <div class="header">{{ title }}</div>
       <div class="serverInfo">
         <label class="server"> Custom Server Name </label>
         <input type="text" v-model="server.server_name"/>
@@ -57,6 +57,9 @@ const {mapActions} = createNamespacedHelpers('inOrganization')
 
 export default {
   name: "ModalAddServer",
+  props:{
+    title: String
+  },
   components: {
     LoadingSpinner
   },

@@ -25,7 +25,6 @@ export default ({
         setWSKey(state, webSocketKey){
             state.webSocketKey = webSocketKey
         },
-
     },
     actions: {
         async connectTerminal(context, data){

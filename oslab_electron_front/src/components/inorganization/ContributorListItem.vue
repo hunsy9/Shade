@@ -3,12 +3,16 @@
     <div class="admin">
       <img src="@/assets/contriAdmin.png">
       <span>{{ admin_email }}</span>
-      <button v-if="isAdmin">Edit</button>
+      <button v-if="isAdmin">Mandate</button>
     </div>
     <div v-for="(item, index) in contributors" :key="index" class="normal">
       <span>{{ item.contributor_email }}</span>
       <button v-if="isAdmin">Delete</button>
-      <button v-if="isAdmin">Edit</button>
+      <button v-if="isAdmin">Privileges</button>
+    </div>
+    <div class="waitingContributor">
+      <span>juniper0917@gmail.com</span>
+
     </div>
   </div>
 </template>
@@ -31,6 +35,31 @@ export default {
 </script>
 
 <style scoped>
+.waitingContributor{
+  color: white;
+  margin-left: 5%;
+  margin-right: auto;
+  background: linear-gradient(-45deg,#91BCE4, #23a6d5, #3ab69a);
+  background-color: #91BCE4;
+  background-size: 400% 400%;
+  width: 90%;
+  border-radius: 0.4rem;
+  border: none;
+  box-shadow: 0 1px 1px 0.5px #0000002f;
+  margin-top: 1rem;
+  animation: gradient 4s ease infinite;
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 img{
   position: absolute;
   z-index: 1;
