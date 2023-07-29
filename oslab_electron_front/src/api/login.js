@@ -112,4 +112,22 @@ export default {
 
         return data
     },
+    async postProject(newProj) {
+        const response = await fetch(`${server}api/project/addProject`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newProj)
+        })
+        console.log(response)
+        if (!response.ok) {
+            throw new Error()
+        }
+
+        const data = await response.text()
+
+        return data
+    },
+    
 }
