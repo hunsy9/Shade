@@ -55,7 +55,7 @@ export default ({
                                 "server_id" : data.server_id,
                                 "keyExistence" : key.keyExistence
                             }
-                            const server = "http://152.67.213.248:8081/"
+                            const server = "http://localhost:8081/"
                             fetch(`${server}api/request/connect`, {
                                 method: 'POST',
                                 headers: {
