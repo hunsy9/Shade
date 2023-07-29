@@ -55,10 +55,8 @@ public class SshThread extends Thread {
     }
 
     public String requestCommand() {
-        log.info("현재 명령어: {}",command);
         try {
             commandQueue.put(command);
-            commandQueue.put("");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -74,8 +72,10 @@ public class SshThread extends Thread {
 
     public String findSSHKey(Long org_id, Long server_id){
         String DATA_DIRECTORY = "/home/opc/oidc/key/"+org_id+"/"+server_id;
+        log.info("findSSHKEY: " + DATA_DIRECTORY);
         File dir = new File(DATA_DIRECTORY);
         File files[] = dir.listFiles();
+        log.info("files: " + files.toString());
         File targetKey = Arrays.stream(files).toList().get(0);
         return targetKey.toString();
     }
@@ -184,9 +184,10 @@ public class SshThread extends Thread {
                         String command = commandQueue.poll();
                         if (command != null) {
                             // 외부에서 명령어 전달받으면 ChannelShell로 전송
+                            log.info("char: "+ command);
                             OutputStream outputStream = channelShell.getOutputStream();
                             PrintStream commander = new PrintStream(outputStream,true);
-                            commander.println(command);
+                            commander.write(command.getBytes(StandardCharsets.UTF_8));
                         }
                         Thread.sleep(100);
                     }

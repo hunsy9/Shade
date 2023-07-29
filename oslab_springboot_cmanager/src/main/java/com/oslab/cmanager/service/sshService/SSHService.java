@@ -118,7 +118,7 @@ public class SSHService implements SSHServiceInterface{
     }
 
     public String fileStoreBuffer(MultipartFile keyfile) throws IOException {
-        String dir = "/home/opc/oidc/keyBuffer/";
+        String dir = "/home/opc/oidc/keyBuffer";
         String fullFilePath = dir + File.separator + keyfile.getOriginalFilename();
         Path path = Paths.get(fullFilePath).toAbsolutePath();
         keyfile.transferTo(path.toFile());
@@ -126,7 +126,7 @@ public class SSHService implements SSHServiceInterface{
     }
 
     public String keyFileStore(MultipartFile keyfile, int org_id, int server_id) throws IOException {
-        String dir = "/home/opc/oidc/key/"+org_id+"/"+server_id+"/";
+        String dir = "/home/opc/oidc/key/"+org_id+"/"+server_id;
         File folder = new File(dir);
         if(!folder.exists()){
             try {

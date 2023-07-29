@@ -7,6 +7,7 @@ import com.oslab.cmanager.model.transfer.SSHDto.*;
 import com.oslab.cmanager.model.transfer.connectionTest.ConTestDto;
 import com.oslab.cmanager.model.transfer.connectionTest.ConnectionTestDto;
 import com.oslab.cmanager.service.sshService.SSHService;
+import com.oslab.cmanager.service.webSocketService.WebSocketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SSHController {
     private final SSHService sshService;
+
 
     @PostMapping ("api/sshService/generateKey")
     KeyBundle generateKey(@RequestBody ConnectingInfo connectingInfo){
