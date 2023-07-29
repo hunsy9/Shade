@@ -23,7 +23,7 @@
     "vuex": "^4.0.0",
     "vuex-persistedstate": "^4.1.0",
     "webstomp-client": "^1.2.6",
-    "xterm": "^5.2.1",
+    "xterm": "^3.4.1",
     "xterm-addon-fit": "^0.7.0",
     "xterm-addon-web-links": "^0.8.0"
   },

@@ -19,18 +19,18 @@
       <div v-else-if="mode == 1">
         <div class="content">
           <PathBar/>
-          <NewServerButton v-if="isAdmin == true" @openModalAddServer="openModalAddServer = true"/>
-          <ServerListItem v-if="catl2" @openModalServerInfo="doOpenModalServerInfo"/>
+          <NewServerButton v-if="isAdmin == true" @openModalAddServer="test1"/>
+          <ServerListItem :v-if="catl2" @openModalServerInfo="doOpenModalServerInfo" @openDeleteModal="doOpenDeleteModal" @openModalAddServer="test1"/>
         </div>
         <div class="rightframe">
-          <RightExpandingMenu/>
-          <NewCategoryButton v-if="isAdmin == true"/>
+          <RightExpandingMenu @openAddCategoryModal="openAddCategoryModal = true" @openDeleteModal="doOpenDeleteModal"/>
+          <NewCategoryButton v-if="isAdmin == true" @openAddCategoryModal="openAddCategoryModal = true"/>
         </div>
       </div>
 
       <div v-else-if="mode == 2">
         <span class="contribut">Contributors</span>
-        <NewContributorButton v-if="isAdmin == true"/>
+        <NewContributorButton v-if="isAdmin == true" @openInviteContributorModal="openInviteContributorModal = true"/>
         <ContributorListItem/>
       </div>
 
@@ -43,8 +43,11 @@
     <TerminalWindow/>
   </div>
 
-  <ModalAddServer v-if="openModalAddServer" @closeModalAddServer="openModalAddServer = false"/>
+  <ModalAddServer :title="title" v-if="openModalAddServer" @closeModalAddServer="openModalAddServer = false"/>
   <ModalServerInfo :sName="sName" :sDesc="sDesc" v-if="openModalServerInfo" @closeModalAddServer="openModalServerInfo = false"/>
+  <ModalAddContributor v-if="openInviteContributorModal" @closeInviteContributorModal="openInviteContributorModal = false"/>
+  <ModalAddCategory v-if="openAddCategoryModal" @closeAddCategoryModal="openAddCategoryModal = false"/>
+  <DeleteModal :DeleteDto="DeleteDto" :DeleteState="DeleteState"  v-if="openDeleteModal" @closeDeleteModal="openDeleteModal = false"/>
 
   <button @click="testIn()">
   화면 전환 버튼(개발용 추후 삭제)
@@ -75,11 +78,14 @@ import TerminalWindow from '@/components/inorganization/TerminalWindow.vue'
 
 import ModalAddServer from '@/components/inorganization/inmodal/ModalAddServer.vue'
 import ModalServerInfo from '@/components/inorganization/inmodal/ModalServerInfo.vue'
+import ModalAddCategory from '@/components/inorganization/inmodal/ModalAddCategory.vue'
+import DeleteModal from '@/components/common/DeleteModal.vue'
 
 import { ipcRenderer } from 'electron';
 import router from '@/router/index.js';
 
 import { mapState, mapMutations } from "vuex";
+import ModalAddContributor from "@/components/inorganization/inmodal/ModalAddContributor";
 
 export default {
   name: 'InOrganizationView',
@@ -89,8 +95,14 @@ export default {
       onContributors: false,
       openModalAddServer: false,
       openModalServerInfo: false,
+      openInviteContributorModal:false,
+      openAddCategoryModal: false,
+      openDeleteModal: false,
       sName: "",
-      sDesc: ""
+      sDesc: "",
+      DeleteState: "",
+      DeleteDto: "",
+      title: ""
     }
   },
   computed: {
@@ -116,9 +128,21 @@ export default {
       this.sName = name
       this.sDesc = desc
       this.openModalServerInfo = true
+    },
+    doOpenDeleteModal(DeleteState, dto){
+      this.DeleteDto = dto
+      this.openDeleteModal = true
+      console.log("자식한테 받음" + DeleteState + "dto:" + dto)
+      this.DeleteState = DeleteState
+    },
+    test1(asdasd){
+      this.openModalAddServer = true
+      console.log(asdasd)
+      this.title = asdasd
     }
   },
   components: {
+    ModalAddContributor,
     AppInfo,
     ContributorButton,
     LeftExpandingMenu,
@@ -134,7 +158,9 @@ export default {
     ContributorListItem,
     TerminalWindow,
     ModalAddServer,
-    ModalServerInfo
+    ModalServerInfo,
+    ModalAddCategory,
+    DeleteModal,
   }
 }
 </script>

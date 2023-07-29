@@ -1,12 +1,12 @@
 <template>
-  <button class="button" @click="$emit('openNewOrganModal')">
-    Add New Contributor
+  <button class="button" @click="$emit('openInviteContributorModal')">
+    Invite Contributor
   </button>
 </template>
       
 <script>
 export default {
-  name: 'NewContributorButton', 
+  name: 'NewContributorButton',
 }
 </script>
 

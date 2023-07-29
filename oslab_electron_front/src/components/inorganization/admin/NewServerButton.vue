@@ -1,5 +1,5 @@
 <template>
-  <button class="button" @click="$emit('openModalAddServer')" v-if="categ_l2 && categ_l1 && proj">
+  <button class="button" @click="$emit('openModalAddServer', 'Add New Server')" v-if="categ_l2 && categ_l1 && proj">
     Add New Server
   </button>
 </template>

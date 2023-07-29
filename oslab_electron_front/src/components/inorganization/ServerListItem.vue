@@ -10,10 +10,10 @@
             <button v-if="!isAdmin" @click="$emit('openModalServerInfo', server.server_name, server.server_desc)">
               Info
             </button>
-            <button v-if="isAdmin">
+            <button v-if="isAdmin" @click="$emit('openDeleteModal', DeleteState, {server_id: server.server_id})">
               Delete
             </button>
-            <button v-if="isAdmin">
+            <button v-if="isAdmin" @click="$emit('openModalAddServer', 'Edit Server')">
               Edit
             </button>
             <button @click="connectServer(server.server_id, org_id)">
@@ -28,11 +28,13 @@
   
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
+import {DeleteState} from "@/store/inOrganization";
 
 export default {
   name: 'ServerListItem',
   data() {
     return {
+      DeleteState: DeleteState.DELETESERVER,
       colors: ["#AFA4C6a2", "#A4C6B5a2", "#A4BEC6a2", "#C6A4A4a2"],
     }
   },

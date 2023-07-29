@@ -8,6 +8,14 @@ export const terminalState = {
     TERMINATED: 2,
 }
 
+export const DeleteState = {
+    DELETEPROJECT: 0,
+    DELETECONTRIBUTOR: 1,
+    DELETECATEGORYL1: 2,
+    DELETECATEGORYL2: 3,
+    DELETESERVER: 4
+}
+
 export default ({
     namespaced: true,
 
@@ -54,7 +62,7 @@ export default ({
         getSelectedCatl2(state){
             if(state.selected_categ_l2){
                 return " > " + state.selected_categ_l2
-            }       
+            }
         },
         getServerList(state){
             const project = state.projects.find((project) => project.project_name == state.selected_proj)
