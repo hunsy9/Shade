@@ -206,6 +206,17 @@ export default ({
                 console.log("fail in fetchNewServer")
             }
         },
+        async addNewProject(context, data){
+            console.log(data)
+            const res = await api.postProject(data)
+            if(res){
+                console.log("success in addNewProject")
+            }
+            else{
+                console.log("fail in addNewProject")
+            }
+        },
+
     },
     modules: {
     },

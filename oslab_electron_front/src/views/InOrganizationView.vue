@@ -6,7 +6,7 @@
       <hr/>
       <ContributorButton/>
       <LeftExpandingMenu/>
-      <NewProjectButton v-if="isAdmin == true"/>
+      <NewProjectButton v-if="isAdmin == true" @openNewProjectModal="openNewProjectModal = true"/>
     </div>
 
     <div class="topbarframe">
@@ -45,6 +45,7 @@
 
   <ModalAddServer v-if="openModalAddServer" @closeModalAddServer="openModalAddServer = false"/>
   <ModalServerInfo :sName="sName" :sDesc="sDesc" v-if="openModalServerInfo" @closeModalAddServer="openModalServerInfo = false"/>
+  <ModalAddProject v-if="openNewProjectModal" @closeNewProjectModal="openNewProjectModal = false"/>
 
   <button @click="testIn()">
   화면 전환 버튼(개발용 추후 삭제)
@@ -75,6 +76,7 @@ import TerminalWindow from '@/components/inorganization/TerminalWindow.vue'
 
 import ModalAddServer from '@/components/inorganization/inmodal/ModalAddServer.vue'
 import ModalServerInfo from '@/components/inorganization/inmodal/ModalServerInfo.vue'
+import ModalAddProject from '@/components/inorganization/inmodal/ModalAddProject.vue'
 
 import { ipcRenderer } from 'electron';
 import router from '@/router/index.js';
@@ -89,6 +91,7 @@ export default {
       onContributors: false,
       openModalAddServer: false,
       openModalServerInfo: false,
+      openNewProjectModal: false,
       sName: "",
       sDesc: ""
     }
@@ -134,7 +137,8 @@ export default {
     ContributorListItem,
     TerminalWindow,
     ModalAddServer,
-    ModalServerInfo
+    ModalServerInfo,
+    ModalAddProject
   }
 }
 </script>
