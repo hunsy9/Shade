@@ -24,7 +24,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUserOrgInfo(user_id));
     }
 
-    @PostMapping("api/user/signup")
+    @PostMapping("api/user/signup/")
     public ResponseEntity<Boolean> signUp(@RequestBody SignupReqDto signupReqDto) throws SQLException{
         System.out.println(signupReqDto);
         boolean success = userService.signUp(signupReqDto);

@@ -57,7 +57,7 @@ public class ServerRepository {
             System.out.println("aaa");
 
             ResponseEntity<?> res = restTemplate.exchange(
-                    "http://144.24.78.122:8082/api/sshService/registerKeyfile",
+                    "http://localhost:8082/api/sshService/registerKeyfile",
                     HttpMethod.POST,
                     entity,
                     new ParameterizedTypeReference<Map<String, Object>>() {
