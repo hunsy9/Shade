@@ -6,7 +6,7 @@
       <hr/>
       <ContributorButton/>
       <LeftExpandingMenu/>
-      <NewProjectButton v-if="isAdmin == true"/>
+      <NewProjectButton v-if="isAdmin == true" @openNewProjectModal="openNewProjectModal = true"/>
     </div>
 
     <div class="topbarframe">
@@ -48,6 +48,7 @@
   <ModalAddContributor v-if="openInviteContributorModal" @closeInviteContributorModal="openInviteContributorModal = false"/>
   <ModalAddCategory v-if="openAddCategoryModal" @closeAddCategoryModal="openAddCategoryModal = false"/>
   <DeleteModal :DeleteDto="DeleteDto" :DeleteState="DeleteState"  v-if="openDeleteModal" @closeDeleteModal="openDeleteModal = false"/>
+  <ModalAddProject v-if="openNewProjectModal" @closeNewProjectModal="openNewProjectModal = false"/>
 
   <button @click="testIn()">
   화면 전환 버튼(개발용 추후 삭제)
@@ -80,6 +81,7 @@ import ModalAddServer from '@/components/inorganization/inmodal/ModalAddServer.v
 import ModalServerInfo from '@/components/inorganization/inmodal/ModalServerInfo.vue'
 import ModalAddCategory from '@/components/inorganization/inmodal/ModalAddCategory.vue'
 import DeleteModal from '@/components/common/DeleteModal.vue'
+import ModalAddProject from '@/components/inorganization/inmodal/ModalAddProject.vue'
 
 import { ipcRenderer } from 'electron';
 import router from '@/router/index.js';
@@ -98,6 +100,7 @@ export default {
       openInviteContributorModal:false,
       openAddCategoryModal: false,
       openDeleteModal: false,
+      openNewProjectModal: false,
       sName: "",
       sDesc: "",
       DeleteState: "",
@@ -161,6 +164,7 @@ export default {
     ModalServerInfo,
     ModalAddCategory,
     DeleteModal,
+    ModalAddProject
   }
 }
 </script>
