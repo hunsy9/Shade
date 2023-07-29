@@ -112,22 +112,40 @@ export default {
 
         return data
     },
-    async postProject(newProj) {
-        const response = await fetch(`${server}api/project/addProject`, {
+    async isDup(email) {
+        console.log("입력된 email " + email)
+
+        const response = await fetch(`${server}api/user/duplicateEmail?email=${email}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+        if (!response.ok) {
+            throw new Error('중복체크에 실패했습니다.')
+        }
+
+        const data = response.json()
+        return data
+    },
+    async signUp(info) {
+        console.log("입력된 info " + info)
+
+        const response = await fetch(`${server}api/user/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newProj)
+            body: JSON.stringify(info)
         })
-        console.log(response)
+
         if (!response.ok) {
-            throw new Error()
+            throw new Error('회원가입에 실패했습니다.')
         }
 
-        const data = await response.text()
-
+        console.log("pass")
+        const data = response.json()
         return data
     },
-    
 }

@@ -46,6 +46,8 @@
 
 <script>
 
+import { mapActions } from "vuex";
+
 export default {
   name: "ModalSignUp",
   data() {
@@ -77,7 +79,7 @@ export default {
       if (cmp == "") { return true }
       return false
     },
-    signUp() { // sign up 버튼
+    async signUp() { // sign up 버튼
       if ((this.no_name = this.chk_null(this.name_))) { return }        // name 비어있으면 종료
       else { this.no_name = false }
       if ((this.no_email = this.chk_null(this.email_))) { return }      // email 비어있으면 종료
@@ -98,21 +100,30 @@ export default {
         return
       }
       else { this.signup_msg = false }
+
+      const param = {
+        user_email: this.email_,
+        user_password: this.pwd_,
+        user_name: this.name_
+      }
+      const data = await this.trySignup(param)
+
+      if (data == false) { return }
       this.$emit("closeAppModalSignUp")
     },
     back() { // 뒤로가기 sign in 버튼
       this.$emit("closeAppModalSignUp")
       this.$emit("openModalLogin")
     },
-    verifing() {
-      if ((this.dup_email = this.is_dup())) { return } // 중복이면 종료
+    async verifing() {
+      const data = await this.tryDup(this.email_)
+      if (data) { // 중복이면 종료
+        this.dup_email = true
+        return
+      } 
+
       this.click_verify = true
       this.signup_msg = false
-    },
-    is_dup() {
-        // 중복 체크 후 중복이면 return true
-        // 아니면 return false
-        return false
     },
     code_chk() {
       if ((this.no_veri_code = this.chk_null(this.code_))) { return } // 비어있으면 종료
@@ -126,6 +137,8 @@ export default {
     resend() { // code resend
 
     },
+    ...mapActions('duplicate', ['tryDup']),
+    ...mapActions('signup' , ['trySignup']),
   }
 };
 </script>

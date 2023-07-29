@@ -6,6 +6,8 @@ import contributorInfo from '@/store/contributorInfo.js'
 import organizationInfo from '@/store/organizationInformation.js'
 import inOrganization from '@/store/inOrganization.js'
 import terminal from '@/store/terminal.js'
+import duplicate from '@/store/duplicate.js'
+import signup from '@/store/signup.js'
 
 export default createStore({
   state: {
@@ -22,7 +24,9 @@ export default createStore({
     contributorInfo,
     organizationInfo,
     inOrganization,
-    terminal
+    terminal,
+    duplicate,
+    signup,
   },
   plugins: [
     createPersistedState({
