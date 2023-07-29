@@ -24,7 +24,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUserOrgInfo(user_id));
     }
 
-    @PostMapping("api/user/signup/")
+    @PostMapping("api/user/signup")
     public ResponseEntity<Boolean> signUp(@RequestBody SignupReqDto signupReqDto) throws SQLException{
         System.out.println(signupReqDto);
         boolean success = userService.signUp(signupReqDto);
@@ -40,7 +40,7 @@ public class UserController {
     @GetMapping("api/user/duplicateEmail")
     public ResponseEntity<?> checkEmailDuplication(@RequestParam("email") String email) throws SQLException {
         boolean result = userService.checkEmailDuplication(email);
-        return result ? ResponseEntity.ok().body("중복되는 이메일이 있습니다.") : ResponseEntity.ok().body("가입 가능한 이메일입니다.");
+        return result ? ResponseEntity.ok().body(true) : ResponseEntity.ok().body(false);
     }
 
     @GetMapping("api/user/checkAdmin")
