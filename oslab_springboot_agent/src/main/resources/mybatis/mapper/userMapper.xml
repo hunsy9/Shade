@@ -13,7 +13,7 @@
     </select>
 
     <insert id="signUp" parameterType="com.oslab.agent.model.transfer.userDto.SignupReqDto">
-        INSERT INTO user_master VALUES (0, #{user_email}, #{user_password}, #{user_name}, now(), now())
+        INSERT INTO user_master VALUES (0, #{user_email}, #{user_password}, #{user_name}, now(), now(), NULL)
     </insert>
 
     <select id="signIn" parameterType="com.oslab.agent.model.transfer.userDto.SignInReqDto" resultType="int">
