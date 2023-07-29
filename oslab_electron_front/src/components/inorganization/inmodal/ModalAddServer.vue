@@ -122,7 +122,7 @@ export default {
         "password": this.server.password
       }
       formData.append("server", new Blob([JSON.stringify(testDto)], {type: "application/json"}))
-      let res = await fetch("http://152.67.213.248:8081/api/request/test", {
+      let res = await fetch("http://localhost:8081/api/request/test", {
         method: "POST",
         body: formData,
       })

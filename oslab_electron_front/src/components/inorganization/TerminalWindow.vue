@@ -1,10 +1,10 @@
 <template>
   <div :class="{ fullbackground: fulll, background: !fulll }">
-    <div class="bar" v-if="fulll" />
+    <div class="bar" v-if="fulll"/>
     <div id="terminal"></div>
 
-    <img src="@/assets/zoomIn.png" class="zoomin" @click="toggle" v-if="!fulll" />
-    <img src="@/assets/zoomOut.png" class="zoomin" @click="toggle" v-else />
+    <img src="@/assets/zoomIn.png" class="zoomin" @click="toggle" v-if="!fulll"/>
+    <img src="@/assets/zoomOut.png" class="zoomin" @click="toggle" v-else/>
     <LoadingSpinner v-if="isLoading"></LoadingSpinner>
     <button class="exitShell" @click="exitShell">x</button>
   </div>
@@ -14,19 +14,19 @@
 import Stomp from "webstomp-client";
 import SockJS from "sockjs-client";
 
-import { mapState, mapMutations } from "vuex";
+import {mapState, mapMutations} from "vuex";
 
-import { Terminal } from "xterm";
-import { WebLinksAddon } from "xterm-addon-web-links";
-import { FitAddon } from "xterm-addon-fit";
-import "xterm/css/xterm.css";
+import {Terminal} from "xterm";
+// import { WebLinksAddon } from "xterm-addon-web-links";
+import {FitAddon} from "xterm-addon-fit";
+import "xterm/dist/xterm.css";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { terminalState } from '../../store/inOrganization';
+import {terminalState} from "../../store/inOrganization";
 
 export default {
   name: "TerminalWindow",
-  components:{
-    LoadingSpinner
+  components: {
+    LoadingSpinner,
   },
   data() {
     return {
@@ -35,7 +35,8 @@ export default {
       shell_head: "",
       flag: false,
       flag2: false,
-      isLoading: false
+      isLoading: false,
+      socket:undefined
     };
   },
   computed: {
@@ -48,24 +49,24 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations("inOrganization", ["toggleFullWindow","setExitShellstatus"]),
-    async exitShell(){
+    ...mapMutations("inOrganization", ["toggleFullWindow", "setExitShellstatus"]),
+    async exitShell() {
       var returnValue = confirm("Are you sure you want to shut down the terminal?");
-      if(returnValue){
+      if (returnValue) {
         const keyBundle = {
           wsKey: this.wskey,
-          thKey: this.thkey
-        }
-        console.log(keyBundle.thKey)
-        let response = await fetch("http://152.67.213.248:8081/api/request/exitShell", {
+          thKey: this.thkey,
+        };
+        console.log(keyBundle.thKey);
+        let response = await fetch("http://localhost:8081/api/request/exitShell", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(keyBundle),
         });
-        if(response.body){
-          this.setExitShellstatus(terminalState.TERMINATED)
+        if (response.body) {
+          this.setExitShellstatus(terminalState.TERMINATED);
         }
       }
     },
@@ -80,40 +81,41 @@ export default {
       this.toggleFullWindow();
     },
     connect() {
-      const serverURL = "http://144.24.78.122:8082/ws";
-      let socket = new SockJS(serverURL);
-      this.stompClient = Stomp.over(socket);
+      const serverURL = "http://localhost:8082/ws";
+      this.socket = new SockJS(serverURL);
+      this.stompClient = Stomp.over(this.socket);
       console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`);
       this.stompClient.connect(
-        {},
-        (frame) => {
-          // 소켓 연결 성공
-          this.connected = true;
-          console.log("소켓 연결 성공", frame);
-          // 서버의 메시지 전송 endpoint를 구독합니다.
-          // 이런형태를 pub sub 구조라고 합니다.
-          const subUrl = this.wskey.split(":").join("/");
-          this.stompClient.subscribe("/sub/ws/" + subUrl, (res) => {
-            if (this.flag) {
-              this.flag = !this.flag;
-            } else {
-              if (this.flag2) {
-                this.term.write(res.body);
-                this.shell_head = res.body;
-                this.flag2 = !this.flag2;
-              } else {
-                this.term.write("\n" + res.body);
-                this.shell_head = res.body;
-              }
-            }
-          });
-
-        },
-        (error) => {
-          // 소켓 연결 실패
-          console.log("소켓 연결 실패", error);
-          this.connected = false;
-        }
+          {},
+          (frame) => {
+            // 소켓 연결 성공
+            this.connected = true;
+            console.log("소켓 연결 성공", frame);
+            // 서버의 메시지 전송 endpoint를 구독합니다.
+            // 이런형태를 pub sub 구조라고 합니다.
+            const subUrl = this.wskey.split(":").join("/");
+            this.stompClient.subscribe("/sub/ws/" + subUrl, (res) => {
+              this.term.writeln(res.body);
+              // this.term.write("\n")
+              // if (this.flag) {
+              //   this.flag = !this.flag;
+              // } else {
+              //   if (this.flag2) {
+              //     this.term.write(res.body);
+              //     this.shell_head = res.body;
+              //     this.flag2 = !this.flag2;
+              //   } else {
+              //     this.term.write("\n" + res.body);
+              //     this.shell_head = res.body;
+              //   }
+              // }
+            });
+          },
+          (error) => {
+            // 소켓 연결 실패
+            console.log("소켓 연결 실패", error);
+            this.connected = false;
+          }
       );
     },
   },
@@ -132,121 +134,154 @@ export default {
     this.connect();
   },
   mounted() {
+    // var intervalId;
+    // const subUrl = this.wskey.split(":").join("/");
+
     this.term.open(document.getElementById("terminal"));
 
-    var curr_line = "";
-    var curr_line_pos = 0;
-    var entries = [];
-    let currEntryPos = 0;
 
-    window.addEventListener("keydown", (e) => {
-      if (e.isComposing) return;
+    // this.term.fit();
+    this.term.focus();
+
+    // this.term.attach(this.socket, false, false);
+
+    // wSocket.onerror = function (event) {
+    //   console.log(event);
+    //   alert("Connection Closed");
+    //   this.term.detach(wSocket);
+    //   window.clearInterval(intervalId);
+    // };
+
+    this.term.on("data", (data) => {
+      console.log(data)
+      this.term.write(data);
+      const commandDto = {
+        key: this.thkey,
+        command: data,
+      };
+      this.stompClient.send("/pub/chat/message", JSON.stringify(commandDto))
+      // var dataSend = { data: { data: data } };
+      // wSocket.send(JSON.stringify(dataSend));
+      //Xtermjs with attach dont print zero, so i force. Need to fix it :(
+      // if (data == "0") {
+      //   this.term.write(data);
+      // }
     });
-    this.term.loadAddon(new WebLinksAddon());
-    this.term.loadAddon(this.fit_addon);
-    this.fit_addon.fit();
+    // this.term.open(document.getElementById("terminal"));
 
-    this.setExitShellstatus(terminalState.OPENED)
+    // var curr_line = "";
+    // var curr_line_pos = 0;
+    // var entries = [];
+    // let currEntryPos = 0;
 
-    this.term.prompt = () => {
-      this.term.write("\n\x1b[32mseunghun>" + curr_line + "\n");
-    };
+    // window.addEventListener("keydown", (e) => {
+    //   if (e.isComposing) return;
+    // });
+    // this.term.loadAddon(new WebLinksAddon());
+    // this.term.loadAddon(this.fit_addon);
+    // this.fit_addon.fit();
 
-    this.term.write("\x1b[32mWelcome to SSH Desktop!\n\n\x1b[0m");
+    // this.setExitShellstatus(terminalState.OPENED)
 
-    this.term.attachCustomKeyEventHandler((event) => {
-      if (event.type == "keydown") {
-        if (event.ctrlKey) {
-          return;
-        } else if (event.altKey) {
-          return;
-        } else if (event.metaKey) {
-          return;
-        } else if (event.shiftKey) {
-          return;
-        } else if (event.code == "Escape") {
-          return;
-        } else if (event.code == "Enter") {
-          if (curr_line.replace(/^\\s+|\\s+$/g, "").length != 0) {
-            entries.push(curr_line);
-            currEntryPos = entries.length - 1;
-            const commandDto = {
-              key: this.thkey,
-              command: curr_line,
-            };
-            this.flag = true;
-            this.flag2 = true;
-            fetch("http://152.67.213.248:8081/api/request/command", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(commandDto),
-            });
-          }
-          this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line + "\n");
-          curr_line = "";
-          curr_line_pos = 0;
-        } else if (event.code == "Backspace") {
-          if (curr_line_pos > 0) {
-            curr_line_pos -= 1;
-          }
-          let buff_line = curr_line.slice(0, -1);
-          curr_line = buff_line;
-          this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line);
-        } else if (event.code == "Tab") {
-          curr_line_pos += 4;
-          curr_line += "    ";
-          this.term.write("    ");
-          return;
-        } else if (event.code == "ArrowLeft") {
-          if (curr_line_pos == 0) return;
-          curr_line_pos--;
-          this.term.write("\x1b[D");
-        } else if (event.code == "ArrowRight") {
-          if (curr_line_pos == curr_line.length) return;
-          curr_line_pos++;
-          this.term.write("\x1b[C");
-        } else if (event.code == "ArrowUp") {
-          if (entries.length > 0) {
-            if (currEntryPos > 0) {
-              currEntryPos -= 1;
-            }
-            curr_line = entries[currEntryPos];
-            curr_line_pos = curr_line.length;
-            this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line);
-          }
-        } else if (event.code == "ArrowDown") {
-          curr_line_pos = curr_line.length;
-          currEntryPos += 1;
-          if (currEntryPos === entries.length || entries.length === 0) {
-            currEntryPos -= 1;
-            curr_line = "";
-            this.term.write(`\x1b[2K\r${this.shell_head}`);
-          } else {
-            curr_line = entries[currEntryPos];
-            this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line);
-          }
-        } else {
-          if (curr_line.length != curr_line_pos) {
-            let a = curr_line.slice(0, curr_line_pos);
-            let b = curr_line.slice(curr_line_pos);
-            curr_line = a + event.key + b;
-            console.log(a + " " + b + curr_line + "cur" + "" + curr_line_pos);
-            this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line);
-            this.term.write(
-              "\x1b["
-                .concat((curr_line.length - curr_line_pos - 1).toString())
-                .concat("D")
-            );
-          } else {
-            curr_line += event.key;
-            this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line);
-          }
-          curr_line_pos += 1;
-        }
-      }
-    });
+    // this.term.prompt = () => {
+    //   this.term.write("\n\x1b[32mseunghun>" + curr_line + "\n");
+    // };
+
+    // this.term.write("\x1b[32mWelcome to SSH Desktop!\n\n\x1b[0m");
+
+    // this.term.attachCustomKeyEventHandler((event) => {
+    //   if (event.type == "keydown") {
+    //     if (event.ctrlKey) {
+    //       return;
+    //     } else if (event.altKey) {
+    //       return;
+    //     } else if (event.metaKey) {
+    //       return;
+    //     } else if (event.shiftKey) {
+    //       return;
+    //     } else if (event.code == "Escape") {
+    //       return;
+    //     } else if (event.code == "Enter") {
+    //       if (curr_line.replace(/^\\s+|\\s+$/g, "").length != 0) {
+    //         entries.push(curr_line);
+    //         currEntryPos = entries.length - 1;
+    //         const commandDto = {
+    //           key: this.thkey,
+    //           command: curr_line,
+    //         };
+    //         this.flag = true;
+    //         this.flag2 = true;
+    //         fetch("http://152.67.213.248:8081/api/request/command", {
+    //           method: "POST",
+    //           headers: {
+    //             "Content-Type": "application/json",
+    //           },
+    //           body: JSON.stringify(commandDto),
+    //         });
+    //       }
+    //       this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line + "\n");
+    //       curr_line = "";
+    //       curr_line_pos = 0;
+    //     } else if (event.code == "Backspace") {
+    //       if (curr_line_pos > 0) {
+    //         curr_line_pos -= 1;
+    //       }
+    //       let buff_line = curr_line.slice(0, -1);
+    //       curr_line = buff_line;
+    //       this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line);
+    //     } else if (event.code == "Tab") {
+    //       curr_line_pos += 4;
+    //       curr_line += "    ";
+    //       this.term.write("    ");
+    //       return;
+    //     } else if (event.code == "ArrowLeft") {
+    //       if (curr_line_pos == 0) return;
+    //       curr_line_pos--;
+    //       this.term.write("\x1b[D");
+    //     } else if (event.code == "ArrowRight") {
+    //       if (curr_line_pos == curr_line.length) return;
+    //       curr_line_pos++;
+    //       this.term.write("\x1b[C");
+    //     } else if (event.code == "ArrowUp") {
+    //       if (entries.length > 0) {
+    //         if (currEntryPos > 0) {
+    //           currEntryPos -= 1;
+    //         }
+    //         curr_line = entries[currEntryPos];
+    //         curr_line_pos = curr_line.length;
+    //         this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line);
+    //       }
+    //     } else if (event.code == "ArrowDown") {
+    //       curr_line_pos = curr_line.length;
+    //       currEntryPos += 1;
+    //       if (currEntryPos === entries.length || entries.length === 0) {
+    //         currEntryPos -= 1;
+    //         curr_line = "";
+    //         this.term.write(`\x1b[2K\r${this.shell_head}`);
+    //       } else {
+    //         curr_line = entries[currEntryPos];
+    //         this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line);
+    //       }
+    //     } else {
+    //       if (curr_line.length != curr_line_pos) {
+    //         let a = curr_line.slice(0, curr_line_pos);
+    //         let b = curr_line.slice(curr_line_pos);
+    //         curr_line = a + event.key + b;
+    //         console.log(a + " " + b + curr_line + "cur" + "" + curr_line_pos);
+    //         this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line);
+    //         this.term.write(
+    //           "\x1b["
+    //             .concat((curr_line.length - curr_line_pos - 1).toString())
+    //             .concat("D")
+    //         );
+    //       } else {
+    //         curr_line += event.key;
+    //         this.term.write(`\x1b[2K\r${this.shell_head}` + curr_line);
+    //       }
+    //       curr_line_pos += 1;
+    //     }
+    //   }
+    // });
 
     // term.onData('key', (key, ev) => {
     //   const printable = !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey &&
@@ -315,19 +350,23 @@ export default {
   width: 100%;
   height: calc(100vh - 2rem);
 }
+
 .background {
   background-color: black;
   width: calc(100vw - 16rem);
   height: calc(100vh - 7rem);
 }
+
 .bar {
   height: 2rem;
   background-color: #2b2b2b;
 }
+
 #terminal {
   width: 100%;
   height: 100%;
 }
+
 .zoomin {
   position: absolute;
   width: 2rem;
@@ -337,10 +376,11 @@ export default {
   z-index: 1;
   cursor: pointer;
 }
-.exitShell{
-  background-color: #D9D9D9;
+
+.exitShell {
+  background-color: #d9d9d9;
   border-radius: 5px;
-  color: #F96464;
+  color: #f96464;
   position: absolute;
   width: 2rem;
   height: 2rem;
