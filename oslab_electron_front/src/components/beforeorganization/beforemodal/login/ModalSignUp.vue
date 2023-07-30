@@ -76,10 +76,17 @@ export default {
   },
   methods: {
     chk_null(cmp) { // 비어있는지 체크하는 함수
-      if (cmp == "") { return true }
+      if (cmp.trim().length == 0) { return true }
       return false
     },
+    setInit() {
+      this.no_name = false
+      this.no_email = false
+      this.no_pwd = false
+      this.no_pwd_chk = false
+    },
     async signUp() { // sign up 버튼
+      this.setInit()
       if ((this.no_name = this.chk_null(this.name_))) { return }        // name 비어있으면 종료
       else { this.no_name = false }
       if ((this.no_email = this.chk_null(this.email_))) { return }      // email 비어있으면 종료
@@ -88,6 +95,11 @@ export default {
       else { this.no_pwd = false }
       if ((this.no_pwd_chk = this.chk_null(this.pwd_chk_))) { return }  // pwd check 비어있으면 종료
       else { this.no_pwd_chk = false }
+
+      this.name_ = this.name_.trim()
+      this.email_ = this.email_.trim()
+      this.pwd_ = this.pwd_.trim()
+      this.pwd_chk_ = this.pwd_chk_.trim()
 
       if (this.pwd_ != this.pwd_chk_) {                                 // pwd 같은지 체크
         this.no_same_pwd = true
@@ -101,6 +113,7 @@ export default {
       }
       else { this.signup_msg = false }
 
+      
       const param = {
         user_email: this.email_,
         user_password: this.pwd_,
@@ -116,6 +129,14 @@ export default {
       this.$emit("openModalLogin")
     },
     async verifing() {
+      if ((this.no_email = this.chk_null(this.email_))) { return }      // email 비어있으면 종료
+      else {
+        this.no_name = false
+        this.no_email = false
+        this.no_pwd = false
+        this.no_pwd_chk = false
+      }
+
       const data = await this.tryDup(this.email_)
       if (data) { // 중복이면 종료
         this.dup_email = true
@@ -127,6 +148,12 @@ export default {
     },
     code_chk() {
       if ((this.no_veri_code = this.chk_null(this.code_))) { return } // 비어있으면 종료
+      else {
+        this.no_name = false
+        this.no_pwd = false
+        this.no_pwd_chk = false
+        this.no_veri_code = false
+      }
       // 코드 맞는지 체크
       // 맞으면 this.invalid_code = false, this.pass_code = true, this.signup_msg = false,
       // 틀리면 this.invalid_code = true,
@@ -213,6 +240,8 @@ input {
   border: none;
   height: auto;
   width: auto;
+  border: none;
+  outline: none;
 }
 .sshdesktopicon {
   width: 4rem;

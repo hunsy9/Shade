@@ -15,10 +15,12 @@
         <div class="id_bar">
           <!-- <img src="@/assets/id.png" class="bar_img" /> -->
           <input type="email" class="inp" placeholder="Email" v-model="loginId"/>
+          <span class="email_span" v-if="no_email==true">Please Enter the Email !</span>
         </div>
         <div class="pass_bar">
           <!-- <img src="@/assets/pw.png" class="bar_img" /> -->
           <input type="password" class="inp" placeholder="Password" v-model="loginPassword"/>
+          <span class="pwd_span" v-if="no_pwd==true">Please Enter the Password !</span>
         </div>
       </div>
       <button class="continuebtn" @click="login(loginId, loginPassword)">Continue</button>
@@ -40,6 +42,9 @@ export default {
     return {
       loginId: "",
       loginPassword: "",
+
+      no_email: false,
+      no_pwd: false,
     };
   },
   computed: {
@@ -48,7 +53,21 @@ export default {
     }),
   },
   methods: {
+    chk_null(cmp) { // 비어있는지 체크하는 함수
+      if (cmp.trim().length == 0) { return true }
+      return false
+    },
+    setInit() {
+      this.no_email = false
+      this.no_pwd = false
+    },
     async login(id, pw){
+      this.setInit()
+      if ((this.no_email = this.chk_null(this.loginId))) { return }      // email 비어있으면 종료
+      else { this.no_email = false }
+      if ((this.no_pwd = this.chk_null(this.loginPassword))) { return }          // pwd 비어있으면 종료
+      else { this.no_pwd = false }
+
       const data = await this.tryLogin(id, pw)
       if(data){
         this.setOrgInfo(data)
@@ -202,5 +221,23 @@ export default {
 }
 a{
   cursor: pointer;
+}
+.email_span {
+  position: inherit;
+  display: block;
+  margin-top: 2.9rem;
+  margin-left: 0.25rem;
+  font-size: 9px;
+  color: tomato;
+  font-weight: 600;
+}
+.pwd_span {
+  position: inherit;
+  display: block;
+  margin-top: 2.9rem;
+  margin-left: 0.25rem;
+  font-size: 9px;
+  color: tomato;
+  font-weight: 600;
 }
 </style>
