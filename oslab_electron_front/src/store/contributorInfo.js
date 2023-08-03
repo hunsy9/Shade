@@ -2,7 +2,7 @@ export default ({
   namespaced: true,
 
   state: {
-    admin_email: {
+    admin_contributor: {
       user_id: null,
       contributor_email: null
     },
@@ -11,7 +11,13 @@ export default ({
             user_id: null,
             contributor_email: null
         },
-    ]
+    ],
+    pending_contributors: [
+      {
+        user_id: null,
+        contributor_email: null
+      },
+    ],
   },
   getters: {
   },
@@ -19,13 +25,14 @@ export default ({
     setContributors(state, data){
       if(!data) {
         console.log(data)
-        state.admin_email.contributor_email = null
+        state.admin_contributor.contributor_email = null
         for(var i in state.contributors){
           i.contributor_email = null
         }
       } else {
-        state.admin_email = data.admin_email
+        state.admin_contributor = data.admin_contributor
         state.contributors = data.contributors
+        state.pending_contributors = data.pending_contributors
       }
     },
   },

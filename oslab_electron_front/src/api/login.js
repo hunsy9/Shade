@@ -148,4 +148,21 @@ export default {
         const data = response.json()
         return data
     },
+    async postProject(data){
+        const response = await fetch(`${server}api/project/addProject`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+
+        let newProjectId = response.json()
+        const newProjectResDto = {
+            "project_id": newProjectId,
+            "project_name": data.project_name
+        }
+        return newProjectResDto
+
+    }
 }

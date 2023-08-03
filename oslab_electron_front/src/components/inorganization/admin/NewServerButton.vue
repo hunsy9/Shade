@@ -35,5 +35,15 @@ export default {
   border: none;
   box-shadow: 0 1px 1px 0.5px #0000002f;
   cursor:pointer;
+  animation: fade-in 1s linear;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

@@ -183,7 +183,7 @@ input {
   color: white;
   padding: 0.2rem 0;
   text-align: center;
-  background-color: #565656;
+  background-color: #2f2f2f;
   width: 15rem;
   border: none;
   outline: none;

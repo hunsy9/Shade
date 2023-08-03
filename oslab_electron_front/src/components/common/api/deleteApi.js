@@ -1,28 +1,34 @@
 const server = "http://localhost:8081/";
 
-import store from '@/store/index';
-
 export default {
 
     async deleteProject(deleteDto){
         console.log(deleteDto)
     },
     async deleteContributor(deleteDto){
-        console.log(deleteDto)
+        const response = await fetch(`${server}api/contributor/delete`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(deleteDto)
+        })
+        return response
     },
-    async deleteCategoryL1(deleteDto) {
-        console.log(deleteDto)
-    },
-    async deleteCategoryL2(deleteDto){
-        console.log(deleteDto)
+    async delCategory(deleteDto) {
+        const response = await fetch(`${server}api/category/delCategory`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(deleteDto)
+        })
+        return response
     },
     async deleteServer(deleteDto) {
         let res = await fetch(`${server}api/server/delete?server_id=${deleteDto.server_id}`, {
             method: 'POST',
         })
-        if(await res.json()){
-            await store.dispatch('inOrganization/refetchNewServer')
-        }
+        return res
     },
-
 }

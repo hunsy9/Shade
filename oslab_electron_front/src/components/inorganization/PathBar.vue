@@ -4,10 +4,10 @@
       {{ proj }} 
     </span>
     <span class="greyspan">
-      {{ getSelectedCatl1 }} 
+      {{ getSelectedCatl1 }}
     </span>
     <span class="greyspan">
-      {{ getSelectedCatl2 }} 
+      {{ getSelectedCatl2 }}
     </span>
   </span>
 </template>

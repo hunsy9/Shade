@@ -1,6 +1,8 @@
 import api from '@/api/login.js'
 import { ipcRenderer } from "electron"
 import router from '@/router/index.js'
+import categoryApi from "@/components/inorganization/inmodal/api/categoryApi";
+import deleteApi from "@/components/common/api/deleteApi";
 
 export const terminalState = {
     INIT: 0,
@@ -14,6 +16,12 @@ export const DeleteState = {
     DELETECATEGORYL1: 2,
     DELETECATEGORYL2: 3,
     DELETESERVER: 4
+}
+
+export const ActionCategoryState = {
+    ADDL1:0,
+    ADDL2:1,
+    EDIT: 2,
 }
 
 export default ({
@@ -40,6 +48,7 @@ export default ({
         mode: 0,
         full: false,
         selected_proj: "",
+        selected_proj_id: 0,
         selected_categ_l1: "",
         selected_categ_l2: "",
         selected_categid: "",
@@ -67,7 +76,7 @@ export default ({
         getServerList(state){
             const project = state.projects.find((project) => project.project_name == state.selected_proj)
             return project.project_server
-        }
+        },
     },
     mutations: {
         resetSelect(state){
@@ -94,6 +103,27 @@ export default ({
             let newData = JSON.parse(dto.newData)
             state.projects.find(projects => projects.project_name == state.selected_proj).project_server[key] = newData
         },
+        reFetchProject(state,dto){
+            state.projects.push(dto)
+        },
+        reFetchCategoryL1(state, dto){
+            let newPrev = dto.prev
+            state.projects.find(projects=>projects.project_id === state.selected_proj_id).category[newPrev] = null
+            let newCategoryKey = dto.new_category_id + ":" + newPrev + ":null"
+            state.projects.find(projects=>projects.project_id === state.selected_proj_id).project_server[newCategoryKey] = []
+        },
+        reFetchCategory(state,dto){
+            state.projects.find(project => project.project_id === state.selected_proj_id).category = dto.category
+            state.projects.find(project => project.project_id === state.selected_proj_id).project_server = dto.project_server
+        },
+        reFetchSelectedCategory(state,dto) {
+            if(dto.prev != ""){
+                state.selected_categ_l1 = dto.prev
+            }
+            if(dto.next != ""){
+                state.selected_categ_l2 = dto.next
+            }
+        },
         //mode 1 proj
         selectProj(state, selected_proj){
             state.mode = 1
@@ -103,6 +133,7 @@ export default ({
                 state.selected_categid = ""
             }
             state.selected_proj = selected_proj
+            state.selected_proj_id = state.projects.find(project=> project.project_name === selected_proj).project_id
         },
         selectCatl1(state, selected_categ_l1){
             state.selected_categ_l1 = selected_categ_l1
@@ -215,8 +246,14 @@ export default ({
             }
         },
         async addNewProject(context, data){
-            console.log(data)
             const res = await api.postProject(data)
+            console.log("newData: " + res)
+            const category_project_server = {
+                "category": null,
+                "project_server": null
+            }
+            const dto = {...res, ...category_project_server}
+            context.commit("reFetchProject", dto)
             if(res){
                 console.log("success in addNewProject")
             }
@@ -224,6 +261,49 @@ export default ({
                 console.log("fail in addNewProject")
             }
         },
+        async addCategoryL1(context, data){
+            let res = await categoryApi.addCategoryL1(data)
+            const dto = {
+                "new_category_id": res,
+                ...data
+            }
+            if(res > 0){
+                context.commit("reFetchCategoryL1", dto)
+            }
+        },
+        async addCategoryL2(context,data){
+            await categoryApi.addCategoryL2(data)
+        },
+        async reFetchCategory(context){
+            const dto = {
+                org_id : context.state.organId,
+                project_id: context.state.selected_proj_id
+            }
+            let res = await categoryApi.reFetchCategory(dto)
+            context.commit("reFetchCategory", res)
+        },
+        async reFetchContributor(context){
+            const data = await context.dispatch('Contributors')
+            if(data.admin_contributor.user_id){
+                await context.commit('contributorInfo/setContributors', data,{root:true})
+            }
+        },
+        async reFetchSelectedCategory(context,data){
+            context.commit('reFetchSelectedCategory', data)
+        },
+        async deleteServer(context,dto){
+            await deleteApi.deleteServer(dto)
+        },
+        async deleteCategory(context, dto){
+            let res = await deleteApi.delCategory(dto)
+            console.log(res)
+        },
+        async editCategory(context, dto){
+            await categoryApi.editCategory(dto)
+        },
+        async deleteContributor(context,dto){
+            await deleteApi.deleteContributor(dto)
+        }
 
     },
     modules: {
