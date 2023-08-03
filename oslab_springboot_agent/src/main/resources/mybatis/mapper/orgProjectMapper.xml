@@ -5,5 +5,8 @@
 <mapper namespace="com.oslab.agent.repository.organization.mapper.OrgProjectMapper">
     <insert id="addProject" parameterType="com.oslab.agent.model.transfer.orgDto.AddProjectDto">
         INSERT INTO organization_project VALUES (0, #{org_id}, #{project_name})
+        <selectKey resultType="int" keyProperty="project_id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 </mapper>

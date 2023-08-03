@@ -18,6 +18,7 @@ public class ContributorRepository {
     private final ContributorMapper contributorMapper;
 
     public boolean addContributor(ContributorDto contributorDto) throws SQLException {
+        System.out.println(contributorDto.toString());
         return contributorMapper.addContributor(contributorDto);
     }
     public boolean registerContributor(RegContributorDto regContributorDto) throws SQLException{

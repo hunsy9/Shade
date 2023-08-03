@@ -20,8 +20,8 @@ public class OrgProjectController {
     private final OrgProjectService orgProjectService;
 
     @PostMapping("api/project/addProject")
-    public ResponseEntity<?> addProject(@RequestBody AddProjectDto addProjectDto) throws SQLException {
-        boolean success = orgProjectService.addProject(addProjectDto);
-        return success ? ResponseEntity.ok().body("Success") : ResponseEntity.internalServerError().body("Fail");
+    public ResponseEntity<Integer> addProject(@RequestBody AddProjectDto addProjectDto) throws SQLException {
+        Integer newProjectId = orgProjectService.addProject(addProjectDto);
+        return ResponseEntity.ok().body(newProjectId) ;
     }
 }

@@ -3,8 +3,10 @@ package com.oslab.agent.service.contributor;
 import com.oslab.agent.model.transfer.contributorDto.ContributorDto;
 import com.oslab.agent.model.transfer.contributorDto.EditPrivDto;
 import com.oslab.agent.model.transfer.contributorDto.RegContributorDto;
+import com.oslab.agent.model.transfer.mailDto.UpdateStateDto;
 import com.oslab.agent.model.transfer.orgDto.OrgReqDto;
 import com.oslab.agent.repository.contributor.ContributorRepository;
+import com.oslab.agent.repository.mail.MailSendingRepository;
 import com.oslab.agent.repository.organization.master.OrgMasterRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +22,14 @@ public class ContributorService implements ContributorServiceInterface{
 
     private final ContributorRepository contributorRepository;
     private final OrgMasterRepository orgMasterRepository;
+    private final MailSendingRepository mailSendingRepository;
     public boolean addContributor(ContributorDto contributorDto) throws SQLException {
-        return contributorRepository.addContributor(contributorDto);
+        UpdateStateDto updateStateDto = UpdateStateDto.builder()
+                .org_id(contributorDto.getOrg_id())
+                .user_id(contributorDto.getUser_id())
+                .state(contributorDto.getState())
+                .build();
+        return mailSendingRepository.setPendingUserToContributor(updateStateDto);
     }
     public boolean registerContributor(RegContributorDto regContributorDto) throws SQLException{
         boolean valid = contributorRepository.registerContributor(regContributorDto);

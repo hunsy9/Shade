@@ -15,7 +15,7 @@ public class OrgProjectService implements OrgProjectServiceInterface{
 
     private final OrgProjectRepository orgProjectRepository;
 
-    public boolean addProject(AddProjectDto addProjectDto) {
+    public Integer addProject(AddProjectDto addProjectDto) {
         return orgProjectRepository.addProject(addProjectDto);
     }
 

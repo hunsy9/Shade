@@ -27,6 +27,8 @@ import java.util.List;
 public class ServerService implements ServerServiceInterface{
     private final ServerRepository serverRepository;
 
+    private final RedisTemplate<String,String> redisTemplate;
+
     public int addNewServer(MultipartFile keyfile, AddServerDto addServerDto) throws SQLException, JsonProcessingException {
         return serverRepository.addNewServer(keyfile,addServerDto);
     }
@@ -37,6 +39,8 @@ public class ServerService implements ServerServiceInterface{
     }
 
     public boolean deleteServer(String server_id) throws SQLException{
+        String redisKey = "Server:"+server_id;
+        redisTemplate.delete(redisKey);
         return serverRepository.deleteServer(server_id);
     }
 

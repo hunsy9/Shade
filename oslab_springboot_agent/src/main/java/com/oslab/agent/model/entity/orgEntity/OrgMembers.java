@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrgMembers {
-    private OrgContributor admin_email;
-    private List<OrgContributor> contributors;
+    private Contributor admin_contributor;
+    private List<Contributor> contributors;
+    private List<Contributor> pending_contributors;
 }

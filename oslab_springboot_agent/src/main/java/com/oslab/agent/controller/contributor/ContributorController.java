@@ -18,9 +18,10 @@ import java.util.List;
 public class ContributorController {
     private final ContributorService contributorService;
 
-    @PostMapping("/api/contributor/add")
-    public boolean addContributor(@RequestBody ContributorDto contributorDto) throws SQLException {
-        return contributorService.addContributor(contributorDto);
+    @GetMapping("/api/contributor/add")
+    public boolean addContributor(@RequestParam("org_id") Long org_id, @RequestParam("user_id") Long user_id, @RequestParam("contributor_email") String email) throws SQLException {
+        ContributorDto contributor = ContributorDto.builder().org_id(org_id).user_id(user_id).contributor_email(email).state("contributor").build();
+        return contributorService.addContributor(contributor);
     }
     @PostMapping("/api/contributor/register")
     public boolean registerContributor(@RequestBody RegContributorDto regContributorDto) throws SQLException {

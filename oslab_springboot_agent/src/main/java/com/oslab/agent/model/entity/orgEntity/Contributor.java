@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrgContributor {
-    private int contributor_id;
+public class Contributor {
+    private int user_id;
     private String contributor_email;
-    private String state;
 }

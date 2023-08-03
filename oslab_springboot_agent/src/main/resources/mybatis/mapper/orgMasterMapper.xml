@@ -38,16 +38,13 @@
         WHERE op.org_id = #{org_id}
     </select>
 
-    <select id="getOrgAdmin" parameterType="Integer">
+    <select id="getOrgContributors" parameterType="Integer" resultType="com.oslab.agent.model.entity.orgEntity.OrgContributor">
         SELECT
-            user_id,
-            contributor_email
+            contributor_id,
+            contributor_email,
+            state
         FROM organization_contributor
-        WHERE user_id = (SELECT org_admin_id FROM organization_master WHERE org_id = #{org_id})
-    </select>
-
-    <select id="getOrgContributors" parameterType="Integer">
-        select user_id, contributor_email from organization_contributor where org_id = #{org_id}
+        WHERE org_id=#{org_id}
     </select>
 
     <select id="getOrgUserPrivileges" parameterType="Integer">

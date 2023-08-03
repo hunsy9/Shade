@@ -29,7 +29,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ServerRepository {
     private final ServerMapper serverMapper;
-
     private final RedisTemplate<String, String> redisTemplate;
     private final ObjectMapper objectMapper;
 

@@ -1,4 +1,16 @@
 spring:
+  mail:
+    host: smtp.gmail.com
+    username: juniper0917@gmail.com
+    port: 587
+    password: 'klcciuxsswboqnvo'
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     mapper-locations: classpath:/mybatis/mapper/**/*.xml

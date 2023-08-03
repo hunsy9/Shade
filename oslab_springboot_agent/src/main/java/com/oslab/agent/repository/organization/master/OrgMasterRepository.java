@@ -1,5 +1,6 @@
 package com.oslab.agent.repository.organization.master;
 
+import com.oslab.agent.model.entity.orgEntity.Contributor;
 import com.oslab.agent.model.entity.orgEntity.*;
 import com.oslab.agent.model.transfer.orgDto.OrgReqDto;
 import com.oslab.agent.model.transfer.orgDto.RegOrgReqDto;
@@ -139,22 +140,31 @@ public class OrgMasterRepository {
     }
 
     public OrgMembers getOrgMembers(Integer org_id) throws SQLException{
-
-        OrgContributor admin = orgMasterMapper.getOrgAdmin(org_id);
         List<OrgContributor> contributors = orgMasterMapper.getOrgContributors(org_id);
+        Contributor admin_contributor = new Contributor();
+        List<Contributor> normal_contributors = new ArrayList<>();
+        List<Contributor> pending_contributors = new ArrayList<>();
+        for(OrgContributor orgContributor:contributors){
+            String state = orgContributor.getState();
+            Contributor contributor = Contributor.builder()
+                    .user_id(orgContributor.getContributor_id())
+                    .contributor_email(orgContributor.getContributor_email())
+                    .build();
 
-        List<OrgContributor> contributorsExceptAdmin = new ArrayList<>();
-
-        contributors.stream().forEach(orgContributor -> {
-            if(orgContributor.getUser_id() == admin.getUser_id()){
-                return;
+            if(state.equals("admin")){
+                admin_contributor = contributor;
             }
-            contributorsExceptAdmin.add(orgContributor);
-        });
-
+            else if(state.equals("contributor")){
+                normal_contributors.add(contributor);
+            }
+            else if(state.equals("pending")){
+                pending_contributors.add(contributor);
+            }
+        }
         OrgMembers orgMembers = OrgMembers.builder()
-                .admin_email(admin)
-                .contributors(contributorsExceptAdmin)
+                .admin_contributor(admin_contributor)
+                .contributors(normal_contributors)
+                .pending_contributors(pending_contributors)
                 .build();
 
         return orgMembers;

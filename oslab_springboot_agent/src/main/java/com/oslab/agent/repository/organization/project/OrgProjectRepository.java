@@ -13,8 +13,9 @@ import org.springframework.stereotype.Repository;
 public class OrgProjectRepository {
     private final OrgProjectMapper orgProjectMapper;
 
-    public boolean addProject(AddProjectDto addProjectDto){
-        return orgProjectMapper.addProject(addProjectDto);
+    public Integer addProject(AddProjectDto addProjectDto){
+        orgProjectMapper.addProject(addProjectDto);
+        return addProjectDto.getProject_id();
     }
 
     public boolean deleteProject(DelProjectDto delProjectDto){

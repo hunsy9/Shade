@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oslab.agent.repository.mail.mapper.MailSendingMapper">
+    <select id="getUserIdFromClientEmail" parameterType="string">
+        SELECT user_id FROM user_master WHERE user_email = #{client_email}
+    </select>
+    <insert id="setPendingUser" parameterType="com.oslab.agent.model.transfer.mailDto.SendInvitationMailDto">
+        INSERT INTO organization_contributor VALUES (#{org_id}, #{user_id}, #{client_email}, "pending", now())
+    </insert>
+    <update id="setPendingUserToContributor" parameterType="com.oslab.agent.model.transfer.mailDto.UpdateStateDto">
+        UPDATE organization_contributor SET state = #{state} WHERE org_id LIKE #{org_id} AND contributor_id LIKE #{user_id}
+    </update>
+</mapper>

@@ -4,6 +4,6 @@ import com.oslab.agent.model.transfer.orgDto.AddProjectDto;
 import com.oslab.agent.model.transfer.orgDto.DelProjectDto;
 
 public interface OrgProjectServiceInterface {
-    boolean addProject(AddProjectDto addProjectDto);
+    Integer addProject(AddProjectDto addProjectDto);
     boolean deleteProject(DelProjectDto delProjectDto);
 }
