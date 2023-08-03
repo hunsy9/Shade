@@ -2,6 +2,7 @@ package com.oslab.agent.service.user;
 
 
 import com.oslab.agent.model.transfer.userDto.SignInReqDto;
+import com.oslab.agent.model.transfer.userDto.SignInResDto;
 import com.oslab.agent.model.transfer.userDto.SignupReqDto;
 import com.oslab.agent.model.transfer.userDto.UserOrgs;
 import com.oslab.agent.repository.user.UserRepository;
@@ -27,7 +28,7 @@ public class UserService implements UserServiceInterface {
         return userRepository.signUp(signupReqDto);
     }
 
-    public boolean signIn(SignInReqDto signinReqDto) throws SQLException{
+    public SignInResDto signIn(SignInReqDto signinReqDto) throws SQLException{
         return userRepository.signIn(signinReqDto);
     }
 

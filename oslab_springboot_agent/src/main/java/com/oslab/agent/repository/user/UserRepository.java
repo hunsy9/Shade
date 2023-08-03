@@ -2,6 +2,7 @@ package com.oslab.agent.repository.user;
 
 
 import com.oslab.agent.model.transfer.userDto.SignInReqDto;
+import com.oslab.agent.model.transfer.userDto.SignInResDto;
 import com.oslab.agent.model.transfer.userDto.SignupReqDto;
 import com.oslab.agent.model.transfer.userDto.UserOrgs;
 import com.oslab.agent.repository.user.mapper.UserMapper;
@@ -26,8 +27,8 @@ public class UserRepository {
         log.info(signupReqDto.getUser_name());
         return userMapper.signUp(signupReqDto);
     }
-    public boolean signIn(SignInReqDto signInReqDto) throws SQLException{
-        return userMapper.signIn(signInReqDto) > 0;
+    public SignInResDto signIn(SignInReqDto signInReqDto) throws SQLException{
+        return userMapper.signIn(signInReqDto);
     }
 
     public boolean checkEmailDuplication(String email) throws SQLException{

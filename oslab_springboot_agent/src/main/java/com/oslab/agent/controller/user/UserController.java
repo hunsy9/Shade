@@ -1,6 +1,7 @@
 package com.oslab.agent.controller.user;
 
 import com.oslab.agent.model.transfer.userDto.SignInReqDto;
+import com.oslab.agent.model.transfer.userDto.SignInResDto;
 import com.oslab.agent.model.transfer.userDto.SignupReqDto;
 import com.oslab.agent.model.transfer.userDto.UserOrgs;
 import com.oslab.agent.service.user.UserService;
@@ -33,8 +34,9 @@ public class UserController {
 
     @PostMapping("api/user/signin")
         public ResponseEntity<?> signIn(@RequestBody SignInReqDto signInReqDto) throws SQLException{
-        boolean result = userService.signIn(signInReqDto);
-        return result ? ResponseEntity.ok().body("로그인 성공") : ResponseEntity.ok().body("로그인 실패");
+        SignInResDto result = userService.signIn(signInReqDto);
+        if (result == null) { return ResponseEntity.ok().body(false); }
+        return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("api/user/duplicateEmail")
