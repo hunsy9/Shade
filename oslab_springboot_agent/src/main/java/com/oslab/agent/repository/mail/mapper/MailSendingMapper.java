@@ -10,4 +10,5 @@ public interface MailSendingMapper {
 
     boolean setPendingUserToContributor(UpdateStateDto updateStateDto);
     Long getUserIdFromClientEmail(String client_email);
+    boolean insertUserOrganization(UpdateStateDto updateStateDto);
 }

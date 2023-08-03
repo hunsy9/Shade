@@ -17,7 +17,8 @@ public class MailSendingRepository {
     }
 
     public boolean setPendingUserToContributor(UpdateStateDto updateStateDto){
-        return mailSendingMapper.setPendingUserToContributor(updateStateDto);
+        mailSendingMapper.setPendingUserToContributor(updateStateDto);
+        return mailSendingMapper.insertUserOrganization(updateStateDto);
     }
 
     public Long getUserIdFromClientEmail(String client_email){
