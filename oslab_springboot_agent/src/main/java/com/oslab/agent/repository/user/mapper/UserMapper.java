@@ -1,6 +1,7 @@
 package com.oslab.agent.repository.user.mapper;
 
 import com.oslab.agent.model.transfer.userDto.SignInReqDto;
+import com.oslab.agent.model.transfer.userDto.SignInResDto;
 import com.oslab.agent.model.transfer.userDto.SignupReqDto;
 import com.oslab.agent.model.transfer.userDto.UserOrgs;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,7 +15,7 @@ public interface UserMapper {
 
     Boolean signUp(SignupReqDto signupReqDto) throws SQLException;
 
-    Integer signIn(SignInReqDto signInReqDto) throws SQLException;
+    SignInResDto signIn(SignInReqDto signInReqDto) throws SQLException;
 
     Integer checkEmailDuplication(String email) throws SQLException;
 

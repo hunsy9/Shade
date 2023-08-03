@@ -16,8 +16,11 @@
         INSERT INTO user_master VALUES (0, #{user_email}, #{user_password}, #{user_name}, now(), now(), NULL)
     </insert>
 
-    <select id="signIn" parameterType="com.oslab.agent.model.transfer.userDto.SignInReqDto" resultType="int">
-        SELECT count(user_name)
+    <select id="signIn" parameterType="com.oslab.agent.model.transfer.userDto.SignInReqDto" resultType="com.oslab.agent.model.transfer.userDto.SignInResDto">
+        SELECT
+            user_id,
+            user_name,
+            user_email
         FROM user_master
         WHERE user_email = #{user_email} AND user_password = #{user_password}
     </select>

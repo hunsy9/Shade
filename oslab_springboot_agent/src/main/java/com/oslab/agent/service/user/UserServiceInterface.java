@@ -1,6 +1,7 @@
 package com.oslab.agent.service.user;
 
 import com.oslab.agent.model.transfer.userDto.SignInReqDto;
+import com.oslab.agent.model.transfer.userDto.SignInResDto;
 import com.oslab.agent.model.transfer.userDto.SignupReqDto;
 import com.oslab.agent.model.transfer.userDto.UserOrgs;
 
@@ -12,7 +13,7 @@ public interface UserServiceInterface {
 
     boolean signUp(SignupReqDto signupReqDto) throws SQLException;
 
-    boolean signIn(SignInReqDto signInReqDto) throws SQLException;
+    SignInResDto signIn(SignInReqDto signInReqDto) throws SQLException;
 
     boolean checkEmailDuplication(String email) throws SQLException;
 }
