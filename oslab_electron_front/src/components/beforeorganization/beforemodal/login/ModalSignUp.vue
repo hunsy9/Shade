@@ -399,4 +399,7 @@ span{
   color: tomato;
   font-weight: 600;
 }
+input{
+  outline: none;
+}
 </style>

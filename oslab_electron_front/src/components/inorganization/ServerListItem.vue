@@ -82,6 +82,7 @@ export default {
   background-color: #a4bec6a2;
   border-radius: 0.4rem;
   padding: 1rem 0;
+  animation: fadeInUp 1s ease backwards;
 }
 .sname{
   color: white;
@@ -99,5 +100,9 @@ button{
   color: white;
   padding: 0.1rem 1.5rem;
   margin-right: 1rem;
+}
+@keyframes fadeInUp{
+  0%{transform:translate(0px, 7px); opacity: 0;}
+  100%{transform:translate(0px, 0); opacity: 1;}
 }
 </style>

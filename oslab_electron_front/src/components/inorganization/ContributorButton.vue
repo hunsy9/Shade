@@ -34,7 +34,7 @@ export default {
         return
       }
       const data = await this.Contributors()
-      if(data.admin_email.user_id){
+      if(data.admin_contributor.user_id){
         this.setContributors(data)
         this.selectContributors()
       }

@@ -46,6 +46,7 @@ export default {
       console.log("modal" + data)
       const res = await this.addNewProject(data)
       console.log("modal res: " + res)
+      this.$emit('closeNewProjectModal')
     }
   }
 }
@@ -68,6 +69,7 @@ export default {
   border-radius: 0.5rem;
   border: none;
   box-shadow: 0.2px 0.2px 4px 4px #0000002f;
+  animation: fade-in-down 0.5s;
 }
 .modalframe{
   margin-top: 15rem;
@@ -94,7 +96,7 @@ input{
   color: white;
   padding: 0.2rem 0;
   text-align: center;
-  background-color: #565656;
+  background-color: #2f2f2f;
   width: 16rem;
   border: none;
   outline: none;
@@ -127,5 +129,19 @@ button {
 }
 .cancel {
   margin-left: 30px;
+}
+.fade-in-down {
+  animation: fade-in-down 2s ease;
+  animation-fill-mode: forwards;
+}
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

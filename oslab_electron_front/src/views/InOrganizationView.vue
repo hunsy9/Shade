@@ -23,15 +23,15 @@
           <ServerListItem :v-if="catl2" @openModalServerInfo="doOpenModalServerInfo" @openDeleteModal="doOpenDeleteModal" @openModalAddServer="test1"/>
         </div>
         <div class="rightframe">
-          <RightExpandingMenu @openAddCategoryModal="openAddCategoryModal = true" @openDeleteModal="doOpenDeleteModal"/>
-          <NewCategoryButton v-if="isAdmin == true" @openAddCategoryModal="openAddCategoryModal = true"/>
+          <RightExpandingMenu @openAddCategoryModal="doOpenAddCategoryModal" @openDeleteModal="doOpenDeleteModal"/>
+          <NewCategoryButton v-if="isAdmin == true" @openAddCategoryModal="doOpenAddCategoryModal"/>
         </div>
       </div>
 
       <div v-else-if="mode == 2">
         <span class="contribut">Contributors</span>
         <NewContributorButton v-if="isAdmin == true" @openInviteContributorModal="openInviteContributorModal = true"/>
-        <ContributorListItem/>
+        <ContributorListItem @openPrivilegeModal="doOpenPrivilegeModal" @openDeleteModal="doOpenDeleteModal"/>
       </div>
 
       <div v-else-if="mode == 3 && full == false">
@@ -45,10 +45,12 @@
 
   <ModalAddServer :title="title" v-if="openModalAddServer" @closeModalAddServer="openModalAddServer = false"/>
   <ModalServerInfo :sName="sName" :sDesc="sDesc" v-if="openModalServerInfo" @closeModalAddServer="openModalServerInfo = false"/>
-  <ModalAddContributor v-if="openInviteContributorModal" @closeInviteContributorModal="openInviteContributorModal = false"/>
-  <ModalAddCategory v-if="openAddCategoryModal" @closeAddCategoryModal="openAddCategoryModal = false"/>
-  <DeleteModal :DeleteDto="DeleteDto" :DeleteState="DeleteState"  v-if="openDeleteModal" @closeDeleteModal="openDeleteModal = false"/>
+  <ModalAddCategory :ActionCategoryState="AddCategoryState" :ActionCategoryDto="AddCategoryDto" v-if="openAddCategoryModal" @closeAddCategoryModal="openAddCategoryModal = false"/>
+  <DeleteModal :DeleteState="DeleteState" :DeleteDto="DeleteDto"  v-if="openDeleteModal" @closeDeleteModal="openDeleteModal = false"/>
   <ModalAddProject v-if="openNewProjectModal" @closeNewProjectModal="openNewProjectModal = false"/>
+
+  <ModalAddContributor v-if="openInviteContributorModal" @closeInviteContributorModal="openInviteContributorModal = false"/>
+  <ModalPrivileges :contributor="contributor" v-if="openPrivilegeModal" @closePrivilegeModal="openPrivilegeModal = false"></ModalPrivileges>
 
   <button @click="testIn()">
   화면 전환 버튼(개발용 추후 삭제)
@@ -88,6 +90,7 @@ import router from '@/router/index.js';
 
 import { mapState, mapMutations } from "vuex";
 import ModalAddContributor from "@/components/inorganization/inmodal/ModalAddContributor";
+import ModalPrivileges from "@/components/inorganization/inmodal/contributor/ModalPrivileges";
 
 export default {
   name: 'InOrganizationView',
@@ -97,14 +100,21 @@ export default {
       onContributors: false,
       openModalAddServer: false,
       openModalServerInfo: false,
-      openInviteContributorModal:false,
       openAddCategoryModal: false,
+      openInviteContributorModal:false,
+      openPrivilegeModal: false,
       openDeleteModal: false,
       openNewProjectModal: false,
       sName: "",
       sDesc: "",
       DeleteState: "",
       DeleteDto: "",
+      AddCategoryState:"",
+      AddCategoryDto:"",
+      contributor:{
+        id:"",
+        email:""
+      },
       title: ""
     }
   },
@@ -127,7 +137,6 @@ export default {
       ipcRenderer.send('reset-window')
     },
     doOpenModalServerInfo(name, desc){
-      console.log("자식한테 받음" + name + desc)
       this.sName = name
       this.sDesc = desc
       this.openModalServerInfo = true
@@ -135,16 +144,26 @@ export default {
     doOpenDeleteModal(DeleteState, dto){
       this.DeleteDto = dto
       this.openDeleteModal = true
-      console.log("자식한테 받음" + DeleteState + "dto:" + dto)
       this.DeleteState = DeleteState
+    },
+    doOpenPrivilegeModal(contributor_id, contributor_email){
+      this.contributor.id = contributor_id
+      this.contributor.email = contributor_email
+      this.openPrivilegeModal = true
     },
     test1(asdasd){
       this.openModalAddServer = true
       console.log(asdasd)
       this.title = asdasd
+    },
+    doOpenAddCategoryModal(addCategoryState, addCategoryDto){
+      this.AddCategoryState = addCategoryState
+      this.AddCategoryDto = addCategoryDto
+      this.openAddCategoryModal = true
     }
   },
   components: {
+    ModalPrivileges,
     ModalAddContributor,
     AppInfo,
     ContributorButton,
