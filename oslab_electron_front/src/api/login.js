@@ -1,10 +1,30 @@
 const server = "http://localhost:8081/"
 
 export default {
-    async login(id, pw) {
-        console.log("입력된 id, pw" + id + pw)
+    async login(info) {
+        // console.log("입력된 id, pw" + id + pw)
 
-        const response = await fetch(`${server}api/user/getUserInfo/1`, {
+        const response = await fetch(`${server}api/user/signin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(info)
+        })
+
+        if (!response.ok) {
+            throw new Error('로그인에 실패했습니다.')
+        }
+
+        console.log("123")
+        const data = response.json()
+        console.log(data)
+        return data
+    },
+    async getOrg(user_id) {
+
+        const response = await fetch(`${server}api/user/getUserInfo/${user_id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -12,7 +32,7 @@ export default {
         })
 
         if (!response.ok) {
-            throw new Error('로그인에 실패했습니다.')
+            throw new Error('Organization을 가져오는데 실패했습니다.')
         }
 
         const data = await response.json()
@@ -126,7 +146,7 @@ export default {
             throw new Error('중복체크에 실패했습니다.')
         }
 
-        const data = response.json()
+        const data = await response.json()
         return data
     },
     async signUp(info) {
@@ -145,24 +165,26 @@ export default {
         }
 
         console.log("pass")
-        const data = response.json()
+        const data = await response.json()
         return data
     },
-    async postProject(data){
-        const response = await fetch(`${server}api/project/addProject`, {
+    async addOrg(info) {
+        console.log("입력된 info " + info)
+
+        const response = await fetch(`${server}api/org/addOrganization`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(info)
         })
 
-        let newProjectId = response.json()
-        const newProjectResDto = {
-            "project_id": newProjectId,
-            "project_name": data.project_name
+        if (!response.ok) {
+            throw new Error('회원가입에 실패했습니다.')
         }
-        return newProjectResDto
 
-    }
+        console.log("pass")
+        const data = await response.json()
+        return data
+    },
 }
