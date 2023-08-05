@@ -37,6 +37,12 @@ public class SSHController {
         sshService.makeNewSSHThread(keyBundle);
     }
 
+    @PostMapping("api/sshService/startPty")
+    public void startPty(@RequestBody PtyConDto ptyConDto) throws IOException {
+        System.out.println(ptyConDto.toString());
+        sshService.startPty(ptyConDto);
+    }
+
     @PostMapping("api/sshService/command")
     public String command(@RequestBody Command command) throws JSchException, IOException {
         return sshService.command(command);

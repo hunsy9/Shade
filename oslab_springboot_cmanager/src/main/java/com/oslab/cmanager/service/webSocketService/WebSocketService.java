@@ -16,14 +16,12 @@ public class WebSocketService {
 
     private Map<String, SshConnectionRoom> sshRooms = new HashMap<>();
 
-    public String makeNewWebSocketSession(int user_id, int server_id){
+    public String makeNewPtySession(int user_id, int server_id){
         SshConnectionRoom room = SshConnectionRoom.create(user_id, server_id);
 
         String room_id = room.getRoom_id();
-        String key = user_id + ":" + server_id + ":" +room_id;
-        sshRooms.put(key,room);
 
-        return room.getRoom_id();
+        return room_id;
     }
 
     public SshConnectionRoom terminateWsRoom(String key){

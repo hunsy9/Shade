@@ -20,8 +20,8 @@ public class WebSocketController {
     private final SSHService sshService;
 
     @GetMapping("api/wsService/makews/{user_id}/{server_id}")
-    public String createWebSocketRoom(@PathVariable int user_id, @PathVariable int server_id){
-        return webSocketService.makeNewWebSocketSession(user_id, server_id);
+    public String createPtyRoom(@PathVariable int user_id, @PathVariable int server_id){
+        return webSocketService.makeNewPtySession(user_id, server_id);
     }
 
     @MessageMapping(value = "/chat/message")
