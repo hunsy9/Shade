@@ -12,6 +12,8 @@
     
 <script>
 import { mapMutations } from "vuex";
+import router from "@/router";
+import { ipcRenderer } from 'electron';
 
 export default {
   name: 'ModalLogOut',
@@ -24,6 +26,8 @@ export default {
   beforeUnmount() {
     this.setLogin(false)
     localStorage.removeItem('vuex')
+    router.push('/')
+    ipcRenderer.send('reset-window')
   },
 }
 </script>
