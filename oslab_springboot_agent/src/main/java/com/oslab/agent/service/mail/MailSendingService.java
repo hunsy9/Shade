@@ -62,7 +62,7 @@ public class MailSendingService {
 
         context.setVariable("text", code);
 
-        String htmlTemplate = htmlTemplateEngine.process("mail/invitationMail", context);
+        String htmlTemplate = htmlTemplateEngine.process("mail/authMail", context);
         messageHelper.setFrom(from);
         messageHelper.setTo(to);
         messageHelper.setSubject("[SSH DESKTOP] Verify Code From SSH DESKTOP");
@@ -81,7 +81,7 @@ public class MailSendingService {
 
         boolean hasKey = redisTemplate.hasKey(mailKey);
         if(hasKey){
-            boolean authSuccess = redisTemplate.opsForValue().get(mailKey) == code;
+            boolean authSuccess = redisTemplate.opsForValue().get(mailKey).equals(code);
             if(authSuccess){
                 return true;
             }
