@@ -11,10 +11,8 @@ export default ({
     },
     actions: {
       async trySignup(context, info) {
-
         const data = await api.signUp(info)
         return data
-        
       },
     },
     getters: {

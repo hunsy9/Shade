@@ -3,23 +3,27 @@
     <p>Sign in</p>
     <img src="@/assets/user.png">
   </button>
-  <button v-else>
+  <button v-else @click="$emit('openModalLogOut')">
     <img src="@/assets/user.png">
     <p v-if="isLogin">{{ userName }}</p>
-    <img class="adm" src="@/assets/adminbanner.png" v-if="isAdmin == true">
+    <img class="adm" src="@/assets/adminbanner.png" v-if="isIn == true && isAdmin == true">
   </button>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('login')
+import { mapState } from "vuex";
 
 export default {
   name: 'TopBarButton',
+  props: {
+    isIn: Boolean
+  },
   computed: {
-    ...mapState({
+    ...mapState('login', {
       userName: state => state.userName,
       isLogin: state => state.isLogin,
+    }),
+    ...mapState('inOrganization', {
       isAdmin: state => state.isAdmin
     }),
   },

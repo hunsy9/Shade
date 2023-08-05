@@ -7,10 +7,13 @@
     </div>
 
     <div class="topbarframe">
-      <TopBarButton @openModalLogin="openModalLogin = true"/>
+      <TopBarButton @openModalLogin="openModalLogin = true" :isIn="false" @openModalLogOut="openModalLogOut = true"/>
     </div>
 
     <div class="contentframe">
+      <template v-if="isLogin ==true">
+        <RefetchBtn :RefetchState="RefetchState"  />
+      </template>
       <template v-if="isLogin ==true && hasOrganization == true">
         <OrganizationListItem @openInOganization="openInOganization"/>
         
@@ -22,6 +25,7 @@
     <ModalLogin v-if="openModalLogin" @closeAppLoginModal="openModalLogin = false" @openAppSignUpModal="openAppModalSignUp = true"/>
     <ModalSignUp v-if="openAppModalSignUp" @closeAppModalSignUp="openAppModalSignUp = false" @openModalLogin="openModalLogin = true"/>
     <ModalAddOrganization v-if="openModalAddOrganization" @closeModalAddOrganization="openModalAddOrganization = false"/>
+    <ModalLogOut v-if="openModalLogOut" @closeModalLogOut="openModalLogOut = false"/>
   </div>
   
 
@@ -32,12 +36,15 @@ import AppInfo from '@/components/common/AppInfo.vue'
 import NewOrganizationButton from '@/components/beforeorganization/NewOrganizationButton.vue'
 import TopBarButton from '@/components/common/TopBarButton.vue'
 import OrganizationListItem from '@/components/beforeorganization/OrganizationListItem.vue'
+import RefetchBtn from '@/components/common/RefetchBtn.vue'
 
 import ModalLogin from '@/components/beforeorganization/beforemodal/ModalLogin.vue'
 import ModalSignUp from '@/components/beforeorganization/beforemodal/login/ModalSignUp.vue'
 import ModalAddOrganization from '@/components/beforeorganization/beforemodal/ModalAddOrganization.vue'
+import ModalLogOut from '@/components/beforeorganization/beforemodal/ModalLogOut.vue'
 
 import { createNamespacedHelpers } from 'vuex'
+import {RefetchState} from "@/store/inOrganization";
 const { mapMutations, mapActions } = createNamespacedHelpers('inOrganization')
 const { mapState } = createNamespacedHelpers('login')
 
@@ -50,6 +57,8 @@ export default {
       openModalLogin: false,
       openAppModalSignUp: false,
       openModalAddOrganization: false,
+      RefetchState: RefetchState.BEFOREORG,
+      openModalLogOut: false,
     }
   },
   computed: {
@@ -73,6 +82,8 @@ export default {
     ModalLogin,
     ModalSignUp,
     ModalAddOrganization,
+    RefetchBtn,
+    ModalLogOut,
   }
 }
 </script>

@@ -11,7 +11,7 @@
 
     <div class="topbarframe">
       <OrganizationName/>
-      <TopBarButton/>
+      <TopBarButton :isIn="true" @openModalLogOut="openModalLogOut = true"/>
     </div>
 
     <div class="contentframe">
@@ -50,7 +50,8 @@
   <ModalAddProject v-if="openNewProjectModal" @closeNewProjectModal="openNewProjectModal = false"/>
 
   <ModalAddContributor v-if="openInviteContributorModal" @closeInviteContributorModal="openInviteContributorModal = false"/>
-  <ModalPrivileges :contributor="contributor" v-if="openPrivilegeModal" @closePrivilegeModal="openPrivilegeModal = false"></ModalPrivileges>
+  <ModalPrivileges :contributor="contributor" v-if="openPrivilegeModal" @closePrivilegeModal="openPrivilegeModal = false"/>
+  <ModalLogOut v-if="openModalLogOut" @closeModalLogOut="openModalLogOut = false"/>
 
   <button @click="testIn()">
   화면 전환 버튼(개발용 추후 삭제)
@@ -84,6 +85,7 @@ import ModalServerInfo from '@/components/inorganization/inmodal/ModalServerInfo
 import ModalAddCategory from '@/components/inorganization/inmodal/ModalAddCategory.vue'
 import DeleteModal from '@/components/common/DeleteModal.vue'
 import ModalAddProject from '@/components/inorganization/inmodal/ModalAddProject.vue'
+import ModalLogOut from '@/components/beforeorganization/beforemodal/ModalLogOut.vue'
 
 import { ipcRenderer } from 'electron';
 import router from '@/router/index.js';
@@ -105,6 +107,7 @@ export default {
       openPrivilegeModal: false,
       openDeleteModal: false,
       openNewProjectModal: false,
+      openModalLogOut: false,
       sName: "",
       sDesc: "",
       DeleteState: "",
@@ -121,12 +124,12 @@ export default {
   computed: {
     ...mapState('login', {
       isLogin: state => state.isLogin,
-      isAdmin: state => state.isAdmin
     }),
     ...mapState('inOrganization', {
       mode: state => state.mode,
       full: state => state.full,
       catl2: state => state.selected_categ_l2,
+      isAdmin: state => state.isAdmin
     }),
   },
   methods: {
@@ -183,7 +186,8 @@ export default {
     ModalServerInfo,
     ModalAddCategory,
     DeleteModal,
-    ModalAddProject
+    ModalAddProject,
+    ModalLogOut,
   }
 }
 </script>

@@ -21,12 +21,16 @@
           <span class="email_span" v-if="no_email==true">Plese Enter the E-mail !</span>
           <span class="email_span" v-if="dup_email==true">This is a duplicate email</span>
         </div>
-        <div class="inpbar_s" v-if="click_verify==true">
-          <input type="text" class="codeinp" placeholder="Enter the Code" v-model="code_">
-          <button class="okbtn" @click="code_chk">OK !</button>
-          <button class="resendbtn" @click="resend">Resend</button>
+        <div class="inpbar_s" v-if="click_verify==true&&pass_code==false">
+          <input type="text" class="codeinp" placeholder="Enter the Code" v-model="code_" >
+          <input type="text" class="timer" v-model="restime" disabled v-if="pass_code==false">
+          <button class="okbtn" @click="code_chk" v-if="pass_code==false">OK !</button>
+          <button class="resendbtn" @click="resend" v-if="pass_code==false">Resend</button>
           <span class="email_span" v-if="no_veri_code==true">Plese Enter the Code !</span>
           <span class="email_span" v-if="invalid_code==true">Invalid Code !</span>
+        </div>
+        <div class="inpbar_m" v-if="pass_code==true">
+          <input type="email" class="emailinp" v-model="email_" disabled>
         </div>
         <div class="inpbar_l">
           <input type="password" class="passinp" placeholder="Enter Your Password" v-model="pwd_">
@@ -47,6 +51,7 @@
 <script>
 
 import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ModalSignUp",
@@ -72,14 +77,25 @@ export default {
       veri_email: false,
       click_verify: false,
       signup_msg: false,
+
+      timer: null,
+      counter: 180,
+      restime: '3:00',
     };
   },
   methods: {
     chk_null(cmp) { // 비어있는지 체크하는 함수
-      if (cmp == "") { return true }
+      if (cmp.trim().length == 0) { return true }
       return false
     },
+    setInit() {
+      this.no_name = false
+      this.no_email = false
+      this.no_pwd = false
+      this.no_pwd_chk = false
+    },
     async signUp() { // sign up 버튼
+      this.setInit()
       if ((this.no_name = this.chk_null(this.name_))) { return }        // name 비어있으면 종료
       else { this.no_name = false }
       if ((this.no_email = this.chk_null(this.email_))) { return }      // email 비어있으면 종료
@@ -88,6 +104,11 @@ export default {
       else { this.no_pwd = false }
       if ((this.no_pwd_chk = this.chk_null(this.pwd_chk_))) { return }  // pwd check 비어있으면 종료
       else { this.no_pwd_chk = false }
+
+      this.name_ = this.name_.trim()
+      this.email_ = this.email_.trim()
+      this.pwd_ = this.pwd_.trim()
+      this.pwd_chk_ = this.pwd_chk_.trim()
 
       if (this.pwd_ != this.pwd_chk_) {                                 // pwd 같은지 체크
         this.no_same_pwd = true
@@ -101,6 +122,7 @@ export default {
       }
       else { this.signup_msg = false }
 
+      
       const param = {
         user_email: this.email_,
         user_password: this.pwd_,
@@ -116,29 +138,106 @@ export default {
       this.$emit("openModalLogin")
     },
     async verifing() {
-      const data = await this.tryDup(this.email_)
-      if (data) { // 중복이면 종료
+      if ((this.no_email = this.chk_null(this.email_))) { return }      // email 비어있으면 종료
+      else {
+        this.no_name = false
+        this.no_email = false
+        this.no_pwd = false
+        this.no_pwd_chk = false
+      }
+
+      this.email_ = this.email_.trim()
+      const dup_data = await this.tryDup(this.email_)
+      if (dup_data) { // 중복이면 종료
         this.dup_email = true
         return
       } 
 
+      
       this.click_verify = true
+      const mail_data = await this.trySendMail(this.email_)
+      if (!mail_data) {
+        //메일 전송 실패
+        return
+      }
+      this.mounted()
+      
       this.signup_msg = false
     },
-    code_chk() {
-      if ((this.no_veri_code = this.chk_null(this.code_))) { return } // 비어있으면 종료
+    async code_chk() {
+      if ((this.no_veri_code = this.chk_null(this.code_))) { return }
+      else {
+        this.no_name = false
+        this.no_pwd = false
+        this.no_pwd_chk = false
+        this.no_veri_code = false
+      }
       // 코드 맞는지 체크
       // 맞으면 this.invalid_code = false, this.pass_code = true, this.signup_msg = false,
       // 틀리면 this.invalid_code = true,
+      this.email_ = this.email_.trim()
+      const param = {
+        mailKey: this.getMailKey(),
+        code: this.code_,
+      }
+      // console.log(param) ok
+      const code_data = await this.tryVerify(param)
+      if (!code_data) {
+        //코드 다름
+        this.invalid_code = true
+        return
+      }
+
+      this.timerStop()
+
       this.signup_msg = false
       this.invalid_code = false
       this.pass_code = true
     },
-    resend() { // code resend
-
+    async resend() { // code resend
+      const mail_data = await this.trySendMail(this.email_)
+      if (!mail_data) {
+        //메일 전송 실패
+        return
+      }
+      this.mounted()
+    },
+    mounted() {
+      if(this.timer != null){
+        this.timerStop(this.timer)
+        this.timer = null
+      }
+      this.timer = this.timerStart()
+    },
+    timerStart() {
+      this.restime = '3:00'
+      this.counter = 180;
+      var interval = setInterval(() => {
+        this.counter--; //1초씩 감소
+        this.restime = this.prettyTime();
+        if (this.counter <= 0) this.timerStop(interval);
+      }, 1000);
+      return interval;
+    },
+    timerStop(id) {
+      clearInterval(id);
+      this.counter = 0;
+    },
+    prettyTime() {
+      // 시간 형식으로 변환 리턴
+      let time = this.counter / 60;
+      let minutes = parseInt(time);
+      let secondes = Math.round((time - minutes) * 60);
+      return (
+        minutes.toString() +
+        ":" +
+        secondes.toString().padStart(2, "0")
+      );
     },
     ...mapActions('duplicate', ['tryDup']),
     ...mapActions('signup' , ['trySignup']),
+    ...mapActions('emailverify' , ['trySendMail', 'tryVerify']),
+    ...mapGetters('emailverify' , ['getMailKey']),
   }
 };
 </script>
@@ -213,6 +312,7 @@ input {
   border: none;
   height: auto;
   width: auto;
+  outline: none;
 }
 .sshdesktopicon {
   width: 4rem;
@@ -258,7 +358,7 @@ span{
   position: relative;
   margin-top: 0.12rem;
   margin-left: 2rem;
-  width: 75%;
+  width: 50%;
   height: 2rem;
   font-size: 0.7rem;
 }
@@ -276,10 +376,21 @@ span{
   border: none;
   cursor: pointer;
 }
+.timer {
+  position:relative;
+  background-color: white;
+  width: 1.6rem;
+  height: 1rem;
+  left: 0.5rem;
+  top: 0rem;
+  font-size: 0.7rem;
+  color:gray;
+}
 .okbtn {
   position: absolute;
   color: #454545;
   top: 3.33rem;
+  left: 12rem;
   width: 19%;
   font-size: 0.7rem;
   margin-left: 0.73rem;
@@ -294,6 +405,7 @@ span{
   position: absolute;
   color: #454545;
   top: 3.33rem;
+  left: 11.91rem;
   width: 19%;
   font-size: 0.7rem;
   margin-left: 6rem;
@@ -369,8 +481,5 @@ span{
   font-size: 9px;
   color: tomato;
   font-weight: 600;
-}
-input{
-  outline: none;
 }
 </style>

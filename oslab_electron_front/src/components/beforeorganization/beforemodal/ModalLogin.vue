@@ -15,13 +15,17 @@
         <div class="id_bar">
           <!-- <img src="@/assets/id.png" class="bar_img" /> -->
           <input type="email" class="inp" placeholder="Email" v-model="loginId"/>
+          <span class="email_span" v-if="no_email==true">Please Enter the Email !</span>
         </div>
         <div class="pass_bar">
           <!-- <img src="@/assets/pw.png" class="bar_img" /> -->
           <input type="password" class="inp" placeholder="Password" v-model="loginPassword"/>
+          <span class="pwd_span" v-if="no_pwd==true">Please Enter the Password !</span>
         </div>
       </div>
-      <button class="continuebtn" @click="login(loginId, loginPassword)">Continue</button>
+      <button class="continuebtn" @click="login">Continue</button>
+      <span class="login_span" v-if="no_login==true">Please Check the Email or Password !</span>
+      <span class="dummy_span" v-if="no_login==false">dummy</span>
       <a class="signup" @click="signUp">Sign up</a>
     </main>
   </div>
@@ -31,7 +35,7 @@
 <script>
 
 import { createNamespacedHelpers } from 'vuex'
-const { mapActions, mapState } = createNamespacedHelpers('login')
+const { mapActions, mapState, mapGetters } = createNamespacedHelpers('login')
 const { mapMutations } = createNamespacedHelpers('organizationInfo')
 
 export default {
@@ -40,6 +44,10 @@ export default {
     return {
       loginId: "",
       loginPassword: "",
+
+      no_email: false,
+      no_pwd: false,
+      no_login: false,
     };
   },
   computed: {
@@ -48,11 +56,42 @@ export default {
     }),
   },
   methods: {
-    async login(id, pw){
-      const data = await this.tryLogin(id, pw)
-      if(data){
-        this.setOrgInfo(data)
+    chk_null(cmp) { // 비어있는지 체크하는 함수
+      if (cmp.trim().length == 0) { return true }
+      return false
+    },
+    setInit() {
+      this.no_email = false
+      this.no_pwd = false
+    },
+    async login(){
+      this.setInit()
+      if ((this.no_email = this.chk_null(this.loginId))) { return }      // email 비어있으면 종료
+      else { this.no_email = false }
+      if ((this.no_pwd = this.chk_null(this.loginPassword))) { return }          // pwd 비어있으면 종료
+      else { this.no_pwd = false }
+
+      const param = {
+        user_email: this.loginId,
+        user_password: this.loginPassword,
       }
+      const login_data = await this.tryLogin(param)
+
+      if(!login_data){
+        this.no_login = true
+        return
+      }
+      this.no_login = false
+
+      const user_id = this.getUserID()
+      const org_data = await this.tryGetOrg(user_id)
+      if (!org_data) {
+        console.log("org를 가져오지 못했습니다.")
+        return 
+      }
+
+      this.setOrgInfo(org_data)
+
       this.loginId = null
       this.loginPassword = null
       this.$emit("closeAppLoginModal")
@@ -61,8 +100,9 @@ export default {
       this.$emit("closeAppLoginModal")
       this.$emit("openAppSignUpModal")
     },
-    ...mapActions(['tryLogin']),
-    ...mapMutations(['setOrgInfo'])
+    ...mapActions(['tryLogin', 'tryGetOrg']),
+    ...mapMutations(['setOrgInfo']),
+    ...mapGetters(['getUserID']),
   },
 };
 </script>
@@ -191,9 +231,9 @@ export default {
 .signup{
   font-size: 0.7rem;
   position: relative;
-  left: 0.1.5rem;
+  left: 0.15rem;
   display: block;
-  margin-top: 1.3rem;
+  margin-top: 0.8rem;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -202,5 +242,41 @@ export default {
 }
 a{
   cursor: pointer;
+}
+.email_span {
+  position: inherit;
+  display: block;
+  margin-top: 2.9rem;
+  margin-left: 0.25rem;
+  font-size: 9px;
+  color: tomato;
+  font-weight: 600;
+}
+.pwd_span {
+  position: inherit;
+  display: block;
+  margin-top: 2.9rem;
+  margin-left: 0.25rem;
+  font-size: 9px;
+  color: tomato;
+  font-weight: 600;
+}
+.login_span {
+  position: inherit;
+  display: block;
+  margin-top: 0rem;
+  margin-left: 7.5rem;
+  font-size: 9px;
+  color: tomato;
+  font-weight: 600;
+}
+.dummy_span {
+  position: inherit;
+  display: block;
+  margin-top: 0rem;
+  margin-left: 7.5rem;
+  font-size: 9px;
+  color: white;
+  font-weight: 600;
 }
 </style>

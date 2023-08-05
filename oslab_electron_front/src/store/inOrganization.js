@@ -3,6 +3,7 @@ import { ipcRenderer } from "electron"
 import router from '@/router/index.js'
 import categoryApi from "@/components/inorganization/inmodal/api/categoryApi";
 import deleteApi from "@/components/common/api/deleteApi";
+// import store from "@/store/index"
 
 export const terminalState = {
     INIT: 0,
@@ -22,6 +23,10 @@ export const ActionCategoryState = {
     ADDL1:0,
     ADDL2:1,
     EDIT: 2,
+}
+
+export const RefetchState = {
+    BEFOREORG: 0,
 }
 
 export default ({
@@ -52,7 +57,8 @@ export default ({
         selected_categ_l1: "",
         selected_categ_l2: "",
         selected_categid: "",
-        exitShellState: 0
+        exitShellState: 0,
+        isAdmin: false,
     },
     getters: {
         getCategory (state){
@@ -165,12 +171,15 @@ export default ({
         },
         setExitShellstatus(state, terminalState){
             state.exitShellState = terminalState;
+        },
+        setOrgAdmin(state, isadmin) {
+            state.isAdmin = isadmin
         }
     },
     actions: {
         async getProjects(context, org){
             const data = await api.getProj(org.org_id)
-            if(data){
+            if(data) {
               context.commit("setOrg", org)
               context.commit("setProj", data)
               router.push('/in')
@@ -178,6 +187,16 @@ export default ({
             }
             else{
               console.log("getProj fail")
+            }
+
+            const user_id = context.rootState.login.userID
+
+            const admin_id = await api.getAdmin(org.org_id)
+            if (admin_id) {
+                context.commit("setOrgAdmin", (user_id == admin_id))
+            }
+            else {
+                console.log("getAdminId fail")
             }
         },
         async Contributors(context){
@@ -248,11 +267,12 @@ export default ({
         async addNewProject(context, data){
             const res = await api.postProject(data)
             console.log("newData: " + res)
-            const category_project_server = {
+            const dto = {
+                "project_id": res,
+                "project_name": data.project_name,
                 "category": null,
                 "project_server": null
             }
-            const dto = {...res, ...category_project_server}
             context.commit("reFetchProject", dto)
             if(res){
                 console.log("success in addNewProject")

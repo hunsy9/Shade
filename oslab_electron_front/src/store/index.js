@@ -8,6 +8,8 @@ import inOrganization from '@/store/inOrganization.js'
 import terminal from '@/store/terminal.js'
 import duplicate from '@/store/duplicate.js'
 import signup from '@/store/signup.js'
+import emailverify from '@/store/emailverify.js'
+import addorganization from '@/store/addorganization.js'
 
 export default createStore({
   state: {
@@ -27,6 +29,8 @@ export default createStore({
     terminal,
     duplicate,
     signup,
+    emailverify,
+    addorganization,
   },
   plugins: [
     createPersistedState({

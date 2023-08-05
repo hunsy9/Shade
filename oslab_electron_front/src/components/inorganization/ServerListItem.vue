@@ -42,9 +42,7 @@ export default {
     ...mapState('inOrganization', {
       categ_l1: state => state.selected_categ_l1,
       categ_l2: state => state.selected_categ_l2,
-      org_id: state => state.organId
-    }),
-    ...mapState('login', {
+      org_id: state => state.organId,
       isAdmin: state => state.isAdmin,
     }),
     ...mapGetters('inOrganization', ['getServerList'])
