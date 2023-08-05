@@ -25,6 +25,10 @@ export const ActionCategoryState = {
     EDIT: 2,
 }
 
+export const RefetchState = {
+    BEFOREORG: 0,
+}
+
 export default ({
     namespaced: true,
 
