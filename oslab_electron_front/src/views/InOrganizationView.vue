@@ -11,7 +11,7 @@
 
     <div class="topbarframe">
       <OrganizationName/>
-      <TopBarButton/>
+      <TopBarButton :isIn="true"/>
     </div>
 
     <div class="contentframe">
@@ -121,12 +121,12 @@ export default {
   computed: {
     ...mapState('login', {
       isLogin: state => state.isLogin,
-      isAdmin: state => state.isAdmin
     }),
     ...mapState('inOrganization', {
       mode: state => state.mode,
       full: state => state.full,
       catl2: state => state.selected_categ_l2,
+      isAdmin: state => state.isAdmin
     }),
   },
   methods: {

@@ -19,7 +19,7 @@ import {mapState, mapMutations} from "vuex";
 import {Terminal} from "xterm";
 // import { WebLinksAddon } from "xterm-addon-web-links";
 import {FitAddon} from "xterm-addon-fit";
-import "xterm/dist/xterm.css";
+import "xterm/css/xterm.css";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {terminalState} from "../../store/inOrganization";
 

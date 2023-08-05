@@ -51,6 +51,21 @@ export default {
         const data = await response.json()
         return data
     },
+    async getAdmin(org_id) {
+        const response = await fetch(`${server}api/org/getOrgAdmin/${org_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+        if (!response.ok) {
+            throw new Error(org_id + '의 Admin id를 가져오는 것에 실패했습니다.')
+        }
+
+        const data = await response.json()
+        return data
+    },
     async getContributors(org_id) {
         const response = await fetch(`${server}api/org/getOrgMemberInfo/${org_id}`, {
             method: 'GET',

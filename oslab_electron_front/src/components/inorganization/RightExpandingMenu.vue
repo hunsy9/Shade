@@ -58,15 +58,13 @@ export default {
     }
   },
   computed: {
-    ...mapState('login', {
-      isAdmin : state => state.isAdmin
-    }),
     ...mapState('inOrganization', {
       projlist: state => state.projects,
       mode: state => state.mode,
       selected_categid : state => state.selected_categid,
       selected_proj_id: state => state.selected_proj_id,
-      org_id: state=> state.organId
+      org_id: state=> state.organId,
+      isAdmin : state => state.isAdmin
     }),
     ...mapGetters('inOrganization', ['getCategory']),
   },

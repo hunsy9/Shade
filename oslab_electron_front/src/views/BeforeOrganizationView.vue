@@ -7,7 +7,7 @@
     </div>
 
     <div class="topbarframe">
-      <TopBarButton @openModalLogin="openModalLogin = true"/>
+      <TopBarButton @openModalLogin="openModalLogin = true" :isIn="false"/>
     </div>
 
     <div class="contentframe">

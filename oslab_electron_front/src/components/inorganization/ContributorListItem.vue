@@ -10,11 +10,13 @@
       <button v-if="isAdmin" @click="deleteContributor(item.user_id, item.contributor_email)">Delete</button>
       <button v-if="isAdmin" @click="$emit('openPrivilegeModal',item.user_id, item.contributor_email)">Privileges</button>
     </div>
-    <div v-for="(it,index) in pending_contributors" :key="index" class="waitingContributor">
-      <span>{{ it.contributor_email }}</span>
-      <img class="x" src="@/assets/testFail.png" @click="deleteContributor(it.user_id, it.contributor_email)"/>
-      <img class="envelop" src="@/assets/envelop-unscreen.gif"/>
-    </div>
+    <template v-if="isAdmin">
+      <div v-for="(it,index) in pending_contributors" :key="index" class="waitingContributor">
+        <span>{{ it.contributor_email }}</span>
+        <img class="x" src="@/assets/testFail.png" @click="deleteContributor(it.user_id, it.contributor_email)"/>
+        <img class="envelop" src="@/assets/envelop-unscreen.gif"/>
+      </div>
+    </template>
   </div>
 </template>
     
@@ -34,7 +36,7 @@ export default {
       org_id:state=>state.organId,
 
     }),
-    ...mapState('login', {
+    ...mapState('inOrganization', {
       isAdmin: state => state.isAdmin
     }),
     ...mapState('contributorInfo', {

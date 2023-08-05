@@ -6,7 +6,6 @@ export default ({
   state: {
     userName:'',
     isLogin: false,
-    isAdmin: true,
     userID: 0,
     userEmail: '',
   },
