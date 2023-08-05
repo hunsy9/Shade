@@ -149,6 +149,39 @@ export default {
         const data = await response.json()
         return data
     },
+    async sendMail(email) {
+        const response = await fetch(`${server}api/mail/sendAuthMail?email=${email}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+        if (!response.ok) {
+            throw new Error('이메일 전송에 실패했습니다.')
+        }
+
+        const data = response.text()
+        return data
+    },
+    async checkcode(info) {
+        console.log(JSON.stringify(info))
+        const response = await fetch(`${server}api/mail/verifyCode`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(info)
+        })
+
+        if (!response.ok) {
+            throw new Error('코드 인증에 실패했습니다.')
+        }
+
+        const data = response.json()
+        console.log("check: " + data)
+        return data
+    },
     async signUp(info) {
         console.log("입력된 info " + info)
 
