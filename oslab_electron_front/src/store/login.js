@@ -60,6 +60,10 @@ export default ({
       console.log(state.userID)
       return state.userID
     },
+    getUserEmail(state) {
+      console.log(state.userID)
+      return state.userEmail
+    },
   },
   modules: {
   },
