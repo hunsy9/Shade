@@ -35,7 +35,7 @@ public class OrgMasterController {
 
     @PostMapping("api/org/addOrgContributor")
     public ResponseEntity<?> addOrganizationToContributor(@RequestBody AddOrgReqDto addOrgReqDto) throws SQLException {
-        addOrgReqDto.setState("contributor");
+        addOrgReqDto.setState("admin");
         boolean success = orgMasterService.addOrganizationToContributor(addOrgReqDto);
         return ResponseEntity.ok().body(success);
     }
