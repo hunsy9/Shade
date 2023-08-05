@@ -33,6 +33,7 @@ export default {
   mounted() {
     const serverAddress = this.serverAddress; // your server address
 
+
     const createTerminal = (term) => {
       term.open(document.getElementById("terminal"));
       term.options = {
