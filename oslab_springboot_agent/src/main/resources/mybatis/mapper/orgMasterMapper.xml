@@ -58,4 +58,7 @@
         SELECT server_id FROM server_privileges WHERE user_id = #{user_id}
     </select>
 
+    <select id="getOrgAdmin" parameterType="Integer" resultType="int">
+        SELECT org_admin_id FROM organization_master WHERE org_id = #{org_id}
+    </select>
 </mapper>

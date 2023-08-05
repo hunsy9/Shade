@@ -46,4 +46,7 @@ public class OrgMasterService implements OrgMasterServiceInterface {
         return orgMasterRepository.getOrgMembers(org_id);
     }
 
+    public Integer getOrgAdmin(Integer org_id) throws SQLException{
+        return orgMasterRepository.getOrgAdmin(org_id);
+    }
 }

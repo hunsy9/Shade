@@ -176,4 +176,7 @@ public class OrgMasterRepository {
         return orgMembers;
     }
 
+    public Integer getOrgAdmin(Integer org_id) throws SQLException{
+        return orgMasterMapper.getOrgAdmin(org_id);
+    }
 }

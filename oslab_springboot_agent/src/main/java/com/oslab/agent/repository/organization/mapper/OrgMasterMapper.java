@@ -27,4 +27,6 @@ public interface OrgMasterMapper {
     List<Integer> getOrgUserPrivileges(Integer user_id) throws SQLException;
 
     List<OrgContributor> getOrgContributors(Integer org_id) throws SQLException;
+
+    Integer getOrgAdmin(Integer org_id) throws SQLException;
 }

@@ -60,4 +60,9 @@ public class OrgMasterController {
         return orgMasterService.getOrgMembers(org_id);
     }
 
+    @GetMapping("api/org/getOrgAdmin/{org_id}")
+    public ResponseEntity<?> getOrgAdmin(@PathVariable Integer org_id) throws SQLException{
+        Integer success = orgMasterService.getOrgAdmin(org_id);
+        return ResponseEntity.ok().body(success);
+    }
 }

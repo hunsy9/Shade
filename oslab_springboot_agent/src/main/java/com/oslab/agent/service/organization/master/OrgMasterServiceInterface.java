@@ -20,4 +20,6 @@ public interface OrgMasterServiceInterface {
 
     OrgMembers getOrgMembers(Integer org_id) throws SQLException;
 
+    Integer getOrgAdmin(Integer org_id) throws SQLException;
+
 }
