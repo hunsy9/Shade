@@ -4,7 +4,7 @@
 
 <mapper namespace="com.oslab.agent.repository.contributor.mapper.ContributorMapper">
     <insert id="addContributor" parameterType="com.oslab.agent.model.transfer.contributorDto.ContributorDto">
-        INSERT INTO organization_contributor VALUES (#{org_id}, #{user_id}, #{contributor_email}, #{state}, now())
+        INSERT INTO organization_contributor VALUES (#{org_id}, #{user_id}, #{contributor_email}, #{state}, now());
         INSERT INTO user_organization VALUES(#{user_id}, #{org_id})
     </insert>
     <select id="checkValidContributor" parameterType="com.oslab.agent.model.transfer.contributorDto.ContributorDto">

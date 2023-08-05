@@ -3,6 +3,7 @@ package com.oslab.agent.controller.organization.master;
 import com.oslab.agent.model.entity.orgEntity.OrgContributor;
 import com.oslab.agent.model.entity.orgEntity.OrgInfo;
 import com.oslab.agent.model.entity.orgEntity.OrgMembers;
+import com.oslab.agent.model.transfer.orgDto.AddOrgReqDto;
 import com.oslab.agent.model.transfer.orgDto.OrgReqDto;
 import com.oslab.agent.model.transfer.orgDto.RegOrgReqDto;
 import com.oslab.agent.service.organization.master.OrgMasterService;
@@ -22,14 +23,21 @@ public class OrgMasterController {
 
     @PostMapping("api/org/regOrganization")
     public ResponseEntity<?> registerOrganizationToPlatform(@RequestBody RegOrgReqDto regOrgReqDto) throws SQLException {
-        boolean success = orgMasterService.registerOrganizationToPlatform(regOrgReqDto);
-        return success ? ResponseEntity.ok().body("Success") : ResponseEntity.internalServerError().body("Fail");
+        Long success = orgMasterService.registerOrganizationToPlatform(regOrgReqDto);
+        return ResponseEntity.ok().body(success);
     }
 
     @PostMapping("api/org/addOrganization")
     public ResponseEntity<?> addOrganizationToPlatform(@RequestBody OrgReqDto orgReqDto) throws SQLException {
         boolean success = orgMasterService.addOrganizationToUser(orgReqDto);
-        return success ? ResponseEntity.ok().body("Success") : ResponseEntity.internalServerError().body("Fail");
+        return ResponseEntity.ok().body(success);
+    }
+
+    @PostMapping("api/org/addOrgContributor")
+    public ResponseEntity<?> addOrganizationToContributor(@RequestBody AddOrgReqDto addOrgReqDto) throws SQLException {
+        addOrgReqDto.setState("contributor");
+        boolean success = orgMasterService.addOrganizationToContributor(addOrgReqDto);
+        return ResponseEntity.ok().body(success);
     }
 
     @DeleteMapping("api/org/deleteOrganizationFromPlatform")

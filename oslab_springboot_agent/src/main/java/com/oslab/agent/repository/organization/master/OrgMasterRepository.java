@@ -2,6 +2,7 @@ package com.oslab.agent.repository.organization.master;
 
 import com.oslab.agent.model.entity.orgEntity.Contributor;
 import com.oslab.agent.model.entity.orgEntity.*;
+import com.oslab.agent.model.transfer.orgDto.AddOrgReqDto;
 import com.oslab.agent.model.transfer.orgDto.OrgReqDto;
 import com.oslab.agent.model.transfer.orgDto.RegOrgReqDto;
 import com.oslab.agent.repository.organization.mapper.OrgMasterMapper;
@@ -18,8 +19,9 @@ import java.util.*;
 public class OrgMasterRepository {
     private final OrgMasterMapper orgMasterMapper;
 
-    public boolean registerOrganizationToPlatform(RegOrgReqDto regOrgReqDto) throws SQLException {
-        return orgMasterMapper.registerOrganizationToPlatform(regOrgReqDto);
+    public Long registerOrganizationToPlatform(RegOrgReqDto regOrgReqDto) throws SQLException {
+        orgMasterMapper.registerOrganizationToPlatform(regOrgReqDto);
+        return regOrgReqDto.getOrg_id();
     }
 
     public void deleteOrganizationFromPlatform(RegOrgReqDto regOrgReqDto) throws SQLException{
@@ -32,6 +34,10 @@ public class OrgMasterRepository {
 
     public void deleteOrganizationFromUser(OrgReqDto orgReqDto) throws SQLException{
         orgMasterMapper.deleteOrganizationFromUser(orgReqDto);
+    }
+
+    public boolean addOrganizationToContributor(AddOrgReqDto addOrgReqDto) throws SQLException{
+        return orgMasterMapper.addOrganizationToContributor(addOrgReqDto);
     }
 
     public OrgInfo getOrgInfo(Integer user_id, Integer org_id) throws SQLException {

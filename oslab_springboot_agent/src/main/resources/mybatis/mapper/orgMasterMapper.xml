@@ -6,6 +6,9 @@
 
     <insert id="registerOrganizationToPlatform" parameterType="com.oslab.agent.model.transfer.orgDto.RegOrgReqDto">
         INSERT INTO organization_master VALUES (0, #{org_name}, #{org_admin_id})
+        <selectKey resultType="long" keyProperty="org_id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <insert id="addOrganizationToUser" parameterType="com.oslab.agent.model.transfer.orgDto.OrgReqDto">
@@ -15,6 +18,10 @@
     <delete id="deleteOrganizationFromPlatform" parameterType="com.oslab.agent.model.transfer.orgDto.RegOrgReqDto">
         DELETE FROM organization_master WHERE org_name LIKE #{org_name}
     </delete>
+
+    <insert id="addOrganizationToContributor" parameterType="com.oslab.agent.model.transfer.orgDto.AddOrgReqDto">
+        INSERT INTO organization_contributor VALUES (#{org_id}, #{contributor_id}, #{contributor_email}, #{state}, now());
+    </insert>
 
     <delete id="deleteOrganizationFromUser" parameterType="com.oslab.agent.model.transfer.orgDto.OrgReqDto">
         DELETE FROM user_organization WHERE user_id LIKE #{user_id} AND org_id LIKE #{org_id}

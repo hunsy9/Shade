@@ -4,15 +4,14 @@ import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
-public class RegOrgReqDto {
-    @Nullable
+public class AddOrgReqDto {
     private Long org_id;
-    private String org_name;
-    private Long org_admin_id;
+    private Long contributor_id;
+    private String contributor_email;
+    @Nullable
+    private String state = "contributor";
 }
