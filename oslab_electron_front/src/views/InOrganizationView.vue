@@ -163,6 +163,7 @@ export default {
     }
   },
   components: {
+    TerminalWindow,
     ModalPrivileges,
     ModalAddContributor,
     AppInfo,
@@ -178,7 +179,6 @@ export default {
     NewCategoryButton,
     NewContributorButton,
     ContributorListItem,
-    TerminalWindow,
     ModalAddServer,
     ModalServerInfo,
     ModalAddCategory,
