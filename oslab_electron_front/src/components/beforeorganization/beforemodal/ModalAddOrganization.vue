@@ -105,16 +105,19 @@ export default {
 .zidx > main {
   display: block;
   margin: 0 auto;
+  margin-top: 7rem;
   width: 625px;
   height: 375px;
   background-color: #242424;
   border-radius: 0.5rem;
   border: none;
   box-shadow: 0.2px 0.2px 4px 4px #0000002f;
+  animation: fade-in-down 0.5s;
 }
 .modalframe{
   width: 100%;
   height: 100%;
+  animation: fade-in-down 0.5s;
 }
 .header{
   margin-top: 2rem;
@@ -185,5 +188,19 @@ export default {
   border: none;
   box-shadow: 0 0.2px 1px 1px #0000002f;
   cursor:pointer;
+}
+.fade-in-down {
+  animation: fade-in-down 2s ease;
+  animation-fill-mode: forwards;
+}
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

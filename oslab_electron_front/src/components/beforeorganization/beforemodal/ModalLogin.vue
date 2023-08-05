@@ -118,17 +118,20 @@ export default {
 .zidx > main {
   display: block;
   margin: 0 auto;
+  margin-top: 2.5rem;
   width: 400px;
   height: 500px;
   background-color: white;
   border-radius: 0.5rem;
   border: none;
   box-shadow: 0.2px 0.2px 4px 4px #0000002f;
+  animation: fade-in-down 0.5s;
 }
 .modalframe {
   margin-top: 2rem;
   padding-top: 1.7rem;
   position: relative;
+  animation: fade-in-down 0.5s;
 }
 .xbtn {
   position: relative;
@@ -278,5 +281,19 @@ a{
   font-size: 9px;
   color: white;
   font-weight: 600;
+}
+.fade-in-down {
+  animation: fade-in-down 2s ease;
+  animation-fill-mode: forwards;
+}
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
