@@ -19,6 +19,11 @@
 </template>
 
 <script>
+
+import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
+import { mapMutations } from "vuex";
+
 export default {
   name: 'ModalAddOrganization',
   data() {
@@ -28,19 +33,62 @@ export default {
     }
   },
   methods: {
-    create(){
-      if (this.org_name == "") {
+    async create(){
+      this.org_name = this.org_name.trim()
+      if (this.org_name.length == 0) {
         this.is_valid = false
         return
       }
       this.is_valid = true
       //api 추가 후 종료
+      
+      const user_id = this.getUserID()
+      const param1 = {
+        org_name: this.org_name,
+        org_admin_id: user_id
+      }
+      const org_id = await this.tryAddMaster(param1)
+
+      const param2 = {
+        user_id: user_id,
+        org_id: org_id,
+      }
+      const adduser_data = await this.tryAddOrgUser(param2)
+      if (!adduser_data) {
+        console.log("add Org fail")
+        return
+      }
+
+      const param3 = {
+        org_id: org_id,
+        contributor_id: user_id,
+        contributor_email: this.getUserEmail()
+      }
+      const addcont_data = await this.tryAddOrgCont(param3)
+      if (!addcont_data) {
+        console.log("add OrgCont fail")
+        return
+      }
+
+      const org_data = await this.tryGetOrg(user_id)
+      if (!org_data) {
+        console.log("org를 가져오지 못했습니다.")
+        return 
+      }
+
+      this.setOrgInfo(org_data)
+
+      this.org_name = ""
       this.$emit("closeModalAddOrganization")
     },
     closeNewOrganModal() {
       this.is_auth = false
       this.$emit("closeModalAddOrganization")
     },
+    ...mapActions('addorganization', ['tryAddMaster', 'tryAddOrgUser', 'tryAddOrgCont']),
+    ...mapActions('login', ['tryGetOrg']),
+    ...mapGetters('login' , ['getUserID', 'getUserEmail']),
+    ...mapMutations('organizationInfo', ['setOrgInfo'])
   }
 }
 </script>

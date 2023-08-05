@@ -17,9 +17,7 @@ export default {
             throw new Error('로그인에 실패했습니다.')
         }
 
-        console.log("123")
         const data = response.json()
-        console.log(data)
         return data
     },
     async getOrg(user_id) {
@@ -35,7 +33,7 @@ export default {
             throw new Error('Organization을 가져오는데 실패했습니다.')
         }
 
-        const data = await response.json()
+        const data = response.json()
         return data
     },
     async getProj(org_id) {
@@ -133,8 +131,6 @@ export default {
         return data
     },
     async isDup(email) {
-        console.log("입력된 email " + email)
-
         const response = await fetch(`${server}api/user/duplicateEmail?email=${email}`, {
             method: 'GET',
             headers: {
@@ -165,7 +161,6 @@ export default {
         return data
     },
     async checkcode(info) {
-        console.log(JSON.stringify(info))
         const response = await fetch(`${server}api/mail/verifyCode`, {
             method: 'POST',
             headers: {
@@ -179,12 +174,9 @@ export default {
         }
 
         const data = response.json()
-        console.log("check: " + data)
         return data
     },
     async signUp(info) {
-        console.log("입력된 info " + info)
-
         const response = await fetch(`${server}api/user/signup`, {
             method: 'POST',
             headers: {
@@ -197,13 +189,26 @@ export default {
             throw new Error('회원가입에 실패했습니다.')
         }
 
-        console.log("pass")
-        const data = await response.json()
+        const data = response.json()
         return data
     },
-    async addOrg(info) {
-        console.log("입력된 info " + info)
+    async addOrgMaster(info) {
+        const response = await fetch(`${server}api/org/regOrganization`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(info)
+        })
 
+        if (!response.ok) {
+            throw new Error('[db: organization_master]Organization 생성에 실패했습니다.')
+        }
+
+        const data = response.json()
+        return data
+    },
+    async addOrgUser(info) {
         const response = await fetch(`${server}api/org/addOrganization`, {
             method: 'POST',
             headers: {
@@ -213,11 +218,26 @@ export default {
         })
 
         if (!response.ok) {
-            throw new Error('회원가입에 실패했습니다.')
+            throw new Error('[db: user_organization] Organization 생성에 실패했습니다.')
         }
 
-        console.log("pass")
-        const data = await response.json()
+        const data = response.json()
+        return data
+    },
+    async addOrgCont(info) {
+        const response = await fetch(`${server}api/org/addOrgContributor`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(info)
+        })
+
+        if (!response.ok) {
+            throw new Error('[db: organization_contributor] Organization 생성에 실패했습니다.')
+        }
+
+        const data = response.json()
         return data
     },
 }
