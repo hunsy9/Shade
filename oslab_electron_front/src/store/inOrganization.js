@@ -267,11 +267,12 @@ export default ({
         async addNewProject(context, data){
             const res = await api.postProject(data)
             console.log("newData: " + res)
-            const category_project_server = {
+            const dto = {
+                "project_id": res,
+                "project_name": data.project_name,
                 "category": null,
                 "project_server": null
             }
-            const dto = {...res, ...category_project_server}
             context.commit("reFetchProject", dto)
             if(res){
                 console.log("success in addNewProject")

@@ -20,6 +20,25 @@ export default {
         const data = response.json()
         return data
     },
+    async postProject(info) {
+        // console.log("입력된 id, pw" + id + pw)
+
+        const response = await fetch(`${server}api/project/addProject`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(info)
+        })
+
+        if (!response.ok) {
+            throw new Error('프로젝트 추가에 실패했습니다.')
+        }
+
+        const data = response.json()
+        return data
+    },
     async getOrg(user_id) {
 
         const response = await fetch(`${server}api/user/getUserInfo/${user_id}`, {
