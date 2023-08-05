@@ -3,7 +3,7 @@
     <p>Sign in</p>
     <img src="@/assets/user.png">
   </button>
-  <button v-else>
+  <button v-else @click="$emit('openModalLogOut')">
     <img src="@/assets/user.png">
     <p v-if="isLogin">{{ userName }}</p>
     <img class="adm" src="@/assets/adminbanner.png" v-if="isIn && isAdmin == true">

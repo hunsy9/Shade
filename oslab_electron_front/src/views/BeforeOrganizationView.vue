@@ -7,7 +7,7 @@
     </div>
 
     <div class="topbarframe">
-      <TopBarButton @openModalLogin="openModalLogin = true" :isIn="false"/>
+      <TopBarButton @openModalLogin="openModalLogin = true" :isIn="false" @openModalLogOut="openModalLogOut = true"/>
     </div>
 
     <div class="contentframe">
@@ -22,6 +22,7 @@
     <ModalLogin v-if="openModalLogin" @closeAppLoginModal="openModalLogin = false" @openAppSignUpModal="openAppModalSignUp = true"/>
     <ModalSignUp v-if="openAppModalSignUp" @closeAppModalSignUp="openAppModalSignUp = false" @openModalLogin="openModalLogin = true"/>
     <ModalAddOrganization v-if="openModalAddOrganization" @closeModalAddOrganization="openModalAddOrganization = false"/>
+    <ModalLogOut v-if="openModalLogOut" @closeModalLogOut="openModalLogOut = false"/>
   </div>
   
 
@@ -36,6 +37,7 @@ import OrganizationListItem from '@/components/beforeorganization/OrganizationLi
 import ModalLogin from '@/components/beforeorganization/beforemodal/ModalLogin.vue'
 import ModalSignUp from '@/components/beforeorganization/beforemodal/login/ModalSignUp.vue'
 import ModalAddOrganization from '@/components/beforeorganization/beforemodal/ModalAddOrganization.vue'
+import ModalLogOut from '@/components/beforeorganization/beforemodal/ModalLogOut.vue'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapMutations, mapActions } = createNamespacedHelpers('inOrganization')
@@ -50,6 +52,7 @@ export default {
       openModalLogin: false,
       openAppModalSignUp: false,
       openModalAddOrganization: false,
+      openModalLogOut: false,
     }
   },
   computed: {
@@ -73,6 +76,7 @@ export default {
     ModalLogin,
     ModalSignUp,
     ModalAddOrganization,
+    ModalLogOut,
   }
 }
 </script>
