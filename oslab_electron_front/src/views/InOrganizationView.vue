@@ -189,7 +189,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  width: 15rem;
+  width: 13rem;
   height: 100%;
   background-color: #444444;
 }
@@ -198,7 +198,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  width: 15rem;
+  width: 13rem;
   height: 100%;
   background-color: #161616;
   animation: gradient 0.7s ease forwards;
@@ -214,17 +214,17 @@ hr{
 .topbarframe {
   position: absolute;
   top: 0;
-  left: 15rem;
-  width: calc(100% - 15rem);
-  height: 7rem;
+  left: 13rem;
+  width: calc(100% - 13rem);
+  height: 5rem;
   background-color: #373737;
 }
 .topbarframe-term{
   position: absolute;
   top: 0;
-  left: 15rem;
-  width: calc(100% - 15rem);
-  height: 7rem;
+  left: 13rem;
+  width: calc(100% - 13rem);
+  height: 5rem;
   animation: gradient 0.7s ease forwards;
 }
 
@@ -244,10 +244,10 @@ hr{
 
 .contentframe {
   position: absolute;
-  top: 7rem;
-  left: 15rem;
-  width: calc(100% - 15rem);
-  height: calc(100% - 7rem);
+  top: 5rem;
+  left: 13rem;
+  width: calc(100% - 13rem);
+  height: calc(100% - 5rem);
   background-color: #2B2B2B;
 }
 
@@ -255,14 +255,14 @@ hr{
   position: absolute;
   top: 0;
   left: 0;
-  width: calc(100% - 15rem);
+  width: calc(100% - 13rem);
   height: 100%;
 }
 
 .rightframe{
   position: absolute;
   right: 0;
-  width: 15rem;
+  width: 13rem;
   height: 100%;
   background-color: #444444;
 }

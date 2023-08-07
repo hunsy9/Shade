@@ -1,7 +1,7 @@
 <template>
   <div class="cont" @click="open">
-    <img class="img1" src="@/assets/dotdot.png">
-    <span>PROJECT</span>
+    <img class="dotdot" src="@/assets/dotdot.png">
+    <span>Project</span>
     <img class="img2" src="@/assets/openproj.png">
   </div>
   <template v-if="isOpen == true">
@@ -76,7 +76,7 @@ export default {
 .img1{
   margin-top: 0.7rem;
   margin-bottom: 0.5rem;
-  margin-left: 1.2rem;
+  margin-left: 3rem;
   width: 1.2rem;
 }
 .proj span{
@@ -84,15 +84,22 @@ export default {
   top: -0.7rem;
   margin-left: 1.1rem;
   color: white;
+  font-size: 0.9rem;
+}
+.dotdot{
+  margin-top: 0.7rem;
+  margin-bottom: 0.5rem;
+  margin-left: 1.2rem;
+  width: 1.2rem;
 }
 .img2{
   position: relative;
   top: -0.75rem;
-  margin-left: 5rem;
+  margin-left: 4.5rem;
   width: 0.5rem;
 }
 .proj{
   cursor:pointer;
-  margin-left: 2.5rem;
+  /*margin-left: 0.5rem;*/
 }
 </style>

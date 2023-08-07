@@ -114,7 +114,7 @@ input::-webkit-inner-spin-button {
   position: relative;
 }
 button {
-  background-color: #989898;
+  background-color: #5e5e5e;
   border-radius: 0.2rem;
   border: none;
   box-shadow: 0 0.2px 1px 1px #0000002f;

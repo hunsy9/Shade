@@ -25,6 +25,8 @@ async function createWindow() {
     title: 'ssh-desktop',
     width: 1000,
     height: 600,
+    minWidth:750,
+    minHeight:450,
     titleBarStyle: 'hiddenInset',
 
     webPreferences: {

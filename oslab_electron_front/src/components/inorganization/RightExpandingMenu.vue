@@ -165,7 +165,7 @@ export default {
 }
 .category{
   display: inline;
-  padding-left: 5%;
+  padding-left: 7%;
   height: 4.5rem;
   width: 70%;
   line-height: 400%;
@@ -173,7 +173,7 @@ export default {
   animation: fade-in 0.3s linear;
 }
 .signTop{
-  margin-left: 8.6rem;
+  margin-left: 6.5rem;
   width: 0.5rem;
   height: 0.5rem;
 }
@@ -183,6 +183,7 @@ export default {
   background-color: #383838;
   border-bottom: 1px solid rgba(26, 26, 26, 0.11);
   animation: fade-in 0.3s linear;
+  font-size: 0.9rem;
 }
 .a{
   animation: fade-in 0.5s linear;
@@ -201,6 +202,7 @@ export default {
   color: white;
   background-color: #2C2C2C;
   border-bottom: 1px solid rgba(26, 26, 26, 0.2);
+  font-size: 0.9rem;
 }
 .dotSign{
   margin-left: 2rem;
@@ -232,8 +234,8 @@ export default {
   width: 12px;
   height: 12px;
   position: absolute;
-  left: 200px;
-  padding-top:13px
+  left: 170px;
+  padding-top: 13px
 }
 .del{
   width: 12px;

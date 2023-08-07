@@ -21,9 +21,9 @@ export default {
 <style scoped>
 .oname{
   position: absolute;
-  top: 3rem;
+  top: 1.95rem;
   left: 3rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: white;
 }
 </style>

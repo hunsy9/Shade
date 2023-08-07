@@ -35,7 +35,7 @@ button{
   color:white;
   float: right;
   position: relative;
-  top: calc(50% - 1.5rem);
+  top: calc(50% - 1.25rem);
   margin-right: 2rem;
   width: auto;
   height: 3em;

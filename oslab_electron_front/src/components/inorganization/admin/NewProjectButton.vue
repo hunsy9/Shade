@@ -19,7 +19,7 @@ export default {
   color: white;
   display: block;
   margin: 0 auto;
-  background-color: #989898;
+  background-color: #6b6b6b;
   padding: 0 auto;
   width: 65%;
   border-radius: 0.2rem;

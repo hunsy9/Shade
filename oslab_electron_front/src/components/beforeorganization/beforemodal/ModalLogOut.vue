@@ -25,16 +25,16 @@ export default {
   },
   methods: {
     toMain(){
-      router.push('/')
       ipcRenderer.send('reset-window')
+      router.push('/')
       this.$emit('closeModalLogOut')
     },
     closeModalLogOut() {
       this.$emit('closeModalLogOut')
       this.setLogin(false)
       localStorage.removeItem('vuex')
-      router.push('/')
       ipcRenderer.send('reset-window')
+      router.push('/')
     },
     ...mapMutations('login', ['setLogin'])
   },
@@ -53,7 +53,7 @@ export default {
 .zidx > main {
   z-index: 100;
   display: block;
-  margin-top: 5rem;
+  margin-top: 4rem;
   margin-left: auto;
   margin-right: 2rem;
   width: 150px;
@@ -61,7 +61,7 @@ export default {
   border-radius: 0.5rem;
   border: none;
   box-shadow: 0.2px 0.2px 4px 4px #0000002f;
-  animation: fadeInUp 1s ease backwards;
+  animation: fadeInUp 0.5s ease backwards;
 
 }
 .modalframe {

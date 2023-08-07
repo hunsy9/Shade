@@ -1,9 +1,8 @@
 <template>
-  <img class="sshdesktopicon" src="@/assets/right-arrow-angle-and-horizontal-down-line-code-signs.png">
-  <div class="text1">SSH Desktop</div>
-  <div class="text2">Build 2312</div>
+  <div class="sshdesktopicon"></div>
+  <div class="text1">Sotter</div>
+  <div class="text2">Version 0.1</div>
   <div class="line">
-    <img class="size" src="@/assets/twitter.png">
     <img class="size" src="@/assets/github.png">
   </div>
 
@@ -22,7 +21,7 @@
   background-color: #D9D9D9;
   border-radius: 0.5rem;
   display: block;
-  margin-top: 9rem;
+  margin-top: 8rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -31,7 +30,7 @@
   color: white;
   font-weight: 500;
   display: block;
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-left: auto;
   margin-right: auto;
 }

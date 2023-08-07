@@ -1,6 +1,6 @@
 <template>
   <div id="terminal"></div>
-  <button class="exitShell" @click="exitShell">x</button>
+  <img class="exitShell" src="@/assets/exitButton.png" @click="exitShell">
 </template>
 
 <script>
@@ -68,7 +68,7 @@ export default {
             console.log("Now the terminal is instantiated");
             // const x = ""
             const term = new Terminal({
-              rows: 44,
+              rows: 46,
               cols: 100, //any value
             });
             const fitAddon = new FitAddon();
