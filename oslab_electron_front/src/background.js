@@ -207,11 +207,11 @@ ipcMain.on('resize-window', () => {
   win.center()
 })
 
-ipcMain.on('resize-for-signup-modal', () => {
-  const win = BrowserWindow.getFocusedWindow()
-  win.setSize(440, 500)
-  win.center()
-})
+// ipcMain.on('resize-for-signup-modal', () => {
+//   const win = BrowserWindow.getFocusedWindow()
+//   win.setSize(440, 500)
+//   win.center()
+// })
 
 ipcMain.on('reset-window', () => {
   const win = BrowserWindow.getFocusedWindow()

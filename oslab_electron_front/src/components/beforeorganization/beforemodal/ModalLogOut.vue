@@ -1,10 +1,13 @@
 <template>
-  <div class="zidx">
+  <div class="zidx" @click="this.$emit('closeModalLogOut')">
     <main>
       <div class="modalframe">
-        <button class="button" @click="closeModalLogOut">
-          Log Out
-        </button>
+        <div class="content" @click="toMain">
+          To main
+        </div>
+        <div class="content" @click="closeModalLogOut">
+          Logout        
+        </div>
       </div>
     </main>
   </div>
@@ -17,17 +20,23 @@ import { ipcRenderer } from 'electron';
 
 export default {
   name: 'ModalLogOut',
+  props: {
+    openModalLogOut: Boolean
+  },
   methods: {
-    closeModalLogOut() {
+    toMain(){
+      router.push('/')
+      ipcRenderer.send('reset-window')
       this.$emit('closeModalLogOut')
     },
+    closeModalLogOut() {
+      this.$emit('closeModalLogOut')
+      this.setLogin(false)
+      localStorage.removeItem('vuex')
+      router.push('/')
+      ipcRenderer.send('reset-window')
+    },
     ...mapMutations('login', ['setLogin'])
-  },
-  beforeUnmount() {
-    this.setLogin(false)
-    localStorage.removeItem('vuex')
-    router.push('/')
-    ipcRenderer.send('reset-window')
   },
 }
 </script>
@@ -39,32 +48,36 @@ export default {
   left: 0;
   bottom: 0;
   right: 0;
+  z-index: 10;
 }
 .zidx > main {
+  z-index: 100;
   display: block;
-  margin: 0 auto;
-  width: 200px;
-  height: 200px;
-  background-color: white;
+  margin-top: 5rem;
+  margin-left: auto;
+  margin-right: 2rem;
+  width: 150px;
+  background-color: #D9D9D9;
   border-radius: 0.5rem;
   border: none;
   box-shadow: 0.2px 0.2px 4px 4px #0000002f;
+  animation: fadeInUp 1s ease backwards;
+
 }
 .modalframe {
-  margin-top: 2rem;
-  padding-top: 1.7rem;
   position: relative;
 }
-.button{
-  color: white;
-  display: block;
-  margin: 0 auto;
-  background-color: #989898;
-  padding-left: 1.8rem;
-  padding-right: 1.8rem;
-  border-radius: 0.2rem;
-  border: none;
-  box-shadow: 0 1px 1px 0.5px #0000002f;
-  cursor:pointer;
+.content{
+  line-height: 300%;
+  text-align: center;
+  height: 3rem;
+  cursor: pointer;
+}
+.content:hover{
+  background-color: #727272aa;
+}
+@keyframes fadeInUp{
+  0%{transform:translate(0px, 7px); opacity: 0;}
+  100%{transform:translate(0px, 0); opacity: 1;}
 }
 </style>

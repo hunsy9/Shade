@@ -51,11 +51,7 @@
 
   <ModalAddContributor v-if="openInviteContributorModal" @closeInviteContributorModal="openInviteContributorModal = false"/>
   <ModalPrivileges :contributor="contributor" v-if="openPrivilegeModal" @closePrivilegeModal="openPrivilegeModal = false"/>
-  <ModalLogOut v-if="openModalLogOut" @closeModalLogOut="openModalLogOut = false"/>
-
-  <button @click="testIn()">
-  화면 전환 버튼(개발용 추후 삭제)
-  </button>
+  <ModalLogOut :openModalLogOut="openModalLogOut" v-if="openModalLogOut" @closeModalLogOut="openModalLogOut = false"/>
 </template>
 
 
@@ -86,9 +82,6 @@ import ModalAddCategory from '@/components/inorganization/inmodal/ModalAddCatego
 import DeleteModal from '@/components/common/DeleteModal.vue'
 import ModalAddProject from '@/components/inorganization/inmodal/ModalAddProject.vue'
 import ModalLogOut from '@/components/beforeorganization/beforemodal/ModalLogOut.vue'
-
-import { ipcRenderer } from 'electron';
-import router from '@/router/index.js';
 
 import { mapState, mapMutations } from "vuex";
 import ModalAddContributor from "@/components/inorganization/inmodal/ModalAddContributor";
@@ -134,11 +127,6 @@ export default {
   },
   methods: {
     ...mapMutations('inOrganization',['resetSelect']),
-    testIn() {
-      this.resetSelect()
-      router.push('/')
-      ipcRenderer.send('reset-window')
-    },
     doOpenModalServerInfo(name, desc){
       this.sName = name
       this.sDesc = desc

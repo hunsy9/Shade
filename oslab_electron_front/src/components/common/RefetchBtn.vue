@@ -1,7 +1,5 @@
 <template>
-    <button @click="Refetch">
-        Refetch
-    </button>
+    <img src="@/assets/refresh.png" @click="Refetch">
 </template>
 
 <script>
@@ -39,3 +37,20 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+img{
+  right: 1rem;
+  bottom: 1rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  position: fixed;
+  cursor: pointer;
+}
+.content:hover{
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0.2px 0.2px 4px 4px #0000002f;
+  background-color: white;
+}
+</style>
