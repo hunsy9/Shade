@@ -5,12 +5,18 @@
         <template v-for="(server, idx) in value" :key="idx">
           <div class="itembox" :style="{ backgroundColor: colors[idx % colors.length]}">
             <span class="sname">
-              {{ server.server_name }}
+              {{ server.server_name}}
             </span>
-            <button class="ibutton">
+            <button v-if="!isAdmin" @click="$emit('openModalServerInfo', server.server_name, server.server_desc)">
               Info
             </button>
-            <button class="cbutton" @click="connectServer(server.server_id)">
+            <button v-if="isAdmin" @click="$emit('openDeleteModal', DeleteState, {server_id: server.server_id})">
+              Delete
+            </button>
+            <button v-if="isAdmin" @click="$emit('openModalAddServer', 'Edit Server')">
+              Edit
+            </button>
+            <button @click="connectServer(server.server_id, org_id)">
               Connect
             </button>
           </div>
@@ -21,26 +27,28 @@
 </template>
   
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapGetters } = createNamespacedHelpers('inOrganization')
-const { mapActions } = createNamespacedHelpers('terminal')
+import { mapState, mapGetters, mapActions } from "vuex";
+import {DeleteState} from "@/store/inOrganization";
 
 export default {
   name: 'ServerListItem',
   data() {
     return {
+      DeleteState: DeleteState.DELETESERVER,
       colors: ["#AFA4C6a2", "#A4C6B5a2", "#A4BEC6a2", "#C6A4A4a2"],
     }
   },
   computed: {
-    ...mapState({
+    ...mapState('inOrganization', {
       categ_l1: state => state.selected_categ_l1,
-      categ_l2: state => state.selected_categ_l2
+      categ_l2: state => state.selected_categ_l2,
+      org_id: state => state.organId,
+      isAdmin: state => state.isAdmin,
     }),
-    ...mapGetters(['getServerList'])
+    ...mapGetters('inOrganization', ['getServerList'])
   },
   methods: {
-    ...mapActions(['connectTerminal']),
+    ...mapActions('terminal', ['connectTerminal']),
     isTrue(key){
       let info = key.split(":")
       let l1 = info[1]
@@ -49,8 +57,12 @@ export default {
         return true
       }
     },
-    async connectServer(serverId){
-      await this.connectTerminal(serverId)
+    async connectServer(serverId,org_id){
+      const data = {
+        server_id: serverId,
+        org_id: org_id
+      }
+      await this.connectTerminal(data)
     }
   }
 }
@@ -68,6 +80,7 @@ export default {
   background-color: #a4bec6a2;
   border-radius: 0.4rem;
   padding: 1rem 0;
+  animation: fadeInUp 1s ease backwards;
 }
 .sname{
   color: white;
@@ -75,24 +88,19 @@ export default {
   width: 20rem;
   margin: 0;
 }
-.ibutton{
-  padding: 0.1rem 2rem;
-  margin-left: 17rem;
-  color: white;
-  background-color: #989898;
+button{  
+  float: right;
+  background-color: #989898c2;
   border-radius: 0.2rem;
   border: none;
   box-shadow: 0 1px 1px 0.5px #0000002f;
   cursor:pointer;
+  color: white;
+  padding: 0.1rem 1.5rem;
+  margin-right: 1rem;
 }
-.cbutton{
-  padding: 0.1rem 1rem;
-  margin-left: 1rem;
-  color: white;
-  background-color: #989898;
-  border-radius: 0.2rem;
-  border: none;
-  box-shadow: 0 1px 1px 0.5px #0000002f;
-  cursor:pointer;
+@keyframes fadeInUp{
+  0%{transform:translate(0px, 7px); opacity: 0;}
+  100%{transform:translate(0px, 0); opacity: 1;}
 }
 </style>

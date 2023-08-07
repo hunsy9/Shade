@@ -1,7 +1,7 @@
 <template>
   <div class="cont" @click="open">
-    <img class="img1" src="@/assets/dotdot.png">
-    <span>PROJECT</span>
+    <img class="dotdot" src="@/assets/dotdot.png">
+    <span>Project</span>
     <img class="img2" src="@/assets/openproj.png">
   </div>
   <template v-if="isOpen == true">
@@ -15,8 +15,9 @@
 </template>
   
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapMutations } = createNamespacedHelpers('inOrganization')
+import {createNamespacedHelpers} from 'vuex'
+import { terminalState } from '../../store/inOrganization';
+const { mapState, mapMutations,mapActions } = createNamespacedHelpers('inOrganization')
 
 export default {
   name: 'LeftExpandingMenu',  
@@ -30,15 +31,26 @@ export default {
   computed: {
     ...mapState({
       projlist: state => state.projects,
-      mode: state => state.mode
+      mode: state => state.mode,
+      exitStatus: state => state.exitShellState
     }),
+    ...mapState({
+      org_id: state => state.organId,
+      org_name: state => state.organName
+    })
   },
   methods: {
-    ...mapMutations(['selectProj']),
+    ...mapMutations(['selectProj', 'setOrg']),
+    ...mapActions(['getProjects']),
     open(){
       this.isOpen = !this.isOpen
     },
     clickProj(name, index){
+      if(this.exitStatus == terminalState.OPENED){
+        alert("The terminal did not shut down\n\n" +
+            "Shut down the terminal first!")
+        return
+      }
       this.isClick = true
       this.pickedProj = index
       this.selectProj(name)
@@ -53,8 +65,9 @@ export default {
   padding-bottom: 0.7rem;
 }
 .cont span{
+  position: relative;
+  top: -0.6rem;
   margin-left: 1.1rem;
-  margin-bottom: 0.7rem;
   color: white;
 }
 .click{
@@ -62,20 +75,31 @@ export default {
 }
 .img1{
   margin-top: 0.7rem;
-  margin-left: 1.2rem;
+  margin-bottom: 0.5rem;
+  margin-left: 3rem;
   width: 1.2rem;
 }
 .proj span{
+  position: relative;
+  top: -0.7rem;
   margin-left: 1.1rem;
   color: white;
+  font-size: 0.9rem;
+}
+.dotdot{
+  margin-top: 0.7rem;
+  margin-bottom: 0.5rem;
+  margin-left: 1.2rem;
+  width: 1.2rem;
 }
 .img2{
-  margin-top: 0.7rem;
-  margin-left: 1rem;
+  position: relative;
+  top: -0.75rem;
+  margin-left: 4.5rem;
   width: 0.5rem;
 }
 .proj{
   cursor:pointer;
-  margin-left: 2.5rem;
+  /*margin-left: 0.5rem;*/
 }
 </style>

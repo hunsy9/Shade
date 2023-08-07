@@ -1,33 +1,31 @@
 <template>
-  <button @click="openAppLoginModal" v-if="isLogin == false">
+  <button @click="$emit('openModalLogin')" v-if="isLogin == false">
     <p>Sign in</p>
     <img src="@/assets/user.png">
   </button>
-  <button v-else>
+  <button v-else @click="$emit('openModalLogOut')">
     <img src="@/assets/user.png">
     <p v-if="isLogin">{{ userName }}</p>
-    <img class="adm" src="@/assets/adminbanner.png" v-if="isAdmin == true">
+    <img class="adm" src="@/assets/adminbanner.png" v-if="isIn == true && isAdmin == true">
   </button>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('login')
-import { ipcRenderer } from 'electron'
+import { mapState } from "vuex";
 
 export default {
   name: 'TopBarButton',
+  props: {
+    isIn: Boolean
+  },
   computed: {
-    ...mapState({
+    ...mapState('login', {
       userName: state => state.userName,
       isLogin: state => state.isLogin,
+    }),
+    ...mapState('inOrganization', {
       isAdmin: state => state.isAdmin
     }),
-  },
-  methods: {
-    openAppLoginModal() {
-      ipcRenderer.send('open-app-login-modal')
-    },
   },
 }
 </script>
@@ -37,7 +35,7 @@ button{
   color:white;
   float: right;
   position: relative;
-  top: calc(50% - 1.5rem);
+  top: calc(50% - 1.25rem);
   margin-right: 2rem;
   width: auto;
   height: 3em;

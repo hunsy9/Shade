@@ -1,13 +1,13 @@
 <template>
   <span class="frame">
-    <span>
+    <span class="first">
       {{ proj }} 
     </span>
     <span class="greyspan">
-      {{ getSelectedCatl1 }} 
+      {{ getSelectedCatl1 }}
     </span>
     <span class="greyspan">
-      {{ getSelectedCatl2 }} 
+      {{ getSelectedCatl2 }}
     </span>
   </span>
 </template>
@@ -38,7 +38,18 @@ span{
   color: white;
   font-size: 1rem;
 }
+.first{
+  animation: fade-in 0.5s linear;
+}
 .greyspan{
   color: #8E8E8E;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

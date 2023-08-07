@@ -3,26 +3,31 @@
 
     <div class="leftsideframe">
       <AppInfo/>
-      <NewOrganizationButton v-if="isLogin ==true" @openNewOrganModal="openNewOrganModal"/>
+      <NewOrganizationButton v-if="isLogin ==true" @openModalAddOrganization="openModalAddOrganization = true"/>
     </div>
 
     <div class="topbarframe">
-      <TopBarButton />
+      <TopBarButton @openModalLogin="openModalLogin = true" :isIn="false" @openModalLogOut="openModalLogOut = true"/>
     </div>
 
     <div class="contentframe">
+      <template v-if="isLogin ==true">
+        <RefetchBtn :RefetchState="RefetchState"  />
+      </template>
       <template v-if="isLogin ==true && hasOrganization == true">
         <OrganizationListItem @openInOganization="openInOganization"/>
+        
       </template>
       <div class="nocontent" v-else>
         Please Sign Up and Create New Organization !
       </div>
     </div>
-
+    <ModalLogin v-if="openModalLogin" @closeAppLoginModal="openModalLogin = false" @openAppSignUpModal="openAppModalSignUp = true"/>
+    <ModalSignUp v-if="openAppModalSignUp" @closeAppModalSignUp="openAppModalSignUp = false" @openModalLogin="openModalLogin = true"/>
+    <ModalAddOrganization v-if="openModalAddOrganization" @closeModalAddOrganization="openModalAddOrganization = false"/>
+    <ModalLogOut :openModalLogOut="openModalLogOut" v-if="openModalLogOut" @closeModalLogOut="openModalLogOut = false"/>
   </div>
-  <!-- <button @click="testIn()">
-    화면 전환 버튼(개발용 추후 삭제)
-  </button> -->
+  
 
 </template>
 
@@ -31,9 +36,15 @@ import AppInfo from '@/components/common/AppInfo.vue'
 import NewOrganizationButton from '@/components/beforeorganization/NewOrganizationButton.vue'
 import TopBarButton from '@/components/common/TopBarButton.vue'
 import OrganizationListItem from '@/components/beforeorganization/OrganizationListItem.vue'
-import { ipcRenderer } from 'electron'
+import RefetchBtn from '@/components/common/RefetchBtn.vue'
+
+import ModalLogin from '@/components/beforeorganization/beforemodal/ModalLogin.vue'
+import ModalSignUp from '@/components/beforeorganization/beforemodal/login/ModalSignUp.vue'
+import ModalAddOrganization from '@/components/beforeorganization/beforemodal/ModalAddOrganization.vue'
+import ModalLogOut from '@/components/beforeorganization/beforemodal/ModalLogOut.vue'
 
 import { createNamespacedHelpers } from 'vuex'
+import {RefetchState} from "@/store/inOrganization";
 const { mapMutations, mapActions } = createNamespacedHelpers('inOrganization')
 const { mapState } = createNamespacedHelpers('login')
 
@@ -43,6 +54,11 @@ export default {
     return {
       hasOrganization: true,
       organizationNames: [],
+      openModalLogin: false,
+      openAppModalSignUp: false,
+      openModalAddOrganization: false,
+      RefetchState: RefetchState.BEFOREORG,
+      openModalLogOut: false,
     }
   },
   computed: {
@@ -51,9 +67,6 @@ export default {
     }),
   },
   methods: {
-    openNewOrganModal() {
-      ipcRenderer.send('open-add-organ-modal')
-    },
     openInOganization(org) {
       this.getProjects(org)
       this.setOrg(org)
@@ -65,7 +78,12 @@ export default {
     AppInfo,
     NewOrganizationButton,
     TopBarButton,
-    OrganizationListItem
+    OrganizationListItem,
+    ModalLogin,
+    ModalSignUp,
+    ModalAddOrganization,
+    RefetchBtn,
+    ModalLogOut,
   }
 }
 </script>

@@ -8,8 +8,9 @@ import { format as formatUrl } from 'url'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 let mainWindow
-let appLoginModalWindow
-let addOrganModalWindow
+// let appLoginModalWindow
+// let addOrganModalWindow
+// let addServerModalWindow
 
 // let startPage = true
 
@@ -24,6 +25,8 @@ async function createWindow() {
     title: 'ssh-desktop',
     width: 1000,
     height: 600,
+    minWidth:750,
+    minHeight:450,
     titleBarStyle: 'hiddenInset',
 
     webPreferences: {
@@ -34,48 +37,70 @@ async function createWindow() {
     }
   })
 
-  const appLoginModal = new BrowserWindow({ 
-    width: 400, 
-    height: 500, 
-    parent: win, 
-    titleBarStyle: 'hidden',
-    show: false,
-    // 개발 끝나고 resizable, movavle false로 수정
-    resizable: true,
-    movavle: true,
-    minimizable: false,
-    maximizable: false,
-    webPreferences: {
-      // Use pluginOptions.nodeIntegration, leave this alone
-      // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-      contextIsolation: false
-    }
-  })
+  // const appLoginModal = new BrowserWindow({ 
+  //   width: 400, 
+  //   height: 500, 
+  //   parent: win, 
+  //   titleBarStyle: 'hidden',
+  //   show: false,
+  //   // 개발 끝나고 resizable, movavle false로 수정
+  //   resizable: true,
+  //   movavle: true,
+  //   minimizable: false,
+  //   maximizable: false,
+  //   webPreferences: {
+  //     // Use pluginOptions.nodeIntegration, leave this alone
+  //     // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
+  //     nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+  //     contextIsolation: false
+  //   }
+  // })
 
-  const addOrganModal = new BrowserWindow({ 
-    width: 625, 
-    height: 375, 
-    parent: win, 
-    titleBarStyle: 'hidden',
-    show: false,
-    resizable: true,
-    movavle: true,
-    minimizable: false,
-    maximizable: false,
-    webPreferences: {
-      // Use pluginOptions.nodeIntegration, leave this alone
-      // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-      contextIsolation: false
-    }
-  })
+  
+  // const addOrganModal = new BrowserWindow({ 
+  //   width: 625, 
+  //   height: 375, 
+  //   parent: win, 
+  //   titleBarStyle: 'hidden',
+  //   show: false,
+  //   resizable: true,
+  //   movavle: true,
+  //   minimizable: false,
+  //   maximizable: false,
+  //   webPreferences: {
+  //     // Use pluginOptions.nodeIntegration, leave this alone
+  //     // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
+  //     nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+  //     contextIsolation: false
+  //   }
+  // })
+
+  
+  // const addServerModal = new BrowserWindow({ 
+  //   width: 500, 
+  //   height: 400, 
+  //   parent: win, 
+  //   titleBarStyle: 'hidden',
+  //   show: false,
+  //   modal: true,
+  //   resizable: true,
+  //   movavle: true,
+  //   minimizable: false,
+  //   maximizable: false,
+  //   webPreferences: {
+  //     // Use pluginOptions.nodeIntegration, leave this alone
+  //     // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
+  //     nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+  //     contextIsolation: false
+  //   }
+  // })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-    await appLoginModal.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#/modallogin')
-    await addOrganModal.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#/modaladdorganization')
+    // await appLoginModal.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#/modallogin')
+    // await addOrganModal.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#/modaladdorganization')
+    // await addServerModal.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#/modaladdserver')
     // if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     createProtocol('app')
@@ -88,8 +113,9 @@ async function createWindow() {
         slashes: true
     }))
 
-    appLoginModal.loadURL(`file://${__dirname}/index.html#/modallogin`)
-    addOrganModal.loadURL(`file://${__dirname}/index.html#/modaladdorganization`)
+    // appLoginModal.loadURL(`file://${__dirname}/index.html#/modallogin`)
+    // addOrganModal.loadURL(`file://${__dirname}/index.html#/modaladdorganization`)
+    // addServerModal.loadURL(`file://${__dirname}/index.html#/modaladdserver`)
   }
 
   win.on('closed', () => {
@@ -108,18 +134,24 @@ async function createWindow() {
     // }
   })
 
-  appLoginModal.on('close', (e) => {
-    e.preventDefault()
-    appLoginModal.hide()
-  })
+  // appLoginModal.on('close', (e) => {
+  //   e.preventDefault()
+  //   appLoginModal.hide()
+  // })
 
-  addOrganModal.on('close', (e) => {
-    e.preventDefault()
-    addOrganModal.hide()
-  })
+  // addOrganModal.on('close', (e) => {
+  //   e.preventDefault()
+  //   addOrganModal.hide()
+  // })
 
-  appLoginModalWindow = appLoginModal
-  addOrganModalWindow = addOrganModal
+  // addServerModal.on('close', (e) => {
+  //   e.preventDefault()
+  //   addServerModal.hide()
+  // })
+
+  // appLoginModalWindow = appLoginModal
+  // addOrganModalWindow = addOrganModal
+  // addServerModalWindow = addServerModal
 
   return win
 }
@@ -177,11 +209,11 @@ ipcMain.on('resize-window', () => {
   win.center()
 })
 
-ipcMain.on('resize-for-signup-modal', () => {
-  const win = BrowserWindow.getFocusedWindow()
-  win.setSize(440, 500)
-  win.center()
-})
+// ipcMain.on('resize-for-signup-modal', () => {
+//   const win = BrowserWindow.getFocusedWindow()
+//   win.setSize(440, 500)
+//   win.center()
+// })
 
 ipcMain.on('reset-window', () => {
   const win = BrowserWindow.getFocusedWindow()
@@ -189,25 +221,38 @@ ipcMain.on('reset-window', () => {
   win.center()
 })
 
-ipcMain.on('open-app-login-modal', () => {
-  appLoginModalWindow.show()
-  appLoginModalWindow.center()
-})
+// ipcMain.on('open-app-login-modal', () => {
+//   appLoginModalWindow.show()
+//   appLoginModalWindow.center()
+// })
 
-ipcMain.on('close-app-login-modal', () => {
-  console.log("login")
-  const win = BrowserWindow.getFocusedWindow()
-  mainWindow = win.getParentWindow()
-  mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-  appLoginModalWindow.hide()
-})
+// ipcMain.on('close-app-login-modal', () => {
+//   console.log("login")
+//   const win = BrowserWindow.getFocusedWindow()
+//   mainWindow = win.getParentWindow()
+//   mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+//   appLoginModalWindow.hide()
+// })
 
-ipcMain.on('open-add-organ-modal', () => {
-  addOrganModalWindow.show()
-  addOrganModalWindow.center()
-})
+// ipcMain.on('open-add-organ-modal', () => {
+//   addOrganModalWindow.show()
+//   addOrganModalWindow.center()
+// })
 
-ipcMain.on('close-add-organ-modal', () => {
-  console.log("organ")
-  addOrganModalWindow.hide()
-})
+// ipcMain.on('close-add-organ-modal', () => {
+//   console.log("organ")
+//   addOrganModalWindow.hide()
+// })
+
+// ipcMain.on('open-add-server-modal', () => {
+//   addServerModalWindow.show()
+//   addServerModalWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#/modaladdserver')
+// })
+
+// ipcMain.on('close-add-server-modal', () => {
+//   console.log("server") 
+//   const win = BrowserWindow.getFocusedWindow()
+//   mainWindow = win.getParentWindow()
+//   mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL + '#/in')
+//   addServerModalWindow.hide()
+// })

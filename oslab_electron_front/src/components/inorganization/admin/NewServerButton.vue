@@ -1,12 +1,22 @@
 <template>
-  <button class="button" @click="$emit('openNewOrganModal')">
+  <button class="button" @click="$emit('openModalAddServer', 'Add New Server')" v-if="categ_l2 && categ_l1 && proj">
     Add New Server
   </button>
 </template>
     
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState } = createNamespacedHelpers('inOrganization')
+
 export default {
-  name: 'NewServerButton', 
+  name: 'NewServerButton',
+  computed: {
+    ...mapState({
+      proj: state => state.selected_proj,
+      categ_l1: state => state.selected_categ_l1,
+      categ_l2: state => state.selected_categ_l2
+    }),
+  }
 }
 </script>
 
@@ -25,5 +35,15 @@ export default {
   border: none;
   box-shadow: 0 1px 1px 0.5px #0000002f;
   cursor:pointer;
+  animation: fade-in 1s linear;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>
