@@ -4,7 +4,6 @@ export default ({
     namespaced: true,
   
     state: {
-        user_id: 1,
         server_id: 0,
         room_id: "",
         serverAddress:""
@@ -26,9 +25,9 @@ export default ({
             context.commit('setServerId', data.server_id)
 
             if(context.state.server_id == data.server_id){
-                const user_id = context.state.user_id;
+                const user_id = context.rootState.login.userID;
                 const server_id = data.server_id;
-                const room_id = await api.getRoomId(data.server_id, context.state.user_id)
+                const room_id = await api.getRoomId(data.server_id, user_id)
                 const nameSpace = `/${user_id}/${server_id}/${room_id}`
                 const serverAddress = `http://localhost:3001${nameSpace}`
 

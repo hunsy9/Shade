@@ -15,9 +15,9 @@
 </template>
   
 <script>
-import { createNamespacedHelpers } from 'vuex'
+import {createNamespacedHelpers} from 'vuex'
 import { terminalState } from '../../store/inOrganization';
-const { mapState, mapMutations } = createNamespacedHelpers('inOrganization')
+const { mapState, mapMutations,mapActions } = createNamespacedHelpers('inOrganization')
 
 export default {
   name: 'LeftExpandingMenu',  
@@ -34,9 +34,14 @@ export default {
       mode: state => state.mode,
       exitStatus: state => state.exitShellState
     }),
+    ...mapState({
+      org_id: state => state.organId,
+      org_name: state => state.organName
+    })
   },
   methods: {
-    ...mapMutations(['selectProj']),
+    ...mapMutations(['selectProj', 'setOrg']),
+    ...mapActions(['getProjects']),
     open(){
       this.isOpen = !this.isOpen
     },

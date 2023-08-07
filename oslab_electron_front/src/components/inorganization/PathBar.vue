@@ -1,6 +1,6 @@
 <template>
   <span class="frame">
-    <span>
+    <span class="first">
       {{ proj }} 
     </span>
     <span class="greyspan">
@@ -38,7 +38,18 @@ span{
   color: white;
   font-size: 1rem;
 }
+.first{
+  animation: fade-in 0.5s linear;
+}
 .greyspan{
   color: #8E8E8E;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

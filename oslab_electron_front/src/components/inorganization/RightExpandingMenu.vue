@@ -18,7 +18,7 @@
         <img class="edit" v-if="l1btn == true && l1index==l1 && this.EditState" src="@/assets/edit.png" @click="editCategoryL1(l1)"/>
         <img class="del" v-if="l1btn == true && l1index==l1 && this.EditState" src="@/assets/trash.png" @click="deleteCategoryL1(l1)"/>
       </div>
-      <div v-if="l1btn == true && l1index == l1">
+      <div class="a" v-if="l1btn == true && l1index == l1">
         <div v-for="(l2, indexl2) in value" :key="indexl2">
           <div v-if="l2!=null" class="level2" @click="select_l2(l2)">
             <img class="dotSign" src="@/assets/dotSign.png">
@@ -161,6 +161,7 @@ export default {
 <style scoped>
 .topcat{
   cursor:pointer;
+  animation: fade-in 1s linear;
 }
 .category{
   display: inline;
@@ -169,6 +170,7 @@ export default {
   width: 70%;
   line-height: 400%;
   color: white;
+  animation: fade-in 0.3s linear;
 }
 .signTop{
   margin-left: 8.6rem;
@@ -180,9 +182,11 @@ export default {
   color: white;
   background-color: #383838;
   border-bottom: 1px solid rgba(26, 26, 26, 0.11);
+  animation: fade-in 0.3s linear;
 }
-
-
+.a{
+  animation: fade-in 0.5s linear;
+}
 .signL1{
   margin-left: 1rem;
   width: 0.5rem;
@@ -197,7 +201,6 @@ export default {
   color: white;
   background-color: #2C2C2C;
   border-bottom: 1px solid rgba(26, 26, 26, 0.2);
-  animation: dropdown_menu-6;
 }
 .dotSign{
   margin-left: 2rem;
@@ -239,5 +242,12 @@ export default {
   right: 10px;
   padding-top:13px;
 }
-
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 </style>

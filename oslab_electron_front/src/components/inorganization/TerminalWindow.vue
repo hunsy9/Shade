@@ -8,7 +8,8 @@ import { Terminal } from "xterm";
 import {FitAddon} from "xterm-addon-fit";
 import "xterm/css/xterm.css";
 import { io } from "socket.io-client";
-import { mapState } from "vuex";
+import {mapMutations, mapState} from "vuex";
+import {terminalState} from "@/store/inOrganization";
 
 export default {
   name: 'TerminalWindow',
@@ -16,7 +17,8 @@ export default {
     return{
       startFlag : false,
       socket: null,
-      term: null
+      term: null,
+      ExitStatus: false
     }
   },
   computed:{
@@ -25,13 +27,19 @@ export default {
     }),
   },
   methods:{
+    ...mapMutations('inOrganization', [
+        "setExitShellstatus"
+    ]),
     exitShell(){
       this.socket.disconnect()
-      this.term.write("\nBroken Pipe")
+      // this.term.write("\nBroken Pipe")
+      this.setExitShellstatus(terminalState.TERMINATED)
     }
   },
   mounted() {
     const serverAddress = this.serverAddress; // your server address
+
+    this.setExitShellstatus(terminalState.OPENED)
 
     const createTerminal = (term) => {
       term.open(document.getElementById("terminal"));
@@ -53,6 +61,7 @@ export default {
 
     connectToSocket(serverAddress)
         .then((socket) => {
+          socket.emit("startChannel",this.serverAddress)
           console.log("The socket is getting first");
           socket.on("connect", () => {
             console.log("Id", socket.id);
@@ -73,13 +82,15 @@ export default {
             window.addEventListener('resize', onSize, false);
             createTerminal(term);
 
-            socket.emit("startChannel",this.serverAddress)
-
             socket.on("output", (data) => {
               console.log("Now I am getting data from pty", data);
               // When there is data from PTY on server, print that on Terminal.
               term.write(data);
             });
+
+            socket.on("unexpectedExit", ()=>{
+              this.setExitShellstatus(terminalState.TERMINATED)
+            })
 
             term.onData((data) => {
               console.log("Now data is being emitted", data);
@@ -93,6 +104,9 @@ export default {
 </script>
 
 <style scoped>
+#terminal{
+  animation: fade-in 0.7s linear;
+}
 .exitShell {
   background-color: #d9d9d9;
   border-radius: 5px;
@@ -103,5 +117,14 @@ export default {
   right: 2rem;
   bottom: 2rem;
   z-index: 1;
+  animation: fade-in 1s linear;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

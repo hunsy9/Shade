@@ -1,7 +1,7 @@
 <template>
   <div class="container" v-if="full == false">
 
-    <div class="leftsideframe">
+    <div class="leftsideframe" :class="{'leftsideframe-term':mode == 3}">
       <AppInfo/>
       <hr/>
       <ContributorButton/>
@@ -9,7 +9,7 @@
       <NewProjectButton v-if="isAdmin == true" @openNewProjectModal="openNewProjectModal = true"/>
     </div>
 
-    <div class="topbarframe">
+    <div class="topbarframe" :class="{'topbarframe-term':mode ==3}">
       <OrganizationName/>
       <TopBarButton :isIn="true" @openModalLogOut="openModalLogOut = true"/>
     </div>
@@ -118,7 +118,7 @@ export default {
         id:"",
         email:""
       },
-      title: ""
+      title: "",
     }
   },
   computed: {
@@ -206,6 +206,16 @@ export default {
   background-color: #444444;
 }
 
+.leftsideframe-term{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15rem;
+  height: 100%;
+  background-color: #161616;
+  animation: gradient 0.7s ease forwards;
+}
+
 hr{
   margin-top: 2.5rem;
   margin-bottom: 0;
@@ -220,6 +230,28 @@ hr{
   width: calc(100% - 15rem);
   height: 7rem;
   background-color: #373737;
+}
+.topbarframe-term{
+  position: absolute;
+  top: 0;
+  left: 15rem;
+  width: calc(100% - 15rem);
+  height: 7rem;
+  animation: gradient 0.7s ease forwards;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+    background-color: #373737;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+    background-color: #121212;
+  }
 }
 
 .contentframe {
