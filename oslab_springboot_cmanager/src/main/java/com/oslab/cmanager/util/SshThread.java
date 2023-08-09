@@ -117,7 +117,7 @@ public class SshThread extends Thread {
                 inputThread.start();
                 outputThread.start();
                 commandQueue.put("");
-         
+           
 
                 // 입력 받기
                 while (true) {
