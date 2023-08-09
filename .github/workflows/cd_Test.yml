@@ -1,0 +1,20 @@
+name: agent-deploy
+on:
+  pull_request:
+    branches: ['main']
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.3.0
+ 
+      - name: execute remote ssh & deploy agent backend server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          password: ${{ secrets.REMOTE_SSH_PASSWORD }}
+          script: |
+            whoami
+            mkdir cdTEset
