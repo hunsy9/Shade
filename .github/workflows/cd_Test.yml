@@ -15,6 +15,7 @@ jobs:
           key: ${{ secrets.REMOTE_SSH_KEY }}
           # script_stop: true
           script: |
+            export PATH=/usr/bin:/bin
             /usr/bin/whoami
             mkdir cdTEset
             /bin/echo $PATH
