@@ -15,5 +15,5 @@ jobs:
           key: ${{ secrets.REMOTE_SSH_KEY }}
           script_stop: true
           script: |
-            whoami
+            /usr/bin/whoami
             mkdir cdTEset
