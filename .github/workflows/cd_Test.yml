@@ -12,7 +12,6 @@ jobs:
           host: ${{ secrets.REMOTE_SSH_HOST }}
           username: ${{ secrets.REMOTE_SSH_USERNAME }}
           key: ${{ secrets.REMOTE_SSH_KEY }}
-          allenvs: true
           script_stop: true
           script: |
             whoami
