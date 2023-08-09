@@ -11,7 +11,7 @@ jobs:
         with:
           host: ${{ secrets.REMOTE_SSH_HOST }}
           username: ${{ secrets.REMOTE_SSH_USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          password: ${{ secrets.REMOTE_SSH_PASSWORD }}
           # key: ${{ secrets.REMOTE_SSH_KEY }}
           script_stop: true
           script: |
