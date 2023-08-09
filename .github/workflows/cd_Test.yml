@@ -14,7 +14,6 @@ jobs:
           host: ${{ secrets.REMOTE_SSH_HOST }}
           username: ${{ secrets.REMOTE_SSH_USERNAME }}
           key: ${{ secrets.REMOTE_SSH_KEY }}
-          password: ${{ secrets.REMOTE_SSH_PASSWORD }}
           script: |
             whoami
             mkdir cdTEset
