@@ -6,7 +6,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.3.0
+      - name: checkout test
+        uses: actions/checkout@v3.3.0
  
       - name: execute remote ssh & deploy agent backend server
         uses: appleboy/ssh-action@master
