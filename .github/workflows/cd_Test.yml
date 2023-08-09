@@ -13,7 +13,8 @@ jobs:
           username: ${{ secrets.REMOTE_SSH_USERNAME }}
           # password: ${{ secrets.REMOTE_SSH_PASSWORD }}
           key: ${{ secrets.REMOTE_SSH_KEY }}
-          script_stop: true
+          # script_stop: true
           script: |
             /usr/bin/whoami
             mkdir cdTEset
+            /bin/echo $PATH
