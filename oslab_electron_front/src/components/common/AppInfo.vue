@@ -1,7 +1,9 @@
 <template>
-  <div class="sshdesktopicon"></div>
-  <div class="text1">Sotter</div>
-  <div class="text2">Version 0.1</div>
+  <div class="sshdesktopicon" >
+    <img src="@/assets/sshdesktopIcon.png" width="60px" height="60px" >
+  </div>
+  <div class="text1">SSH Desktop</div>
+  <div class="text2">Version 0.2</div>
   <div class="line">
     <img class="size" src="@/assets/github.png">
   </div>
@@ -16,9 +18,10 @@
 
 <style scoped>
 .sshdesktopicon{
+  text-align: center;
   width: 4rem;
   height: 4rem;
-  background-color: #D9D9D9;
+  /*background-color: #D9D9D9;*/
   border-radius: 0.5rem;
   display: block;
   margin-top: 8rem;

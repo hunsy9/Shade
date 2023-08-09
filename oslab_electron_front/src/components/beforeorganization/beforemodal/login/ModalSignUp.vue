@@ -6,7 +6,7 @@
       <div class="modalframe">
         <img
           class="sshdesktopicon"
-          src="@/assets/right-arrow-angle-and-horizontal-down-line-code-signs.png"
+          src="@/assets/sshdesktopIcon.png"
         >
         <div class="text1">SSH Desktop</div>
       </div>
@@ -320,7 +320,7 @@ input {
 .sshdesktopicon {
   width: 4rem;
   height: 4rem;
-  background-color: #d9d9d9;
+  /*background-color: #d9d9d9;*/
   border-radius: 0.5rem;
   display: block;
   margin-top: 0rem;
