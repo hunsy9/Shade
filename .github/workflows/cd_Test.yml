@@ -16,6 +16,10 @@ jobs:
           # script_stop: true
           script: |
             export PATH=/usr/bin:/bin
-            /usr/bin/whoami
-            mkdir cdTEset
-            /bin/echo $PATH
+            cd ssh_desktop_cmanager_spring/oslab_springboot_cmanager/
+            git pull origin main
+            mvn package
+            mv cmanager-0.0.1-SNAPSHOT.jar ~/
+            ls
+            cd ~
+            systemctl restart cmanager.service
