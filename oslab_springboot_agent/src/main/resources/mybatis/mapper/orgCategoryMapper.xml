@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oslab.agent.repository.organization.mapper.OrgCategoryMapper">
+    <insert id="addNewCategoryL1" parameterType="com.oslab.agent.model.transfer.categoryDto.CategoryDto">
+        INSERT INTO category_master VALUES (0,#{org_id},#{project_id},#{prev},null)
+        <selectKey resultType="long" keyProperty="category_id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <select id="getNext" parameterType="long" resultType="com.oslab.agent.model.transfer.categoryDto.CategoryDto">
+        SELECT org_id, project_id, prev, next FROM category_master WHERE category_id = #{category_id}
+    </select>
+
+    <update id="addNewCategoryL2" parameterType="com.oslab.agent.model.transfer.categoryDto.CategoryDtoL2">
+        UPDATE category_master SET next = #{next} WHERE category_id = #{category_id}
+    </update>
+
+    <insert id="insertNewCategoryL2" parameterType="com.oslab.agent.model.transfer.categoryDto.CategoryDto">
+        INSERT INTO category_master VALUES (0,#{org_id},#{project_id},#{prev},#{next})
+    </insert>
+
+    <update id="editCategory" parameterType="com.oslab.agent.model.transfer.categoryDto.EditCategory">
+        UPDATE category_master SET prev = #{prev}  WHERE category_id = #{category_id};
+        UPDATE category_master SET next = #{next}  WHERE category_id = #{category_id};
+    </update>
+
+    <delete id="delCategory" parameterType="long">
+        DELETE FROM category_master WHERE category_id = #{categoryId}
+    </delete>
+    <update id="delCategoryL2" parameterType="long">
+        UPDATE category_master SET next = null WHERE category_id = #{categoryId}
+    </update>
+    <update id="updateCategory" parameterType="com.oslab.agent.model.transfer.categoryDto.CategoryDto">
+        UPDATE category_master SET next = #{next} WHERE prev = #{prev}
+    </update>
+    <delete id="deleteCategory" parameterType="com.oslab.agent.model.transfer.categoryDto.CategoryDto">
+        DELETE FROM category_master WHERE prev LIKE #{prev} AND next LIKE #{next}
+    </delete>
+</mapper>

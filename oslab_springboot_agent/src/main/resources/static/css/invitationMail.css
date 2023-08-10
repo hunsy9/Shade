@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
+#titleLine{
+    border:7px solid rgba(167, 167, 167);
+}
+body{
+    font-family: Arial;
+    text-align: center;
+    color: black;
+    padding: 100px;
+    background: whitesmoke;
+    display: table-cell;
+}
+#title {
+    margin-top: 3rem;
+}
+#desc{
+    font-size: 1.2rem;
+    margin-top: 3rem;
+}
+#desc{
+    font-size: 1.2rem;
+}
+button {
+    margin: 20px;
+}
+.w-btn-outline {
+    position: relative;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+}
+.w-btn:hover {
+    letter-spacing: 2px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.w-btn-outline:hover {
+    letter-spacing: 2px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+.w-btn:active {
+    transform: scale(1.5);
+}
+
+.w-btn-outline:active {
+    transform: scale(1.5);
+}
+.w-btn-indigo-outline {
+    border: 3px solid aliceblue;
+    color: #1e6b7b;
+}
+.w-btn-indigo-outline:hover {
+    color: #1e6b7b;
+    background: aliceblue;
+}
+#footerLine{
+    border:1px solid rgba(167, 167, 167, 0.4);
+}
+#footDesc{
+    color: rgba(167, 167, 167, 0.9);
+    font-size: 0.8rem;
+}
