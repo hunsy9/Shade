@@ -14,8 +14,9 @@ httpServer.listen(port, () => {
     console.log("server listening on port", port);
 
     const io = new PtySocketService(httpServer, {
+        allowEIO3: true,
         cors:{
-            origin:['*'],
+            origins:["*"],
         }
     });
 
