@@ -4,9 +4,9 @@ const {createServer} = require("http");
 const {Server: PtySocketService} = require("socket.io");
 
 const httpServer = createServer((req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "*");
     res.write("terminal server started");
-    // res.end();
+    res.end();
 });
 
 const port = 3001;
