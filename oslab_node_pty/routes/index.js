@@ -35,7 +35,6 @@ router.post('/startSocketRoom', (req,res)=>{
 
   const initCommand = `sshpass -p ${req.body.password} ssh ${req.body.username}@${req.body.host} -p ${req.body.port}\n`
 
-
   ssh.on("connection", (socket) => {
     console.log("connection Success!")
     socket.on("startChannel", async () => {
