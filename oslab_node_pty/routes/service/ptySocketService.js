@@ -13,12 +13,7 @@ const port = 3001;
 httpServer.listen(port, () => {
     console.log("server listening on port", port);
 
-    const io = new PtySocketService(httpServer, {
-        cors:{
-            origin: "*",
-            methods: ["PUT", "GET", "POST", "DELETE", "OPTIONS"],
-        }
-    });
+    const io = new PtySocketService(httpServer);
 
     global.io = io
 
