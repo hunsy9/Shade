@@ -15,7 +15,7 @@ httpServer.listen(port, () => {
 
     const io = new PtySocketService(httpServer, {
         cors: {
-            origin: ["http://localhost:8080", "http://localhost:8082"],
+            origin: true,
         },
     });
 
