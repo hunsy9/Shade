@@ -37,7 +37,7 @@ router.post('/startSocketRoom', (req,res)=>{
 
 
   ssh.on("connection", (socket) => {
-
+    console.log("connection Success!")
     socket.on("startChannel", async () => {
       console.log("Start ptyChannel ", socket.id);
       const shell = os.platform() === "win32" ? "powershell.exe" : "bash";
