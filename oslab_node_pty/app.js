@@ -3,7 +3,7 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
-const cors = require("cors");
+// const cors = require("cors");
 
 let ptyControllerRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
@@ -14,7 +14,7 @@ let app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(cors())
+// app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
