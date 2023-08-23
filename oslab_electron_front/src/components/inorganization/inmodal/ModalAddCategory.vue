@@ -51,6 +51,7 @@ export default {
             "project_id": this.ActionCategoryDto.project_id,
             "prev": this.categoryName
           })
+          await this.reFetchCategory()
           this.$emit('closeAddCategoryModal')
           break
         case ActionCategoryState.ADDL2:

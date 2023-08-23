@@ -40,10 +40,10 @@ export default ({
                 project_id: "",
                 project_name: "",
                 category: {
-                
+
                 },
                 project_server: {
-                
+
                 }
             }
         ],
@@ -180,13 +180,13 @@ export default ({
         async getProjects(context, org){
             const data = await api.getProj(org.org_id)
             if(data) {
-              context.commit("setOrg", org)
-              context.commit("setProj", data)
-              router.push('/in')
-              ipcRenderer.send('resize-window')
+                context.commit("setOrg", org)
+                context.commit("setProj", data)
+                router.push('/in')
+                ipcRenderer.send('resize-window')
             }
             else{
-              console.log("getProj fail")
+                console.log("getProj fail")
             }
 
             const user_id = context.rootState.login.userID
@@ -202,12 +202,12 @@ export default ({
         async Contributors(context){
             const data = await api.getContributors(context.state.organId)
             if(data){
-            //   context.commit("selectContributors")
-              return data
+                //   context.commit("selectContributors")
+                return data
             }
             else{
-              console.log("Contritubors fail in store")
-              return false
+                console.log("Contritubors fail in store")
+                return false
             }
         },
         async addNewServer(context, server){
@@ -237,11 +237,11 @@ export default ({
             console.log(obj)
             const data = await api.postNewServer(formData)
             if(data){
-              return true
+                return true
             }
             else{
-              console.log("fail in addNewServer")
-              return false
+                console.log("fail in addNewServer")
+                return false
             }
         },
         async refetchNewServer(context){
@@ -282,14 +282,15 @@ export default ({
             }
         },
         async addCategoryL1(context, data){
-            let res = await categoryApi.addCategoryL1(data)
-            const dto = {
-                "new_category_id": res,
-                ...data
-            }
-            if(res > 0){
-                context.commit("reFetchCategoryL1", dto)
-            }
+            await categoryApi.addCategoryL1(data)
+            // let res = await categoryApi.addCategoryL1(data)
+            // const dto = {
+            //     "new_category_id": res,
+            //     ...data
+            // }
+            // if(res > 0){
+            //     context.commit("reFetchCategoryL1", dto)
+            // }
         },
         async addCategoryL2(context,data){
             await categoryApi.addCategoryL2(data)
