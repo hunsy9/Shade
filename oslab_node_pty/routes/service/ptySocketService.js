@@ -15,8 +15,7 @@ httpServer.listen(port, () => {
 
     const io = new PtySocketService(httpServer, {
         cors:{
-            origin:true,
-            credentials:true
+            origin:['*'],
         }
     });
 
