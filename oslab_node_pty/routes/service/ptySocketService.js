@@ -17,6 +17,7 @@ httpServer.listen(port, () => {
         cors: {
             origin: "*"
         },
+        methods: ["GET", "POST", "PUT", "DELETE"],
         allowEIO3: true
     });
 
