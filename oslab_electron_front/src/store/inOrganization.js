@@ -94,9 +94,10 @@ export default ({
             state.selected_categid = ""
         },
         setOrg(state, org){
+            state.exitShellState = 0
             state.mode = 0
-            state.organName = org.org_name;
-            state.organId = org.org_id;
+            state.organName = org.org_name
+            state.organId = org.org_id
         },
         setProj(state, data){
             state.org_user_privileges = data.org_user_privileges
