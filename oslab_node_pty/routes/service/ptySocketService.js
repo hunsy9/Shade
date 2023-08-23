@@ -15,9 +15,7 @@ httpServer.listen(port, () => {
     console.log("server listening on port", port);
 
     const io = new PtySocketService(httpServer, {
-        cors: {
-            origin: "*",
-        },
+
     });
 
     global.io = io
