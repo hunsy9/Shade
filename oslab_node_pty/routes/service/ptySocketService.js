@@ -4,8 +4,9 @@ const {createServer} = require("http");
 const {Server: PtySocketService} = require("socket.io");
 
 const httpServer = createServer((req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.write("terminal server started");
-    res.end();
+    // res.end();
 });
 
 const port = 3001;
@@ -13,7 +14,11 @@ const port = 3001;
 httpServer.listen(port, () => {
     console.log("server listening on port", port);
 
-    const io = new PtySocketService(httpServer);
+    const io = new PtySocketService(httpServer,{
+        cors:{
+            origin:true
+        }
+    });
 
     global.io = io
 
