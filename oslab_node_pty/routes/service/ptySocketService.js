@@ -9,16 +9,28 @@ const httpServer = createServer((req, res) => {
     res.end();
 });
 
+const whitelist = [
+    "*",
+];
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error("NOT allowed"));
+        }
+    },
+    credentials: true,
+};
+
 const port = 3001;
 
 httpServer.listen(port, () => {
     console.log("server listening on port", port);
 
     const io = new PtySocketService(httpServer,{
-        cors: {
-            origin:'*:*'
-        },
-        allowEIO3: true,
+        cors: corsOptions
     });
 
     global.io = io
