@@ -1,4 +1,4 @@
-# SSH DESKTOP
+# Shade
 
 ## Dependencies
 
