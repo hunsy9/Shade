@@ -1,2 +1,2 @@
-# ssh_desktop_pty_node
+# shade_pty_node
 nodejs application repository for pty
