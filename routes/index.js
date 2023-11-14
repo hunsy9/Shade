@@ -7,7 +7,7 @@ let flag = false
 
 const makePty = (shell, setEscape, initCommand) =>{
   return new Promise((resolve, reject)=>{
-    const ptyTerm =pty.spawn(shell, [], {
+    const ptyTerm = pty.spawn(shell, [], {
       name: "xterm-color",
       cols: 100,
       rows: 24,
