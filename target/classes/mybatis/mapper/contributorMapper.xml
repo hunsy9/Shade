@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oslab.agent.repository.contributor.mapper.ContributorMapper">
+    <insert id="addContributor" parameterType="com.oslab.agent.model.transfer.contributorDto.ContributorDto">
+        INSERT INTO organization_contributor VALUES (#{org_id}, #{user_id}, #{contributor_email}, #{state}, now());
+        INSERT INTO user_organization VALUES(#{user_id}, #{org_id})
+    </insert>
+    <select id="checkValidContributor" parameterType="com.oslab.agent.model.transfer.contributorDto.ContributorDto">
+        SELECT count(contributor_email) FROM organization_contributor WHERE org_id LIKE #{org_id} AND contributor_email LIKE #{contributor_email}
+    </select>
+    <delete id="deleteContributor" parameterType="com.oslab.agent.model.transfer.contributorDto.ContributorDto">
+        DELETE FROM organization_contributor WHERE org_id = #{org_id} AND contributor_id = #{user_id} AND contributor_email = #{contributor_email};
+        DELETE FROM user_organization WHERE user_id = #{user_id} AND org_id = #{org_id}
+    </delete>
+    <update id="editContributorEmail" parameterType="com.oslab.agent.model.transfer.contributorDto.ContributorDto">
+        UPDATE organization_contributor SET contributor_email = #{contributor_email} WHERE org_id LIKE #{org_id} AND contributor_email LIKE #{contributor_email}
+    </update>
+    <insert id="editPrivileges" parameterType="com.oslab.agent.model.transfer.contributorDto.EditPrivDto">
+        INSERT INTO server_privileges VALUES (#{user_id}, #{server_id})
+    </insert>
+</mapper>
