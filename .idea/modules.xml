@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/oslab_springboot_agent/agent.iml" filepath="$PROJECT_DIR$/oslab_springboot_agent/agent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/ssh_desktop_agent_spring.iml" filepath="$PROJECT_DIR$/.idea/ssh_desktop_agent_spring.iml" />
-    </modules>
-  </component>
-</project>
