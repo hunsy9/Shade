@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oslab.agent.repository.user.mapper.UserMapper">
+    <select id="getUserOrgInfo" parameterType="int" resultType="com.oslab.agent.model.transfer.userDto.UserOrgs">
+        SELECT
+            om.org_id,
+            om.org_name
+        FROM user_organization uo
+             join organization_master om using(org_id)
+        WHERE user_id = #{user_id}
+    </select>
+
+    <insert id="signUp" parameterType="com.oslab.agent.model.transfer.userDto.SignupReqDto">
+        INSERT INTO user_master VALUES (0, #{user_email}, #{user_password}, #{user_name}, now(), now(), NULL)
+    </insert>
+
+    <select id="signIn" parameterType="com.oslab.agent.model.transfer.userDto.SignInReqDto" resultType="com.oslab.agent.model.transfer.userDto.SignInResDto">
+        SELECT
+            user_id,
+            user_name,
+            user_email
+        FROM user_master
+        WHERE user_email = #{user_email} AND user_password = #{user_password}
+    </select>
+
+    <select id="checkEmailDuplication" parameterType="string" resultType="int">
+        SELECT count(user_name)
+        FROM user_master
+        WHERE user_email = #{user_email}
+    </select>
+
+    <select id="checkAdmin" parameterType="string" resultType="int">
+        SELECT count(um.user_id)
+        FROM
+            user_master um
+            JOIN organization_master om ON um.user_id = om.org_admin_id
+        WHERE um.user_email LIKE #{user_email}
+    </select>
+
+</mapper>

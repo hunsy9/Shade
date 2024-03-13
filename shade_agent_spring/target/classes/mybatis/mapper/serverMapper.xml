@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oslab.agent.repository.server.mapper.ServerMapper">
+    <insert id="addNewServer" parameterType="com.oslab.agent.model.transfer.serverDto.AddServerDto" useGeneratedKeys="true" keyProperty="server_id">
+        INSERT INTO server_master VALUES (0, #{org_id}, #{category_id}, #{server_name}, #{server_desc})
+    </insert>
+
+    <update id="editServerInfo" parameterType="com.oslab.agent.model.transfer.serverDto.EditServerDto">
+        UPDATE server_master SET server_name = #{server_name}, server_desc = #{server_desc} WHERE server_id LIKE #{server_id}
+    </update>
+
+    <delete id="deleteServer" parameterType="string">
+        DELETE FROM server_master WHERE server_id LIKE #{server_id}
+    </delete>
+    <select id="reFetchServer" parameterType="int" resultType="com.oslab.agent.model.entity.orgEntity.OrgServer">
+        SELECT server_id, server_name, server_desc FROM server_master WHERE org_id = #{org_id} AND category_id = #{category_id}
+    </select>
+</mapper>

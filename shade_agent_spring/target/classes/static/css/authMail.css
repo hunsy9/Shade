@@ -1,0 +1,42 @@
+#titleLine{
+    border:7px solid rgba(167, 167, 167);
+}
+body{
+    font-family: Arial;
+    text-align: center;
+    color: black;
+}
+#title {
+    margin-top: 3rem;
+}
+#desc{
+    font-size: 1.2rem;
+    margin-top: 3rem;
+}
+#inviteCode{
+    margin: 0;
+    font-size: 1.5rem;
+}
+#codeBox{
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 24rem;
+    border: 2px solid #989898;
+}
+#codeDesc{
+    font-size: 1.2rem;
+}
+#inBox{
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    display:inline-block;
+    background-color: rgba(167, 167, 167, 0.2);
+}
+#footerLine{
+    border:1px solid rgba(167, 167, 167, 0.4);
+}
+#footDesc{
+    color: rgba(167, 167, 167, 0.9);
+    font-size: 0.8rem;
+}
