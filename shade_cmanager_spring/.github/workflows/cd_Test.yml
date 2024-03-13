@@ -1,0 +1,25 @@
+name: agent-deploy
+on:
+  pull_request:
+    branches: ['main']
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: execute remote ssh & deploy agent backend server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          # password: ${{ secrets.REMOTE_SSH_PASSWORD }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          # script_stop: true
+          script: |
+            export PATH=/usr/bin:/bin
+            cd ssh_desktop_cmanager_spring/oslab_springboot_cmanager/
+            git pull origin main
+            mvn package
+            mv cmanager-0.0.1-SNAPSHOT.jar ~/
+            ls
+            cd ~
+            systemctl restart cmanager.service
