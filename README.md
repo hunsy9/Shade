@@ -1,8 +1,8 @@
 # Shade
 
-<center>
-<img src="./assets/logo.png" width="80" height="80"/>
-</center>
+<p align="center">
+<img src="./assets/logo.png" width="120" height="120"/>
+</p>
 
 ### 프로젝트 동기
 이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연구생으로 있을 때의 경험이 바탕이 되었습니다.
@@ -11,7 +11,7 @@
 
 **구글 공유문서**로 각자에게 할당된 IP를 공유 받고, 접속하여 작업하였습니다.
 
-하지만 위 과정에서 문서를 통해 Private IP 및 1 : 1 NAT Public IP를 공유하는 방식은
+하지만 위 과정에서 문서를 통해 Private IP 및 1:1 NAT Public IP를 공유하는 방식은
 보안적으로 문제가 있을 수 있다고 생각하였습니다.
 
 따라서
