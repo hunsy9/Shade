@@ -26,6 +26,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/startSocketRoom', (req,res)=>{
+  console.log("들어왔다.")
   const namespace = req.body.nameSpace //nameSpace String
   const escapeUUID = namespace.split("/")[3]
   console.log(namespace)

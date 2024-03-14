@@ -157,7 +157,7 @@ export default ({
         selectCatl2(state, selected_categ_l2){
             state.selected_categ_l2 = selected_categ_l2
             const a = Object.keys(state.projects.find(project => project.project_name === state.selected_proj).project_server)
-            for(var i = 0; i < a.length; i++){
+            for(let i = 0; i < a.length; i++){
                 const b = a[i].split(":")
                 if(b[1] == state.selected_categ_l1 && b[2] == state.selected_categ_l2){
                     state.selected_categid = b[0]
@@ -172,8 +172,8 @@ export default ({
             state.selected_categ_l2 = ""
             state.selected_categid = ""
         },
-        selectInitialProjectWindow(state){
-            state.mode = 0
+        selectRecentProjectWindow(state){
+            state.mode = 1
         },
         //mode 3 terminal
         selectTerminal(state){

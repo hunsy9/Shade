@@ -5,8 +5,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eabeb134-f287-4a29-813f-e3686cda8c5d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oslab_springboot_cmanager/src/main/java/com/oslab/cmanager/CmanagerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/oslab_springboot_cmanager/src/main/java/com/oslab/cmanager/CmanagerApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/shade_backend.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shade_database/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/templates/mail/authMail.html" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/target/classes/templates/mail/authMail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/templates/mail/invitationMail.html" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/target/classes/templates/mail/invitationMail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/oslab/cmanager/controller/SSHController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/oslab/cmanager/controller/SSHController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/oslab/cmanager/service/sshService/SSHService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/oslab/cmanager/service/sshService/SSHService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_pty_node/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_pty_node/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_pty_node/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_pty_node/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/assets/remove-bg-shadeIcon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/assets/remove-bg-shadeIcon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/assets/shadeIcon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/assets/shadeIcon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/background.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/background.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/beforeOrganization/beforemodal/ModalLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/beforeOrganization/beforemodal/ModalLogin.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/AppInfo.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/DeleteModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/DeleteModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/api/deleteApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/api/deleteApi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/topBar/settings/ModalSettings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/topBar/settings/ModalSettings.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/leftExpanding/contributorContentWindow/ContributorListItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/leftExpanding/contributorContentWindow/ContributorListItem.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalAddProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalAddProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalProjectSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalProjectSelect.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalServerInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalServerInfo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalServerListItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalServerListItem.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/projectContentWindow/ServerListItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/projectContentWindow/ServerListItem.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/ExitTerminalButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/ExitTerminalButton.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/remoteDirectory/RemoteDirectoryLeftExpandingMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/remoteDirectory/RemoteDirectoryLeftExpandingMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/terminalTabBarList/TerminalTabBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/terminalTabBarList/TerminalTabBar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/terminalTabBarList/terminalTab/TerminalTab.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/terminalTabBarList/terminalTab/TerminalTab.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/topBar/ProjectSelection.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/topBar/ProjectSelection.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/localTerm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/store/inOrganization.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/store/inOrganization.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/store/terminal.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/store/terminal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/views/BeforeOrganizationView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/views/BeforeOrganizationView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/views/InOrganizationView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/views/InOrganizationView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/vue.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,15 +56,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="useMavenConfig" value="true" />
-      </MavenGeneralSettings>
-    </option>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
   <component name="ProjectId" id="2QJwH3IpSU6GqfNFq7qC9qIZGa1" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
@@ -30,12 +71,25 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.CmanagerApplication.executor": "Run",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/yuseunghun/Documents/oidc/ssh_desktop_cmanager_spring",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/yuseunghun/Documents/portfolio/shade/shade_backend/shade_cmanager_spring",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "spring.configuration.checksum": "1988f4ea487e1e4478df74dd06a51c3d"
+    "spring.configuration.checksum": "1988f4ea487e1e4478df74dd06a51c3d",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
@@ -57,6 +111,7 @@
       <updated>1685084900742</updated>
       <workItem from="1685084901894" duration="24000" />
       <workItem from="1685085038498" duration="3000" />
+      <workItem from="1710313464078" duration="2587000" />
     </task>
     <servers />
   </component>

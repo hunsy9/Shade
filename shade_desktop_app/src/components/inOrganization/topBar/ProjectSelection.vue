@@ -1,5 +1,5 @@
 <template>
-  <div class="projectSelection" @click="openSelectionModal" :class="{'projectSelection-shifted': shiftState==true}">
+  <div class="projectSelection"  @click="openSelectionModal" :class="{'projectSelection-shifted': shiftState==true}">
     <span class="pName">
       {{proj}}
     </span>
@@ -51,6 +51,7 @@ export default {
   margin-left: 7rem;
 }
 .sort-vertical-wrapper{
+  z-index: 99;
   margin-left: 0.6rem;
   display: flex;
   align-items: center;

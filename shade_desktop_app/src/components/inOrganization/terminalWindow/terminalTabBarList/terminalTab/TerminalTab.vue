@@ -1,8 +1,8 @@
 <template>
-  <div class="terminalTab">
+  <div class="terminalTab" :class="isMain ? 'terminalTab' : 'terminalTab-main'" @click="this.$emit('handleChangeTab')">
     <span class="serverNameSpan">{{server_name}}</span>
     <div class="exitServerBtnWrapper">
-      <img src="@/assets/x.png" width="8"/>
+      <img src="@/assets/x.png" width="8" height="8"/>
     </div>
   </div>
 </template>
@@ -12,7 +12,8 @@
 export default {
   name: 'TerminalTab',
   props:{
-    server_name: String
+    server_name: String,
+    isMain: Boolean
   },
   data() {
     return{
@@ -29,14 +30,25 @@ export default {
   display: flex;
   cursor: pointer;
   align-items: center;
-  justify-content: center;
+  width: 130px;
+  height: 39px;
+  justify-content: space-around;
+  margin-left: 0.3rem;
+  background-color: #000000;
+  border-top-left-radius: 0.7rem;
+  border-top-right-radius: 0.7rem;
 }
+
+.terminalTab-main{
+  border-bottom: 3px solid #4D4DB8;
+}
+
 .serverNameSpan{
   padding: 1rem;
 }
 .exitServerBtnWrapper{
-  width: 16px;
-  height: 16px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;

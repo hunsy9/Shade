@@ -1,11 +1,11 @@
 <template>
   <div class="shadeIcon">
-    <img src="@/assets/shadeIcon.png" width="60px" height="60px">
+    <img src="../../../assets/shadeIcon.png" width="60px" height="60px">
   </div>
   <div class="text1">Shade</div>
   <div class="text2">Beta 0.2</div>
   <div class="line">
-    <img class="size" src="@/assets/github.png">
+    <img class="size" src="../../../assets/github.png">
   </div>
 </template>
 

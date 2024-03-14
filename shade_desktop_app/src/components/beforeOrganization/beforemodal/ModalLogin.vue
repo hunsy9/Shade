@@ -9,7 +9,7 @@
         >
         <div class="text1">Shade</div>
         <div class="text2">Welcome</div>
-        <div class="text3">Log in to Shade to continue</div>
+        <div class="text3">Login to Shade to continue</div>
       </div>
       <div class="inpframe">
         <div class="id_bar">
@@ -44,7 +44,6 @@ export default {
     return {
       loginId: "",
       loginPassword: "",
-
       no_email: false,
       no_pwd: false,
       no_login: false,
@@ -118,7 +117,7 @@ export default {
 .zidx > main {
   display: block;
   margin: 0 auto;
-  margin-top: 2.5rem;
+  margin-top: 1.5rem;
   width: 400px;
   height: 500px;
   background-color: white;
@@ -190,7 +189,7 @@ export default {
   margin-top: 0.5rem;
   margin-left: auto;
   margin-right: auto;
-  border: solid 0.15rem #5F76C9;
+  border: solid 0.15rem #000000;
   border-radius: 0.4rem;
 }
 .pass_bar{
@@ -199,7 +198,7 @@ export default {
   margin-top: 0.5rem;
   margin-left: auto;
   margin-right: auto;
-  border: solid 0.15rem #5F76C9;
+  border: solid 0.15rem #000000;
   border-radius: 0.4rem;
 }
 .bar_img{
@@ -226,7 +225,7 @@ export default {
   margin-top: 0.7rem;
   margin-left: auto;
   margin-right: auto;
-  background-color: #2a3d80;
+  background-color: #000000;
   padding: 1rem 8.3rem;
   border-radius: 0.5rem;
   border: none;

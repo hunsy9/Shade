@@ -26,7 +26,6 @@ import java.util.List;
 public class SSHController {
     private final SSHService sshService;
 
-
     @PostMapping ("api/sshService/generateKey")
     KeyBundle generateKey(@RequestBody ConnectingInfo connectingInfo){
         return sshService.generateKey(connectingInfo);

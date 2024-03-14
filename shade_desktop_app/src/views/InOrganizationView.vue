@@ -1,24 +1,27 @@
 <template>
-  <div class="container" v-if="full == false">
-
-    <div class="leftsideframe" :class="{'leftsideframe-term': mode == 3, 'leftsideframe-shifted': shiftState == true, 'leftsideframe-light': getTheme == 0}"
+  <div class="container" v-if="full === false">
+    <div class="leftSideFrame" :class="{'leftSideFrame-term': mode === 3, 'leftSideFrame-shifted': shiftState === true, 'leftSideFrame-light': getTheme == 0}"
          v-on:mouseover="openHidingBtn" v-on:mouseleave="closeHidingBtn">
       <div class="hidingBtnWrapper" @click="shiftLeft" v-if="hidingBtnOpenedState">
         <img src="@/assets/chevron.png" width="12" height="12" @click="shiftLeft"/>
       </div>
-      <LeftSideOrgBanner v-if="shiftState == false && mode != 3"/>
-      <hr v-if="shiftState == false && mode != 3"/>
-      <LocalTerminalButton v-if="shiftState == false && mode != 3" :theme="getTheme"/>
-      <ProjectWhiteBoardButton v-if="shiftState == false && mode != 3" :theme="getTheme"/>
-      <ContributorButton v-if="shiftState == false && mode != 3" :theme="getTheme"/>
-      <RemoteDirectoryLeftExpandingMenu v-if="shiftState == false && mode==3"/>
-      <ExitTerminalButton v-if="shiftState == false && mode==3"/>
+      <template v-if="shiftState === false && mode !== 3">
+        <LeftSideOrgBanner />
+        <hr/>
+        <LocalTerminalButton :theme="getTheme"/>
+        <ProjectWhiteBoardButton :theme="getTheme"/>
+        <ContributorButton :theme="getTheme"/>
+      </template>
+      <template v-if="shiftState === false && mode===3">
+        <RemoteDirectoryLeftExpandingMenu/>
+          <ExitTerminalButton/>
+      </template>
 <!--      <LeftExpandingMenu v-if="shiftState == false" :theme="getTheme"/>-->
 <!--      <NewProjectButton  v-if="isAdmin == true && shiftState == false && mode != 3" @openNewProjectModal="openNewProjectModal = true"/>-->
     </div>
 
-    <div class="topbarframe" :class="{'topbarframe-term':mode ==3, 'topbarframe-shifted':shiftState == true, 'topbarframe-light':getTheme == 0}">
-      <div class="hidingBtnWrapper-top" @click="shiftRight" v-if="shiftState == true">
+    <div class="topbarframe" :class="{'topbarframe-term':mode === 3, 'topbarframe-shifted':shiftState === true, 'topbarframe-light':getTheme === 0}">
+      <div class="hidingBtnWrapper-top" @click="shiftRight" v-if="shiftState === true">
         <img :src="getTheme == 0 ? require('@/assets/menuIcon-light.png') : require('@/assets/menuIcon.png')" width="12" height="12" @click="shiftRight"/>
       </div>
       <ProjectSelection v-if="mode != 3" :shiftState="shiftState" @openProjectSelectionModal="openProjectSelectionModal = true" />
@@ -26,15 +29,14 @@
         <img :src="getTheme == 0 ? require('@/assets/topBarFrame/user-profile-light.png') : require('@/assets/topBarFrame/user-profile.png')" width="18" @click="openModalLogOut = true"/>
       </div>
       <div class="userBtnWrapper setting" @click="openModalSettings = true">
-        <img :src="getTheme == 0 ? require('@/assets/topBarFrame/settings-light.png') : require('@/assets/topBarFrame/settings.png')" width="18" @click="openModalSettings = true" />
+        <img :src="getTheme === 0 ? require('@/assets/topBarFrame/settings-light.png') : require('@/assets/topBarFrame/settings.png')" width="18" @click="openModalSettings = true" />
       </div>
-      <TerminalTabBar v-if="mode==3"/>
+      <TerminalTabBar v-if="mode === 3"/>
     </div>
 
-
     <div class="contentframe" :class="{'contentframe-shifted' : shiftState == true, 'contentframe-light': getTheme == 0}">
-      <div class="initialProjectWindow" v-if="mode == 0">Please select any menu</div>
-      <div v-else-if="mode == 1">
+      <div class="initialProjectWindow" v-if="mode === 0">Please Select Any Project</div>
+      <div v-else-if="mode === 1">
         <div class="content">
           <PathBar :theme="getTheme"/>
           <ServerListItem :theme="getTheme" :v-if="catl2" @openModalServerInfo="doOpenModalServerInfo"
@@ -45,7 +47,7 @@
           <NewCategoryButton v-if="isAdmin == true && categoryHidingState == false" @openAddCategoryModal="doOpenAddCategoryModal"/>
         </div>
         <div class="categoryBanner" v-if="categoryHidingState == true" @click="toggleCategoryMenu(false)" v-on:mouseover="hidingBannerName = 'Category'" v-on:mouseleave="hidingBannerName = ''">
-          <img src="@/assets/remove-bg-shadeIcon.png" width="20" height="20" style="margin-right: 5px"/>
+          <img src="@/assets/remove-bg-shadeIcon.png"/>
           {{hidingBannerName}}
         </div>
       </div>
@@ -65,37 +67,55 @@
     <TerminalWindow/>
   </div>
 
+  <!--  Modal-->
   <ModalAddServer :title="title" v-if="openModalAddServer" @closeModalAddServer="openModalAddServer = false"/>
+
   <ModalServerInfo :sName="sName" :sDesc="sDesc" v-if="openModalServerInfo"
                    @closeModalAddServer="openModalServerInfo = false"/>
+
   <ModalAddCategory :ActionCategoryState="AddCategoryState" :ActionCategoryDto="AddCategoryDto"
                     v-if="openAddCategoryModal" @closeAddCategoryModal="openAddCategoryModal = false"/>
+
   <DeleteModal :DeleteState="DeleteState" :DeleteDto="DeleteDto" v-if="openDeleteModal"
                @closeDeleteModal="openDeleteModal = false"/>
+
   <ModalAddProject v-if="openNewProjectModal" @closeNewProjectModal="openNewProjectModal = false"/>
+
+  <ModalProjectOption :locationX="curXMousePos"
+                      :locationY="curYMousePos"
+                      :project="projectSelectionItem"
+                      v-if="openProjectOptionModal"
+                      @closeProjectOptionModal="openProjectOptionModal = false"/>
 
   <ModalAddContributor v-if="openInviteContributorModal"
                        @closeInviteContributorModal="openInviteContributorModal = false"/>
-  <ModalPrivileges :contributor="contributor" v-if="openPrivilegeModal"
+
+  <ModalPrivileges :contributor="contributor"
+                   v-if="openPrivilegeModal"
                    @closePrivilegeModal="openPrivilegeModal = false"/>
-  <ModalProjectSelect v-if="openProjectSelectionModal" :shiftState="shiftState" :openProjectSelection="openProjectSelectionModal = true" @closeProjectSelectionModal="openProjectSelectionModal = false" :theme="getTheme" @openNewProjectModal="openNewProjectModal = true"/>
+
+  <ModalProjectSelect v-if="openProjectSelectionModal"
+                      :shiftState="shiftState"
+                      :openProjectSelection="openProjectSelectionModal = true"
+                      @openProjectOptionModal="doOpenProjectOptionModal"
+                      @closeProjectSelectionModal="openProjectSelectionModal = false"
+                      :theme="getTheme"
+                      @openNewProjectModal="openNewProjectModal = true"/>
+
   <ModalLogOut :openModalLogOut="openModalLogOut" v-if="openModalLogOut" @closeModalLogOut="openModalLogOut = false"/>
+
   <ModalSettings v-if="openModalSettings" @closeSettingsModal="openModalSettings = false"/>
+  <!--  Modal-->
 </template>
 <script>
 import NewContributorButton from '@/components/inOrganization/btnForAdmin/NewContributorButton.vue'
 import NewCategoryButton from '@/components/inOrganization/btnForAdmin/NewCategoryButton.vue'
-
 import PathBar from '@/components/inOrganization/projectContentWindow/PathBar.vue'
-
 import ServerListItem from '@/components/inOrganization/projectContentWindow/ServerListItem.vue'
 import RightExpandingMenu from '@/components/inOrganization/categoryFloatComponent/RightExpandingMenu.vue'
-
 import ContributorListItem from '@/components/inOrganization/leftExpanding/contributorContentWindow/ContributorListItem.vue'
 import ContributorButton from '@/components/inOrganization/leftExpanding/contributorContentWindow/ContributorButton.vue'
-
 import TerminalWindow from '@/components/inOrganization/terminalWindow/TerminalWindow.vue'
-
 import ModalAddServer from '@/components/inOrganization/modalComponent/ModalAddServer.vue'
 import ModalServerInfo from '@/components/inOrganization/modalComponent/ModalServerInfo.vue'
 import ModalAddCategory from '@/components/inOrganization/modalComponent/ModalAddCategory.vue'
@@ -115,6 +135,7 @@ import ProjectWhiteBoardButton from "@/components/inOrganization/leftExpanding/p
 import ExitTerminalButton from "@/components/inOrganization/terminalWindow/ExitTerminalButton.vue";
 import LocalTerminalButton from "@/components/inOrganization/terminalWindow/localTerminal/LocalTerminalButton.vue";
 import TerminalTabBar from "@/components/inOrganization/terminalWindow/terminalTabBarList/TerminalTabBar.vue";
+import ModalProjectOption from "@/components/inOrganization/modalComponent/ModalProjectOption.vue";
 
 export default {
   name: 'InOrganizationView',
@@ -132,12 +153,14 @@ export default {
       DeleteDto: "",
       AddCategoryState: "",
       AddCategoryDto: "",
+      projectSelectionItem: "",
+      curXMousePos: 0,
+      curYMousePos: 0,
       contributor: {
         id: "",
         email: ""
       },
       title: "",
-
       openModalAddServer: false,
       openModalServerInfo: false,
       openAddCategoryModal: false,
@@ -145,6 +168,7 @@ export default {
       openPrivilegeModal: false,
       openDeleteModal: false,
       openNewProjectModal: false,
+      openProjectOptionModal: false,
       openProjectSelectionModal: false,
       openModalLogOut: false,
       openModalSettings: false,
@@ -198,6 +222,13 @@ export default {
       this.contributor.email = contributor_email
       this.openPrivilegeModal = true
     },
+    doOpenProjectOptionModal(item, curX, curY){
+      this.projectSelectionItem = item
+      this.curXMousePos = curX
+      this.curYMousePos = curY
+      this.openProjectOptionModal = true
+      console.log("openProjectListItemModal: ", item)
+    },
     test1(asdasd) {
       this.openModalAddServer = true
       console.log(asdasd)
@@ -210,6 +241,7 @@ export default {
     }
   },
   components: {
+    ModalProjectOption,
     TerminalTabBar,
     LocalTerminalButton,
     ExitTerminalButton,
@@ -223,11 +255,7 @@ export default {
     ModalPrivileges,
     ModalAddContributor,
     ContributorButton,
-    // LeftExpandingMenu,
-    // NewProjectButton,
-    // OrganizationName,
     PathBar,
-    // NewServerButton,
     ServerListItem,
     RightExpandingMenu,
     NewCategoryButton,
@@ -253,6 +281,7 @@ export default {
   --ModeLeftExpandingHover: #313131;
   --ModeBtnColor: #5e5e5e;
   --ModeServerListItemBtnColor: #EFF0F4;
+  --ModeAdminAddNewServerItemBoxColor: #2b2b2b;
   --ModeTopBarBtnHover: #545454;
   --ModeLevel1Color: #383838;
   --ModeLevel2Color: #2C2C2C;
@@ -261,6 +290,7 @@ export default {
   position: fixed;
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 23px;
   height: 22px;
   text-align: center;
@@ -286,7 +316,7 @@ export default {
   height: 100%;
 }
 
-.leftsideframe {
+.leftSideFrame {
   position: absolute;
   top: 0;
   width: 13rem;
@@ -294,7 +324,7 @@ export default {
   background-color: #1e1e1e;
   transition: width 0.3s;
 }
-.leftsideframe-light {
+.leftSideFrame-light {
   position: absolute;
   top: 0;
   left: 0;
@@ -520,5 +550,9 @@ hr {
 }
 .categoryBanner:hover{
   width: 100px;
+}
+
+.exitTerminalButtonWrapper{
+  justify-content: center;
 }
 </style>

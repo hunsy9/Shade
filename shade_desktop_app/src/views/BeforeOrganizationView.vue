@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import AppInfo from '@/components/common/AppInfo.vue'
+import AppInfo from '@/components/common/leftBar/AppInfo.vue'
 import OrganizationListItem from '@/components/beforeOrganization/OrganizationListItem.vue'
 import RefetchBtn from '@/components/common/RefetchBtn.vue'
 import QuickAccess from "@/components/beforeOrganization/quickAccessComponent/QuickAccess";

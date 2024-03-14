@@ -19,10 +19,10 @@ export default {
     })
   },
   methods: {
-    ...mapMutations('inOrganization',['selectProj', 'setOrg','selectInitialProjectWindow']),
+    ...mapMutations('inOrganization',['selectProj', 'setOrg','selectRecentProjectWindow']),
     ...mapMutations('terminal', ['resetRunningConnection']),
     backToProjectWindow(){
-      this.selectInitialProjectWindow()
+      this.selectRecentProjectWindow()
       this.resetRunningConnection()
     },
   }
@@ -31,9 +31,8 @@ export default {
 
 <style scoped>
 .exitTerminalButtonWrapper{
-  position: fixed;
+  margin-top: 26rem;
   height: 3rem;
-  bottom: 0rem;
 }
 .exitTerminalButton{
   display: flex;
@@ -43,7 +42,7 @@ export default {
   font-size: small;
   border-radius: 0.2rem;
   height: 1rem;
-  width: 80%;
+  //width: 80%;
   background-color: #2E2E2E;
   color: #9D9D9D;
 }

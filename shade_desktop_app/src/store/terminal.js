@@ -1,5 +1,5 @@
 import api from '@/api/login.js'
-import {makeLocalPty} from "@/localTerm";
+// import {makeLocalPty} from "@/localTerm";
 
 export default ({
     namespaced: true,
@@ -29,7 +29,7 @@ export default ({
             state.runningConnection.push({
                 server_id: 325,
                 room_id: state.room_id,
-                server_name: "testtest"
+                server_name: "TestTab"
             })
         },
         resetRunningConnection(state){
@@ -38,20 +38,21 @@ export default ({
     },
     actions: {
         async connectLocalTerminal(){
-            await makeLocalPty()
+            // await makeLocalPty()
         },
         async connectTerminal(context, data){
             console.log(data)
 
             context.commit('setServerId', data.server_id)
             context.commit('setServerName', data.server_name)
-            if(context.state.server_id == data.server_id){
+            if(context.state.server_id === data.server_id){
                 const user_id = context.rootState.login.userID;
                 const server_id = data.server_id;
                 const room_id = await api.getRoomId(data.server_id, user_id)
                 const nameSpace = `/${user_id}/${server_id}/${room_id}`
                 const serverAddress = `http://localhost:3001${nameSpace}`
 
+                console.log(nameSpace)
                 context.commit("setServerAddress", serverAddress)
 
                 const detail = {

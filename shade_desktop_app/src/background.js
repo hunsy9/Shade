@@ -1,13 +1,10 @@
-'use strict'
-
 import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
 const isDevelopment = process.env.NODE_ENV !== 'production'
-// const pty = require("node-pty");
-// const os = require("os");
+
 // const shell = os.platform() === "win32" ? "powershell.exe" : "bash";
 let mainWindow
 
@@ -56,7 +53,6 @@ async function createWindow() {
         protocol: 'file',
         slashes: true
     }))
-
   }
 
   win.on('closed', () => {

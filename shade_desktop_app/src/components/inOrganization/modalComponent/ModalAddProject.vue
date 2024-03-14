@@ -22,6 +22,8 @@
 
 <script>
 import {createNamespacedHelpers} from 'vuex'
+// import axios from "axios";
+// import {ProjectQueryPath} from "@/store/query/QueryPath";
 const { mapState, mapActions } = createNamespacedHelpers('inOrganization')
 
 export default {
@@ -33,17 +35,18 @@ export default {
   },
   computed: {
     ...mapState({
-      organid: state => state.organId
+      organId: state => state.organId
     })
   },
   methods: {
     ...mapActions(["addNewProject"]),
     async addProject(pName){
       const data = {
-        org_id: parseInt(this.organid),
+        org_id: parseInt(this.organId),
         project_name: pName
       }
-      console.log("modal" + data)
+      // const addNewProjectUrl = ProjectQueryPath.addNewProject
+      // const response = await axios.post(addNewProjectUrl, data)
       const res = await this.addNewProject(data)
       console.log("modal res: " + res)
       this.$emit('closeNewProjectModal')

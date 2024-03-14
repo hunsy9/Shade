@@ -1,13 +1,13 @@
 <template>
   <div class="terminalTabBar">
-<!--    <draggable :list="runningConnection">-->
       <div class="terminalTabListWrapper" v-for="(item, index) in runningConnection" :key="index">
-        <TerminalTab :server_name="item.server_name"/>
+        <TerminalTab :server_name="item.server_name" :isMain="index===mainTerminalIndexState" @handleChangeTab="handleChangeTerminalTab(index)"/>
       </div>
-<!--    </draggable>-->
-    <div class="addTerminalTabWrapper">
-      <div class="addTerminalBtn">
-        <img src="@/assets/plus.png" width="20"/>
+    <div class="addTerminalTab">
+      <div class="addTerminalTabWrapper">
+        <div class="addTerminalBtn">
+          <img src="@/assets/plus.png" width="20"/>
+        </div>
       </div>
     </div>
   </div>
@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return{
-
+      mainTerminalIndexState: 0
     }
   },
   computed: {
@@ -41,6 +41,11 @@ export default {
       runningConnection: state => state.runningConnection
     })
   },
+  methods:{
+    handleChangeTerminalTab(idx){
+      this.mainTerminalIndexState = idx
+    }
+  }
 }
 </script>
 
@@ -48,6 +53,7 @@ export default {
 .terminalTabBar{
   color: white;
   display: flex;
+  margin-left: 0.2rem;
 }
 
 .terminalTabListWrapper{
@@ -56,16 +62,21 @@ export default {
   overflow-x: scroll;
 }
 
+.addTerminalTab{
+  display: flex;
+  margin-left: 0.2rem;
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;;
+}
+
 .addTerminalTabWrapper{
-  width: 5rem;
+  width: 2rem;
   justify-content: center;
   display: flex;
   align-items: center;
 }
 
 .addTerminalBtn{
-  width: 22px;
-  height: 22px;
   border-radius: 0.2rem;
   display: flex;
   align-items: center;

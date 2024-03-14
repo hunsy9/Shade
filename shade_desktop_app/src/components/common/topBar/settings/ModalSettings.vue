@@ -67,6 +67,7 @@ export default {
       theme.style.setProperty('--ModeLeftExpandingHover','#EFEFEF')
       theme.style.setProperty('--ModeTopBarBtnHover', '#EFEFEF')
       theme.style.setProperty('--ModeServerListItemBtnColor','#F0F0F0')
+      theme.style.setProperty('--ModeAdminAddNewServerItemBoxColor','rgba(168,168,168,0.67)')
     },
     setThemeDark(){
       this.setTheme(themeState.DARK)
@@ -81,7 +82,8 @@ export default {
       theme.style.setProperty('--ModeHidingBannerBackgroundColor', '#282828')
       theme.style.setProperty('--ModeLeftExpandingHover','#313131')
       theme.style.setProperty('--ModeTopBarBtnHover', '#545454')
-      theme.style.setProperty('--ModeServerListItemBtnColor','#8d8d8d')
+      theme.style.setProperty('--ModeServerListItemBtnColor','#242424')
+      theme.style.setProperty('--ModeAdminAddNewServerItemBoxColor','#2b2b2b')
     },
     tabClick(index){
       if(index == 1){

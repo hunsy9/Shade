@@ -109,7 +109,6 @@ public class SSHService implements SSHServiceInterface{
         restTemplate.postForEntity(url, detailJson, Void.class);
     }
 
-
     public void makeNewSSHThread(KeyBundle keyBundle){
         String threadKey = keyBundle.getThreadKey();
         String webSocketKey = keyBundle.getWebSocketKey();

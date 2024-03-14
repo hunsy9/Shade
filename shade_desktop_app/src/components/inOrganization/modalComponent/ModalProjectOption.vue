@@ -1,21 +1,17 @@
 <template>
-  <div class="zidx" @click="this.$emit('closeModalServerListItem')">
+  <div class="zidx" @click="this.$emit('closeProjectOptionModal')">
     <div class="modal">
       <div class="overlay">
         <div class="modal-card" :style="{top: this.locationY + 'px', left: this.locationX + 'px'}">
-          <div class="content" @click="$emit('openModalServerInfo', server.server_name, server.server_desc)">
-            Info
-            <img src="@/assets/modalServerListItem-info.png" width="13" height="13" style="padding-top: 3px; padding-left: 10px; padding-right: 5px;"/>
+          <div class="content">
+            Edit
+            <img src="@/assets/modalServerListItem-edit.png" width="15" height="15" style="padding-top: 3px; padding-left: 10px; padding-right: 5px;"/>
           </div>
-<!--          <div class="content">-->
-<!--            Version Track-->
-<!--            <img src="@/assets/modalServerListItem-edit.png" width="15" height="15" style="padding-top: 3px; padding-left: 10px; padding-right: 5px;"/>-->
-<!--          </div>-->
-<!--          <div class="content" v-if="isAdmin">-->
-<!--            Edit-->
-<!--            <img src="@/assets/modalServerListItem-edit.png" width="15" height="15" style="padding-top: 3px; padding-left: 10px; padding-right: 5px;"/>-->
-<!--          </div>-->
-          <div class="content" v-if="isAdmin" @click="$emit('openDeleteModal', DeleteState, {server_id: server.server_id})">
+          <!--          <div class="content" v-if="isAdmin">-->
+          <!--            Edit-->
+          <!--            <img src="@/assets/modalServerListItem-edit.png" width="15" height="15" style="padding-top: 3px; padding-left: 10px; padding-right: 5px;"/>-->
+          <!--          </div>-->
+          <div class="content" v-if="isAdmin">
             Delete
             <img src="@/assets/modalServerListItem-delete.png" width="13" height="13" style="padding-top: 3px; padding-left: 10px; padding-right: 5px;"/>
           </div>
@@ -27,31 +23,36 @@
 
 <script>
 import {mapState} from "vuex";
-import {DeleteState} from "@/store/inOrganization";
 
 export default {
-  name: "ModalAdminServerListItem",
+  name: "ModalProjectOption",
   props:{
     locationX: Number,
     locationY: Number,
-    server: Object
+    project: Object
   },
   computed:{
     ...mapState('inOrganization', {
       isAdmin: state => state.isAdmin
     }),
   },
-  data(){
-    return{
-      DeleteState: DeleteState.DELETESERVER,
-    }
+  mounted() {
+    console.log("mounted!!: ", this.locationY)
   }
 }
 </script>
 
 <style scoped>
+.zidx {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  //z-index: 1000;
+}
 .modal{
-  position: relative;
+  //position: relative;
   animation: fade-in-down 0.1s;
 }
 .overlay {
@@ -64,8 +65,8 @@ export default {
   flex-direction: column;
   max-width: 300px;
   min-height: 50px;
-  z-index: 999;
-  background-color: #383838;
+  z-index: 10;
+  background-color: #f6f6f6;
   border-radius: 0.5rem;
   border: none;
   box-shadow:0 2px 3px 0 rgba(34,36,38,0.15);
@@ -73,13 +74,13 @@ export default {
 }
 
 .content {
-  color: #ffffff;
+  color: #4f4f4f;
   font-size: 13px;
   border-radius: 0.5rem;
   display: flex;
   padding-top: 2px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding-left: 4px;
+  padding-right: 2px;
   justify-content: space-between;
   line-height: 170%;
   text-align: center;
@@ -88,7 +89,7 @@ export default {
 }
 
 .content:hover {
-  background-color: #4b4b4b;
+  background-color: #efefef;
 }
 
 @keyframes fade-in-down {

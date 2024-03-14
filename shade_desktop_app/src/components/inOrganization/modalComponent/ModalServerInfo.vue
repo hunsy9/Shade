@@ -34,9 +34,7 @@ export default {
 }
 .zidx > main {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 19rem;
+  margin: 0 auto;
   width: 500px;
   height: 220px;
   background-color: var(--ModeModalBackgroundColor);

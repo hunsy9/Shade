@@ -11,7 +11,7 @@
               <div class="projectBlock" @click="clickProj(item.project_name, index)" v-on:mouseover="mouseOverElement = index">
                 <img class="projIcon" :src="theme==0 ? require('@/assets/dotdot-light.png') : require('@/assets/dotdot.png') ">
                 <span>{{ item.project_name }}</span>
-                <div class="additionalOptionWrapper" v-if="mouseOverElement == index" @click="clickProjectOption">
+                <div class="additionalOptionWrapper" v-if="mouseOverElement == index" @click="clickProjectOption(item, $event)">
                   <img src="@/assets/dot-horizontal.png" width="11"/>
                 </div>
               </div>
@@ -58,8 +58,8 @@ export default {
       this.pickedProj = index
       this.selectProj(name)
     },
-    clickProjectOption(){
-      alert("projectOption")
+    clickProjectOption(item, e){
+      this.$emit('openProjectOptionModal', item, e.clientX, e.clientY)
     }
   },
   components:{

@@ -4,27 +4,24 @@
             <template v-if="isTrue(key)">
                 <template v-for="(server, idx) in value" :key="idx">
                     <div class="itembox" :style="{ backgroundColor: colors[idx % colors.length]}">
-            <span class="sname">
-              {{ server.server_name }}
-            </span>
-                        <!--            <button v-if="!isAdmin" @click="$emit('openModalServerInfo', server.server_name, server.server_desc)">-->
-                        <!--              Info-->
-                        <!--            </button>-->
-                        <!--            <button v-if="isAdmin" @click="$emit('openDeleteModal', DeleteState, {server_id: server.server_id})">-->
-                        <!--              Delete-->
-                        <!--            </button>-->
-                        <!--            <button v-if="isAdmin" @click="$emit('openModalAddServer', 'Edit Server')">-->
-                        <!--              Edit-->
-                        <!--            </button>-->
+                      <span class="sname">
+                        {{ server.server_name }}
+                      </span>
                         <button class="connectBtn" @click="connectServer(server.server_id, org_id, server.server_name)">
-                            Connect
+                            Access
                         </button>
-                        <div class="dot-vertical-wrapper"
-                             v-on:click="openModalServerListItem(server.server_id, server.server_name, $event)">
+                      <div class="dot-vertical-wrapper"
+                             v-on:click="openModalServerListItem(server, server.server_id, server.server_name, $event)">
                             <img :src="theme == 0 ? require('@/assets/dot-vertical-light.png') : require('@/assets/dot-vertical.png')"
                                  width="3" style="padding-top: 3px"/>
                         </div>
-                      <ModalAdminServerListItem v-if="ModalServerListItemState" @closeModalServerListItem="ModalServerListItemState = false"/>
+                      <ModalAdminServerListItem @openModalServerInfo="doOpenModalServerInfo"
+                                                @openDeleteModal="doOpenDeleteModal"
+                                                :server="this.server"
+                                                :locationX="this.curXMousePos"
+                                                :locationY="this.curYMousePos"
+                                                v-if="ModalServerListItemState"
+                                                @closeModalServerListItem="ModalServerListItemState = false"/>
                     </div>
                 </template>
                 <div v-if="isAdmin == true" class="adminAddNewServerItemBox" @click="$emit('openModalAddServer', 'Add New Instance')">
@@ -52,6 +49,9 @@ export default {
             ModalServerListItemState: false,
             DeleteState: DeleteState.DELETESERVER,
             colors: ["#A4A9C6a2", "#AFA4C6a2", "#A4C6B5a2", "#C6A4A4a2"],
+            curXMousePos: 0,
+            curYMousePos: 0,
+            server: 0
         }
     },
     computed: {
@@ -65,9 +65,11 @@ export default {
     },
     methods: {
         ...mapActions('terminal', ['connectTerminal']),
-        openModalServerListItem(server_id, server_name, e) {
+        openModalServerListItem(server, server_id, server_name, e) {
             this.curXMousePos = e.clientX
             this.curYMousePos = e.clientY
+            this.server = server
+            console.log(this.curYMousePos)
             this.ModalServerListItemState = true
         },
         isTrue(key) {
@@ -85,7 +87,14 @@ export default {
                 server_name: server_name
             }
             await this.connectTerminal(data)
-        }
+        },
+      doOpenModalServerInfo(server_name, server_desc){
+          console.log(server_name)
+          this.$emit('openModalServerInfo',server_name,server_desc)
+      },
+      doOpenDeleteModal(deleteState, serverIdObject){
+          this.$emit('openDeleteModal', deleteState, serverIdObject)
+      }
     }
 }
 </script>
@@ -99,6 +108,7 @@ export default {
 }
 
 .itembox {
+    position: relative;
     display: flex;
     margin-bottom: 0.7rem;
     background-color: #a4bec6a2;
@@ -112,7 +122,7 @@ export default {
     cursor: pointer;
     display: flex;
     margin-bottom: 0.7rem;
-    background-color: #2b2b2b;
+    background-color: var(--ModeAdminAddNewServerItemBoxColor);
     opacity: 0.67;
     border-radius: 0.4rem;
     padding: 1rem 0;
@@ -131,19 +141,22 @@ export default {
 }
 
 button {
-    background-color: var(--ModeServerListItemBtnColor);
+    //background-color: var(--ModeServerListItemBtnColor);
+  background-color: #ffffff;
     border-radius: 0.2rem;
     border: none;
     box-shadow: 0 1px 1px 0.5px #0000002f;
     cursor: pointer;
-    color: var(--ModeTextColor);
-    padding: 0.1rem 1.5rem;
+    //color: var(--ModeTextColor);
+  color: #1b1b1b;
+    width: 4rem;
     margin-right: 5%;
+    text-align: center;
     margin-left: 30%;
 }
 
 .connectBtn:hover {
-    background-color: #9b9b9b;
+    background-color: #5e5e5e;
 }
 
 .dot-vertical-wrapper {
@@ -190,4 +203,5 @@ button {
         opacity: 1;
     }
 }
+
 </style>

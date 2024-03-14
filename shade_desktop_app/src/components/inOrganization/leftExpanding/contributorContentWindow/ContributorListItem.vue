@@ -99,7 +99,7 @@ span{
   color: white;
   margin-left: 5%;
   margin-right: auto;
-  background-color: #222c59;
+  background-color: #14121A;
   width: 90%;
   border-radius: 0.4rem;
   border: none;

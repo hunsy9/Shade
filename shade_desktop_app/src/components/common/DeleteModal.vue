@@ -7,8 +7,8 @@
           <div style="padding-top: 10px; padding-left: 1px">Are you sure you want to delete it?</div>
         </div>
         <div class="btnWrapper">
-          <button @click="$emit('closeDeleteModal')">Cancle</button>
-          <button @click="deleteController"> Ok</button>
+          <button @click="$emit('closeDeleteModal')">Cancel</button>
+          <button @click="deleteController">Ok</button>
         </div>
       </div>
     </div>
