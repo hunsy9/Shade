@@ -1,4 +1,6 @@
 # Shade
+[English README](./README-EN.md)
+
 > 개발 중인 레포지토리입니다.
 
 <p align="center">
