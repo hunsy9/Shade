@@ -26,32 +26,19 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/startSocketRoom', (req,res)=>{
-  console.log("들어왔다.")
   const namespace = req.body.nameSpace //nameSpace String
   const escapeUUID = namespace.split("/")[3]
   console.log(namespace)
   const ssh = io.of(namespace)
 
   const setEscape = `export PS1=${escapeUUID}`
-
-  const initCommand = `sshpass -p ${req.body.password} ssh ${req.body.username}@${req.body.host} -p ${req.body.port}\n`
+  const initCommand = `sshpass -p${req.body.password} ssh -o StrictHostKeyChecking=no -p${req.body.port} ${req.body.username}@${req.body.host}\n`
 
   ssh.on("connection", (socket) => {
     console.log("connection Success!")
     socket.on("startChannel", async () => {
       console.log("Start ptyChannel ", socket.id);
       const shell = os.platform() === "win32" ? "powershell.exe" : "bash";
-
-      // const ptyProcess = pty.spawn(shell, [], {
-      //   name: "xterm-color",
-      //   cols: 100,
-      //   rows: 24,
-      //   cwd: process.env.HOME,
-      //   env: process.env,
-      // });
-      //
-      // ptyProcess.write(setEscape+'\n')
-      // ptyProcess.write(initCommand)
 
       await makePty(shell,setEscape,initCommand)
           .then((ptyProcess)=>{

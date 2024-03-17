@@ -18,6 +18,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -30,7 +31,11 @@ public class ServerService implements ServerServiceInterface{
     private final RedisTemplate<String,String> redisTemplate;
 
     public int addNewServer(MultipartFile keyfile, AddServerDto addServerDto) throws SQLException, JsonProcessingException {
-        return serverRepository.addNewServer(keyfile,addServerDto);
+        try {
+            return serverRepository.addNewServer(keyfile,addServerDto);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

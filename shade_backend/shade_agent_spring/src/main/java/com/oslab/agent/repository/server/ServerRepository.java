@@ -20,6 +20,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +36,24 @@ public class ServerRepository {
     private final RedisTemplate<String, String> redisTemplate;
     private final ObjectMapper objectMapper;
 
-    private void addNewServerToCloud(ServerDetailDto serverDetailDto, MultipartFile keyfile, Long org_id) throws JsonProcessingException {
+    private String storeKeyFile(MultipartFile keyfile, Long org_id, Long server_id) throws IOException {
+        String dir = "/home/opc/oidc/key/"+org_id+"/"+server_id;
+        File folder = new File(dir);
+        if(!folder.exists()){
+            try {
+                folder.mkdirs();
+                log.info(dir+" keyFile folder generated!");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        String fullPath = dir + File.separator + keyfile.getOriginalFilename();
+        Path path = Paths.get(fullPath).toAbsolutePath();
+        keyfile.transferTo(path.toFile());
+        return path.toString();
+    }
+
+    private void addNewServerToCloud(ServerDetailDto serverDetailDto, MultipartFile keyfile, Long org_id) throws IOException {
         ValueOperations<String, String> newServerDetail = redisTemplate.opsForValue();
         String key = String.format("Server:%s", serverDetailDto.getServer_id());
 
@@ -41,28 +62,11 @@ public class ServerRepository {
         newServerDetail.set(key, serverDetail);
 
         if (serverDetailDto.getKeyExistence()) {
-            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-            HttpHeaders headers = new HttpHeaders();
-            RestTemplate restTemplate = new RestTemplate();
-            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-            body.add("keyfile", keyfile.getResource());
-            RegKeyInfoDto regKeyInfoDto = RegKeyInfoDto.builder()
-                    .org_id(org_id)
-                    .server_id(serverDetailDto.getServer_id())
-                    .build();
-            body.add("regKeyInfo", regKeyInfoDto);
-            HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);
-
-            ResponseEntity<?> res = restTemplate.exchange(
-                    "http://localhost:8082/api/sshService/registerKeyfile",
-                    HttpMethod.POST,
-                    entity,
-                    new ParameterizedTypeReference<Map<String, Object>>() {
-                    });
+            storeKeyFile(keyfile, org_id, serverDetailDto.getServer_id());
         }
     }
 
-    public int addNewServer(MultipartFile keyfile, AddServerDto addServerDto) throws SQLException, JsonProcessingException {
+    public int addNewServer(MultipartFile keyfile, AddServerDto addServerDto) throws SQLException, IOException {
         System.out.println(keyfile.getOriginalFilename());
         serverMapper.addNewServer(addServerDto);
         ServerDetailDto serverDetailDto = ServerDetailDto.builder()

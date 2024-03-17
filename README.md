@@ -2,7 +2,7 @@
 [English README](./README-EN.md)
 
 > 개발 중인 레포지토리입니다.
-
+[English README]()
 <p align="center">
 <img src="./assets/logo.png" width="120" height="120"/>
 </p>
@@ -24,4 +24,5 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 토이 프로젝트인 **Shade**를 시작하였습니다.
 
 ### 프로젝트 소개
+
 

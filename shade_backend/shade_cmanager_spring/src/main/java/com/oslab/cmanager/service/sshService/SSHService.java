@@ -65,10 +65,6 @@ public class SSHService implements SSHServiceInterface{
             throw new RuntimeException(e);
         }
 
-//        if(serverDetail == null){
-//            return ;
-//        }
-
         String username = serverDetail.getUsername();
         String host = serverDetail.getHost();
         int port = serverDetail.getPort();

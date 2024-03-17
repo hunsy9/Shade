@@ -30,7 +30,7 @@ public class RequestController {
 
     @PostMapping("api/request/generateKey")
     public ResponseEntity<KeyBundle> generateKey(@RequestBody ConnectingDto connectingDto) {
-        return requestService.generateKey(connectingDto);
+        return ResponseEntity.ok().body(requestService.generateKey(connectingDto));
     }
 
     @PostMapping("/api/request/connect")
@@ -51,5 +51,11 @@ public class RequestController {
     @PostMapping("api/request/test")
     public ResponseEntity<?> sshConnectionTest(@RequestPart(value = "keyfile", required = false) MultipartFile keyfile, @RequestPart("server") ConTestDto server) throws IOException {
         return requestService.sshConnectionTest(keyfile, server);
+    }
+
+    @PostMapping("api/request/startPty")
+    public void startPty(@RequestBody PtyConnectionDto ptyConnectionDto) throws IOException {
+        System.out.println(ptyConnectionDto.toString());
+        requestService.startPty(ptyConnectionDto);
     }
 }

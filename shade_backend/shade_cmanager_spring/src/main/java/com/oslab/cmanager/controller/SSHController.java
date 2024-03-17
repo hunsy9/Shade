@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -53,7 +54,7 @@ public class SSHController {
 
     @PostMapping("api/sshService/test1")
     public ResponseEntity<?> test(@RequestPart("keyfile") MultipartFile keyfile, @RequestPart("serverDetail") ConnectionTestDto server) throws IOException {
-        if (!keyfile.getOriginalFilename().equals("nFile")){
+        if (!Objects.requireNonNull(keyfile.getOriginalFilename()).equals("nFile")){
             String dir = sshService.fileStoreBuffer(keyfile);
             server.setFileDir(dir);
         }

@@ -4,51 +4,52 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eabeb134-f287-4a29-813f-e3686cda8c5d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/shade_backend.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shade_database/Dockerfile" afterDir="false" />
+    <list default="true" id="eabeb134-f287-4a29-813f-e3686cda8c5d" name="Changes" comment="refactor: 불필요한 console.log 제거">
+      <change afterPath="$PROJECT_DIR$/../.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../db/conf.d/my.cnf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../db/initdb.d/a.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../db/initdb.d/shade.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shade_agent_spring/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shade_agent_spring/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/configuration/websocket/entity/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/configuration/websocket/entity/SshConnectionRoom.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/model/transfer/enums/TestResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/model/transfer/requestDto/PtyConnectionDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/model/transfer/requestDto/ServerDetailDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/model/transfer/serverDto/ConnectionTestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/service/webSocketService/WebSocketService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/util/SshTestThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shade_pty_node/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../shade_agent_spring/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/templates/mail/authMail.html" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/target/classes/templates/mail/authMail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/templates/mail/invitationMail.html" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/target/classes/templates/mail/invitationMail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/controller/sshRequest/RequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/controller/sshRequest/RequestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/repository/server/ServerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/repository/server/ServerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/service/server/ServerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/service/server/ServerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/service/sshRequest/RequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/java/com/oslab/agent/service/sshRequest/RequestService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_agent_spring/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/mybatis/mapper/contributorMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/mybatis/mapper/mailSendingMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/mybatis/mapper/orgCategoryMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/mybatis/mapper/orgMasterMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/mybatis/mapper/orgProjectMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/mybatis/mapper/serverMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/mybatis/mapper/userMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/static/css/authMail.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/static/css/invitationMail.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/static/javascript/authMailAction.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/templates/mail/authMail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_agent_spring/target/classes/templates/mail/invitationMail.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/oslab/cmanager/containerManagingBean/cManagingBean.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/oslab/cmanager/controller/SSHController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/oslab/cmanager/controller/SSHController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/oslab/cmanager/service/sshService/SSHService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/oslab/cmanager/service/sshService/SSHService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shade_pty_node/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_pty_node/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shade_database/Dockerfile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../shade_pty_node/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../shade_pty_node/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/assets/remove-bg-shadeIcon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/assets/remove-bg-shadeIcon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/assets/shadeIcon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/assets/shadeIcon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/background.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/background.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/beforeOrganization/beforemodal/ModalLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/beforeOrganization/beforemodal/ModalLogin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/AppInfo.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/DeleteModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/DeleteModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/api/deleteApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/api/deleteApi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/topBar/settings/ModalSettings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/common/topBar/settings/ModalSettings.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/leftExpanding/contributorContentWindow/ContributorListItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/leftExpanding/contributorContentWindow/ContributorListItem.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalAddProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalAddProject.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalProjectSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalProjectSelect.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalServerInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalServerInfo.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalServerListItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/modalComponent/ModalServerListItem.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/projectContentWindow/ServerListItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/projectContentWindow/ServerListItem.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/ExitTerminalButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/ExitTerminalButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/remoteDirectory/RemoteDirectoryLeftExpandingMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/remoteDirectory/RemoteDirectoryLeftExpandingMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/terminalTabBarList/TerminalTabBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/terminalTabBarList/TerminalTabBar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/terminalTabBarList/terminalTab/TerminalTab.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/terminalWindow/terminalTabBarList/terminalTab/TerminalTab.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/topBar/ProjectSelection.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/components/inOrganization/topBar/ProjectSelection.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/localTerm.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/store/inOrganization.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/store/inOrganization.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/store/terminal.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/store/terminal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/views/BeforeOrganizationView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/views/BeforeOrganizationView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/src/views/InOrganizationView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/src/views/InOrganizationView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../shade_desktop_app/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../shade_desktop_app/vue.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,37 +62,37 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2QJwH3IpSU6GqfNFq7qC9qIZGa1" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.CmanagerApplication.executor": "Run",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/yuseunghun/Documents/portfolio/shade/shade_backend/shade_cmanager_spring",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "spring.configuration.checksum": "1988f4ea487e1e4478df74dd06a51c3d",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.CmanagerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/yuseunghun/Documents/portfolio/shade/shade_backend/shade_cmanager_spring&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;1988f4ea487e1e4478df74dd06a51c3d&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="CmanagerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="cmanager" />
@@ -112,10 +113,26 @@
       <workItem from="1685084901894" duration="24000" />
       <workItem from="1685085038498" duration="3000" />
       <workItem from="1710313464078" duration="2587000" />
+      <workItem from="1710652855684" duration="248000" />
+      <workItem from="1710653145719" duration="4572000" />
+      <workItem from="1710657847431" duration="1837000" />
     </task>
+    <task id="LOCAL-00001" summary="refactor: 불필요한 console.log 제거">
+      <option name="closed" value="true" />
+      <created>1710653424013</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1710653424013</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="refactor: 불필요한 console.log 제거" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: 불필요한 console.log 제거" />
   </component>
 </project>
