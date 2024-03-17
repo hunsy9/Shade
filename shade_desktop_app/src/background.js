@@ -22,7 +22,7 @@ async function createWindow() {
   const win = new BrowserWindow({
     title: 'shade',
     width: 870,
-    height: 550,
+    height: 500,
     minWidth:850,
     minHeight:600,
     frame: false,
