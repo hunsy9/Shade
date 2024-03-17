@@ -1,0 +1,49 @@
+version: "1"
+services:
+  shade-redis:
+    image: redis:4.0-alpine
+    restart: always
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - shade_network
+
+  shade-mariadb:
+    image: mariadb:10
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db/conf.d:/etc/mysql/conf.d
+      - ./db/data:/var/lib/mysql
+      - ./db/initdb:/docker-entrypoint-initdb.d
+    env_file: .env
+    networks:
+      - shade_network
+    environment:
+      TZ: Asia/Seoul
+    restart: always
+  shade-pty:
+    image: juniper0917/shade-pty:0.4
+    restart: always
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    networks:
+      - shade_network
+
+  shade-backend:
+    image: juniper0917/shade:0.3
+    restart: always
+    depends_on:
+      - shade-redis
+      - shade-mariadb
+    ports:
+      - "0.0.0.0:8081:8081"
+    networks:
+      - shade_network
+
+networks:
+  shade_network:
+    driver: bridge
