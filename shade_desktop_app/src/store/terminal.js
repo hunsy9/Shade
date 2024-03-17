@@ -61,7 +61,7 @@ export default ({
                     nameSpace : nameSpace
                 }
 
-                await fetch('http://localhost:8082/api/sshService/startPty',{
+                await fetch('http://localhost:8081/api/request/startPty',{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
