@@ -290,7 +290,7 @@ export default {
   margin-top: 0.5rem;
   margin-left: 2.3rem;
   margin-right: auto;
-  border: solid 0.15rem #5F76C9;
+  border: solid 0.15rem #000000;
   border-radius: 0.4rem;
 }
 .inpbar_m {
@@ -299,7 +299,7 @@ export default {
   margin-top: 0.5rem;
   margin-left: 2.3rem;
   margin-right: auto;
-  border: solid 0.15rem #5F76C9;
+  border: solid 0.15rem #000000;
   border-radius: 0.4rem;
 }
 .inpbar_l {
@@ -308,7 +308,7 @@ export default {
   margin-top: 0.5rem;
   margin-left: auto;
   margin-right: auto;
-  border: solid 0.15rem #5F76C9;
+  border: solid 0.15rem #000000;
   border-radius: 0.4rem;
 }
 input {
@@ -374,7 +374,7 @@ span{
   margin-left: 0.73rem;
   padding-top: 0.9rem;
   padding-bottom: 0.9rem;
-  background-color: #5F76C9;
+  background-color: #000000;
   border-radius: 0.2rem;
   border: none;
   cursor: pointer;
@@ -399,7 +399,7 @@ span{
   margin-left: 0.73rem;
   padding-top: 0.9rem;
   padding-bottom: 0.9rem;
-  background-color: #5F76C9;
+  background-color: #000000;
   border-radius: 0.2rem;
   border: none;
   cursor: pointer;
@@ -414,7 +414,7 @@ span{
   margin-left: 6rem;
   padding-top: 0.9rem;
   padding-bottom: 0.9rem;
-  background-color: #2a3d80;
+  background-color: #000000;
   border-radius: 0.2rem;
   border: none;
   cursor: pointer;
@@ -436,7 +436,7 @@ span{
   display: block;
   margin-left: auto;
   margin-right: auto;
-  background-color: #2a3d80;
+  background-color: #000000;
   border-radius: 0.5rem;
   border: none;
   cursor: pointer;
