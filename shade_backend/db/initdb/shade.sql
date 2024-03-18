@@ -19,6 +19,7 @@
 -- Table structure for table `category_master`
 --
 
+use shade;
 
 DROP TABLE IF EXISTS `category_master`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -218,7 +219,8 @@ CREATE TABLE `user_master` (
 LOCK TABLES `user_master` WRITE;
 /*!40000 ALTER TABLE `user_master` DISABLE KEYS */;
 -- INSERT INTO `user_master` VALUES (23,'yungs0917@naver.com','0917','seunghun','2023-08-09 23:12:17','2023-08-09 23:12:17',NULL),(24,'kt8619@naver.com','0000','kimkitae','2023-08-09 23:12:34','2023-08-09 23:12:34',NULL);
-INSERT INTO `user_master` VALUES (1,'root@email.com','rootroot','admin',current_timestamp() ,current_timestamp(),NULL)
+INSERT INTO `user_master` VALUES (1,'root@email.com','rootroot','admin',current_timestamp() ,current_timestamp(),NULL);
+INSERT INTO `user_master` VALUES (2,'contri@email.com','contri','contributor',current_timestamp() ,current_timestamp(),NULL);
 /*!40000 ALTER TABLE `user_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
