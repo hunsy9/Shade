@@ -74,38 +74,38 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 ### 로그인 화면
 - 로그인/회원가입이 가능합니다.
 <p align="center">
-<img src="./assets/로그인.gif" width="70%"/>
+<img src="./assets/로그인.gif" width="80%"/>
 </p>
 
 ### 조직 생성
 - 깃허브와 같이 누구나 조직을 생성하여 관리자가 될 수 있습니다.
 <p align="center">
-<img src="./assets/조직생성1.gif" width="70%"/>
+<img src="./assets/조직생성1.gif" width="80%"/>
 </p>
 
 ### 조직 > 프로젝트 > 카테고리
 - 관리자는 서버 접속 정보를 **프로젝트 > 카테고리** 내에 등록할 수 있습니다.
 <p align="center">
-<img src="./assets/confproject.gif" width="70%"/>
+<img src="./assets/confproject.gif" width="80%"/>
 </p>
 
 ### Contributor(조직 내 개발자)를 초대
 - 관리자는 **Contributor(조직 내 개발자)를 초대**하여 관리할 수 있습니다.
 <p align="center">
-<img src="./assets/invite.gif" width="70%"/>
+<img src="./assets/invite.gif" width="80%"/>
 </p>
 
 ### 조직의 서버 접속 정보를 등록
 - 관리자는 **조직의 서버 접속 정보를 등록**합니다.
 <p align="center">
-<img src="./assets/addserver.gif" width="70%"/>
+<img src="./assets/addserver.gif" width="80%"/>
 </p>
 
 ### 접속 정보 없는 서버 접속
 - Contributor(조직 내 개발자)는 관리자가 등록해놓은 서버를 접속 정보 없이 사용할 수 있습니다.
 
 <p align="center">
-<img src="./assets/main.gif" width="70%"/>
+<img src="./assets/main.gif" width="80%"/>
 </p>
 
 더 자세한 기능 명세는 [UseCase Wiki](https://github.com/hunsy9/Shade/wiki/5.-Use-Case)를 참고해주세요.
