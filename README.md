@@ -4,7 +4,7 @@
 [English README](./README-EN.md)
 <p align="center">
  <img src="./assets/로고.png" width="35%"/>
- <img src="./assets/main.gif" width="50%"/>
+ <img src="./assets/main.gif" width="60%"/>
 </p>
 
 ## 프로젝트 동기
