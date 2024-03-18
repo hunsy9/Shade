@@ -65,7 +65,7 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 ## 개발 인원
 - 2023.09 ~ 현재 : [@hunsy9](https://github.com/hunsy9)의 개인 프로젝트로 전환되었습니다.
 - 2023.05.01 ~ 2023.08.31
-    - 팀장: [@hunsy9]((https://github.com/hunsy9))
+    - 팀장: [@hunsy9](https://github.com/hunsy9)
     - 팀원: [@kimkitae](https://github.com/kimikitae), [@JHongsee](https://github.com/JHongsee)
 
 
