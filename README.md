@@ -23,6 +23,9 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 토이 프로젝트인 **Shade**를 시작하였습니다.
 
 ### 프로젝트 소개
+![로그인](https://github.com/hunsy9/Shade/assets/101303791/150e15c5-c110-4e6c-96c3-80871d45d79f)
+
+
 
 ### 프로토타입 설치
 [프로토타입 설치 Wiki](https://github.com/hunsy9/Shade/wiki/2.-Prototype)를 참고해주세요.
