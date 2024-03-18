@@ -25,6 +25,7 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 ### 프로젝트 소개
 ![로그인](https://github.com/hunsy9/Shade/assets/101303791/150e15c5-c110-4e6c-96c3-80871d45d79f)
 
+![조직생성](https://github.com/hunsy9/Shade/assets/101303791/69eaae29-7b24-4394-ac00-11ef878f5938)
 
 
 ### 프로토타입 설치
