@@ -1,8 +1,7 @@
 # Shade
-[English README](./README-EN.md)
 
 > 개발 중인 레포지토리입니다.
-[English README]()
+[English README](./README-EN.md)
 <p align="center">
 <img src="./assets/logo.png" width="120" height="120"/>
 </p>
