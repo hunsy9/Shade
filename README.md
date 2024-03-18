@@ -3,8 +3,8 @@
 > 개발 중인 프로젝트입니다.
 [English README](./README-EN.md)
 <p align="center">
- <img src="./assets/logo.png" width="120" height="120"/>
- <img src="https://github.com/hunsy9/Shade/assets/101303791/dd90cfc8-a47c-4f27-ab1e-1e95310c5c37" width="50%"/>
+ <img src="./assets/로고.png" width="30%"/>
+ <img src="./assets/main.png" width="50%"/>
 </p>
 
 ## 프로젝트 동기
