@@ -52,4 +52,7 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 ## 프로토타입 설치
 [프로토타입 설치 Wiki](https://github.com/hunsy9/Shade/wiki/2.-Prototype)를 참고해주세요.
 
+## 라이센스
+[MIT License](http://opensource.org/licenses/MIT)
+
 
