@@ -42,37 +42,37 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 ## 프로젝트 실행화면
 
 <p align="center">
-<img src="./assets/로그인.gif" width="50%"/>
+<img src="./assets/로그인.gif" width="70%"/>
 </p>
 
  - 로그인 화면입니다.
 
 <p align="center">
-<img src="./assets/조직생성1.gif" width="50%"/>
+<img src="./assets/조직생성1.gif" width="70%"/>
 </p>
 
  - 조직을 생성합니다. 깃허브와 같이 누구나 조직을 생성하여 관리자가 될 수 있습니다.
 
 <p align="center">
-<img src="./assets/confproject.gif" width="50%"/>
+<img src="./assets/confproject.gif" width="70%"/>
 </p>
 
 - 관리자는 서버를 프로젝트 > 카테고리 내에 등록할 수 있습니다. 
 
 <p align="center">
-<img src="./assets/invite.gif" width="50%"/>
+<img src="./assets/invite.gif" width="70%"/>
 </p>
 
 - 관리자는 Contributor(조직 내 개발자)를 초대하여 관리할 수 있습니다.
 
 <p align="center">
-<img src="./assets/invite.gif" width="50%"/>
+<img src="./assets/addserver.gif" width="70%"/>
 </p>
 
 - 관리자는 조직의 서버 접속 정보를 등록합니다.
 
 <p align="center">
-<img src="./assets/main.gif" width="50%"/>
+<img src="./assets/main.gif" width="70%"/>
 </p>
 
 - Contributor(조직 내 개발자)는 관리자가 등록해놓은 서버를 접속 정보 없이 사용할 수 있습니다.
