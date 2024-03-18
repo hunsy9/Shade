@@ -25,6 +25,26 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 
 ## 프로젝트 소개
 
+### 프로젝트 목표 및 아이디어
+
+개발 조직에서 관리자를 제외한 인원에게 **접속정보를 은닉**하기 위해, 
+
+개발 조직의 특정 서버에서 사용자들이 **원하는 목적지로의 ssh 연결을 대신 맺고**,
+
+사용자가 이 **연결에 명령어를 주입할 수 있는 API를 제공**하는 것이 목표입니다.
+
+<p align="center">
+<img src="./assets/maindesc.png"/>
+</p>
+
+위 그림처럼 핵심 아이디어는 **접속을 대리하고 이를 사용자와 공유**하는 것입니다.
+
+이때 **shade backend**는 마치 **reverse proxy**처럼 작용할 수 있습니다.
+
+사용자는 데스크톱 어플리케이션의 인터페이스를 통해 접속을 대리하는 외부 환경과 통신할 수 있으며,
+
+세부 프로젝트 구조는 [이곳](https://github.com/hunsy9/Shade/wiki/4.-Architecture)에서 확인하실 수 있습니다.
+
 ### 서비스 흐름도
 
 다음은 서비스의 구조 및 흐름입니다.
@@ -41,44 +61,44 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 
 ## 프로젝트 실행화면
 
+### 로그인 화면
+- 로그인/회원가입이 가능합니다.
 <p align="center">
 <img src="./assets/로그인.gif" width="70%"/>
 </p>
 
- - 로그인 화면입니다.
-
+### 조직 생성
+- 깃허브와 같이 누구나 조직을 생성하여 관리자가 될 수 있습니다.
 <p align="center">
 <img src="./assets/조직생성1.gif" width="70%"/>
 </p>
 
- - 조직을 생성합니다. 깃허브와 같이 누구나 조직을 생성하여 관리자가 될 수 있습니다.
-
+### 조직 > 프로젝트 > 카테고리
+- 관리자는 서버 접속 정보를 **프로젝트 > 카테고리** 내에 등록할 수 있습니다.
 <p align="center">
 <img src="./assets/confproject.gif" width="70%"/>
 </p>
 
-- 관리자는 서버를 프로젝트 > 카테고리 내에 등록할 수 있습니다. 
-
+### Contributor(조직 내 개발자)를 초대
+- 관리자는 **Contributor(조직 내 개발자)를 초대**하여 관리할 수 있습니다.
 <p align="center">
 <img src="./assets/invite.gif" width="70%"/>
 </p>
 
-- 관리자는 Contributor(조직 내 개발자)를 초대하여 관리할 수 있습니다.
-
+### 조직의 서버 접속 정보를 등록
+- 관리자는 **조직의 서버 접속 정보를 등록**합니다.
 <p align="center">
 <img src="./assets/addserver.gif" width="70%"/>
 </p>
 
-- 관리자는 조직의 서버 접속 정보를 등록합니다.
+### 접속 정보 없는 서버 접속
+- Contributor(조직 내 개발자)는 관리자가 등록해놓은 서버를 접속 정보 없이 사용할 수 있습니다.
 
 <p align="center">
 <img src="./assets/main.gif" width="70%"/>
 </p>
 
-- Contributor(조직 내 개발자)는 관리자가 등록해놓은 서버를 접속 정보 없이 사용할 수 있습니다.
-
-
-더 자세한 기능은 [UseCase Wiki](https://github.com/hunsy9/Shade/wiki/5.-Use-Case)를 참고해주세요.
+더 자세한 기능 명세는 [UseCase Wiki](https://github.com/hunsy9/Shade/wiki/5.-Use-Case)를 참고해주세요.
 
 ## 프로토타입 설치
 [프로토타입 설치 Wiki](https://github.com/hunsy9/Shade/wiki/2.-Prototype)를 참고해주세요.
