@@ -38,13 +38,13 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 ## 프로젝트 실행화면
 
 <p align="center">
-<img src="https://github.com/hunsy9/Shade/assets/101303791/150e15c5-c110-4e6c-96c3-80871d45d79f" width="348" height="200"/>
+<img src="https://github.com/hunsy9/Shade/assets/101303791/150e15c5-c110-4e6c-96c3-80871d45d79f" width="696" height="400"/>
 </p>
 
  - 로그인 화면입니다.
 
 <p align="center">
-<img src="https://github.com/hunsy9/Shade/assets/101303791/69eaae29-7b24-4394-ac00-11ef878f5938" width="348" height="200"/>
+<img src="https://github.com/hunsy9/Shade/assets/101303791/69eaae29-7b24-4394-ac00-11ef878f5938" width="696" height="400"/>
 </p>
 
  - 조직을 생성합니다. 깃허브와 같이 누구나 조직을 생성하여 관리자가 될 수 있습니다.
