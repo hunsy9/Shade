@@ -1,6 +1,6 @@
 # Shade
 
-> 개발 중인 레포지토리입니다.
+> 개발 중인 프로젝트입니다.
 [English README](./README-EN.md)
 <p align="center">
 <img src="./assets/logo.png" width="120" height="120"/>
@@ -23,10 +23,22 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 토이 프로젝트인 **Shade**를 시작하였습니다.
 
 ### 프로젝트 소개
-![로그인](https://github.com/hunsy9/Shade/assets/101303791/150e15c5-c110-4e6c-96c3-80871d45d79f)
 
-![조직생성](https://github.com/hunsy9/Shade/assets/101303791/69eaae29-7b24-4394-ac00-11ef878f5938)
 
+
+### 프로젝트 실행화면
+
+<p align="center">
+<img src="https://github.com/hunsy9/Shade/assets/101303791/150e15c5-c110-4e6c-96c3-80871d45d79f" width="348" height="200"/>
+</p>
+
+ - 로그인 화면입니다.
+
+<p align="center">
+<img src="https://github.com/hunsy9/Shade/assets/101303791/69eaae29-7b24-4394-ac00-11ef878f5938" width="348" height="200"/>
+</p>
+
+ - 조직을 생성합니다. 깃허브와 같이 누구나 조직을 생성하여 관리자가 될 수 있습니다.
 
 ### 프로토타입 설치
 [프로토타입 설치 Wiki](https://github.com/hunsy9/Shade/wiki/2.-Prototype)를 참고해주세요.
