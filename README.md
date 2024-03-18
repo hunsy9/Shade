@@ -26,6 +26,9 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 ## 프로젝트 소개
 
 ### 서비스 흐름도
+
+다음은 서비스의 구조 및 흐름입니다.
+
 <p align="center">
 <img src="./assets/service_flow.png" width="340" height="268"/>
 </p>
@@ -39,16 +42,43 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 ## 프로젝트 실행화면
 
 <p align="center">
-<img src="./assets/로그인.gif" width="696" height="400"/>
+<img src="./assets/로그인.gif" width="50%"/>
 </p>
 
  - 로그인 화면입니다.
 
 <p align="center">
-<img src="./assets/조직생성1.gif" width="696" height="400"/>
+<img src="./assets/조직생성1.gif" width="50%"/>
 </p>
 
  - 조직을 생성합니다. 깃허브와 같이 누구나 조직을 생성하여 관리자가 될 수 있습니다.
+
+<p align="center">
+<img src="./assets/confproject.gif" width="50%"/>
+</p>
+
+- 관리자는 서버를 프로젝트 > 카테고리 내에 등록할 수 있습니다. 
+
+<p align="center">
+<img src="./assets/invite.gif" width="50%"/>
+</p>
+
+- 관리자는 Contributor(조직 내 개발자)를 초대하여 관리할 수 있습니다.
+
+<p align="center">
+<img src="./assets/invite.gif" width="50%"/>
+</p>
+
+- 관리자는 조직의 서버 접속 정보를 등록합니다.
+
+<p align="center">
+<img src="./assets/main.gif" width="50%"/>
+</p>
+
+- Contributor(조직 내 개발자)는 관리자가 등록해놓은 서버를 접속 정보 없이 사용할 수 있습니다.
+
+
+더 자세한 기능은 [UseCase Wiki](https://github.com/hunsy9/Shade/wiki/5.-Use-Case)를 참고해주세요.
 
 ## 프로토타입 설치
 [프로토타입 설치 Wiki](https://github.com/hunsy9/Shade/wiki/2.-Prototype)를 참고해주세요.
