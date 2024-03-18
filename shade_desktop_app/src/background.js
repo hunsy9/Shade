@@ -24,7 +24,7 @@ async function createWindow() {
     width: 870,
     height: 500,
     minWidth:850,
-    minHeight:600,
+    minHeight:500,
     frame: false,
     titleBarStyle: 'hiddenInset',
     backgroundColor: '#000000',
