@@ -1,7 +1,5 @@
 # Shade
 
-> 개발 중인 프로젝트입니다.
-[English README](./README-EN.md)
 <p align="center">
  <img src="./assets/로고.png" width="35%"/>
  <img src="./assets/main.gif" width="60%"/>
