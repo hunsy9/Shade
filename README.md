@@ -58,13 +58,13 @@ _이 프로젝트는 제가 운영체제 및 클라우드 연구실의 학부연
 5. 조직 내 개발자는 **등록되어 있는 인스턴스를 사용**합니다.
 
 ## 프로토타입 설치
-[프로토타입 설치 Wiki](https://github.com/hunsy9/Shade/wiki/5.-Prototype)를 참고해주세요.
+[프로토타입 설치 가이드](https://github.com/hunsy9/Shade/wiki/5.-Prototype)를 참고해주세요.
 
 ## 개발 인원
 - 2023.09 ~ 현재 : [@hunsy9](https://github.com/hunsy9)의 개인 프로젝트로 전환되었습니다.
 - 2023.05.01 ~ 2023.08.31
-    - 팀장: [@hunsy9](https://github.com/hunsy9)
-    - 팀원: [@kimkitae](https://github.com/kimikitae), [@JHongsee](https://github.com/JHongsee)
+    - 프로젝트 리더: [@hunsy9](https://github.com/hunsy9)
+    - 프로젝트 멤버: [@kimkitae](https://github.com/kimikitae), [@JHongsee](https://github.com/JHongsee)
 
 
 ## 프로젝트 실행화면
